@@ -1,0 +1,19 @@
+# Visual Studio files
+.vs/
+*.user
+*.suo
+
+# Build output
+bin/
+obj/
+
+# SFML DLLs or other binaries
+*.dll
+*.exe
+
+# Other temporary files
+*.log
+*.tlog
+x64/*
+x64/*
+*.obj

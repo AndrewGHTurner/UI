@@ -1,0 +1,508 @@
+//SFML .dlls needed for this to work
+#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <iostream>
+#include <vector>
+#include <fstream>
+using namespace std;
+using namespace sf;
+
+class EText {
+private:
+	Text textSfml;
+	string text;
+public:
+
+	RenderTexture renderTesture;
+
+	EText(Font& font, string initialText) : textSfml(font, initialText){
+		text = initialText;
+		textSfml.setFillColor(sf::Color::Red);
+	}
+
+	void draw(RenderWindow& window)
+	{
+		window.draw(textSfml);
+	}
+	void setPosition(Vector2f position)
+	{
+		textSfml.setPosition(position);
+	}
+	void setSize(Vector2f size)
+	{
+
+	}
+	void setText(string newText, sf::Font& font)
+	{
+		textSfml.setString(newText);
+		text = newText;
+	}
+};
+
+//box on the screen
+class Box {
+protected:
+	Vector2f origin;//top right
+	Vector2f antiOrigin;//bottom left
+	Vector2f size;
+public:
+	Box(Box* parent, Vector2f origin, Vector2f siz) : container(parent) {
+		setOrigin(origin);
+		setSize(siz);
+	}
+	bool isLeaf = true;
+	bool isClickable = false;
+	bool contentChanged = false;
+	bool containsText = false;//sfml text has its own draw calls... would like to just use main vertex array but too complicated for now
+	Box* container;
+	short numTexts = 0;
+	void notifyTextChanged(bool added)//bool for if text object was added or not
+	{
+
+		if (added)
+		{
+			numTexts += 1;
+			containsText = true;
+		}
+		else
+		{
+			numTexts -= 1;
+			if (numTexts == 0)
+			{
+				containsText = false;
+			}
+		}
+		if(container){
+			container->notifyTextChanged(added);
+		}
+	}
+	void setOrigin(Vector2f origin)
+	{
+		this->origin = origin;
+		antiOrigin = Vector2f(origin.x + size.x, origin.y + size.y);
+		notifyChange();
+	}
+	void setSize(Vector2f siz)
+	{
+		size = siz;
+		antiOrigin = Vector2f(origin.x + size.x, origin.y + size.y);
+		notifyChange();
+	}
+	bool isPointWithin(Vector2i point)
+	{
+		if (point.x > origin.x && point.y > origin.y)
+		{
+			if (point.x < antiOrigin.x && point.y < antiOrigin.y)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	//notify any changes in the positions of the verticies in the vertex array
+	void notifyChange()
+	{
+		contentChanged = true;
+		if (container)
+		{
+			container->notifyChange();
+		}
+	}
+};
+
+//this is a box that draws itself as UI ... 
+class Leaf : public Box
+{
+protected:
+	VertexArray& vertices;
+	int index;
+
+public:
+	
+	void updateVerticesPosition()
+	{
+		//first triangle
+		vertices[index].position = origin;
+		vertices[index + 1].position = Vector2f(origin.x, antiOrigin.y);
+		vertices[index + 2].position = Vector2f(antiOrigin.x, origin.y);
+		//second triangle
+		vertices[index + 3].position = Vector2f(antiOrigin.x, origin.y);
+		vertices[index + 4].position = Vector2f(origin.x, antiOrigin.y);
+		vertices[index + 5].position = Vector2f(antiOrigin.x, antiOrigin.y);
+
+
+		contentChanged = false;
+	}
+	Leaf(Vector2f origin, Vector2f siz, VertexArray& verts, int ind, Box* container) : vertices(verts), index(ind), Box(container, origin, siz) 
+	{
+		isLeaf = true;
+	}
+};
+
+class Clickable {
+protected:
+	void* param = nullptr;
+	void (*onClick)(void*);
+public:
+	Clickable(void (*onClickFunk)(void*))
+	{
+		cout << onClickFunk << endl;
+		onClick = onClickFunk;
+		cout << "onclick " << onClick
+	}
+	inline void click()
+	{
+		cout << onClick << " " << param << endl;;
+		onClick(param);
+	}
+	void setParam(void* p)
+	{
+		param = p;
+	}
+};
+
+class ClickableLeaf : public Leaf, public Clickable
+{
+public:
+	ClickableLeaf(Vector2f origin, Vector2f siz, VertexArray& verts, int ind, void (*clickFunction)(void*), Box* container)
+		: Leaf(origin, siz, verts, ind, container), Clickable(clickFunction) {
+		isClickable = true;
+	}
+	bool clickedAt(Vector2i pos)
+	{
+		if (onClick) {
+			if (isPointWithin(pos))
+			{
+				click();
+				return true;
+			}
+		}
+	}
+};
+
+
+
+
+
+//make a box factory
+
+class Button : public ClickableLeaf{
+private:
+public:
+	Button(VertexArray& verts, int ind, Vector2f origin, Vector2f siz, void (*clickFunction)(void*), Box* container)
+		: ClickableLeaf(origin, siz, verts, ind, clickFunction, container)
+	{
+		//size = siz;
+		//this->origin = origin;
+		//antiOrigin = Vector2f(origin.x + siz.x, origin.y + siz.y);
+		updateVerticesPosition();
+	}
+	Button(const Button&) = delete;  // Prevent copying
+
+
+
+	void setColor(Color c)
+	{
+		vertices[index].color = c;
+		vertices[index + 1].color = c;
+		vertices[index + 2].color = c;
+		vertices[index + 3].color = c;
+		vertices[index + 4].color = c;
+		vertices[index + 5].color = c;
+	}
+
+};
+
+
+//TEXT CONTAINER SHOULD INHERIT FROM LEAF AND THEN TEXT BUTTON SHOULD INHERIT FROM THAT
+
+class TextContainer : public Leaf {
+public:
+
+	TextContainer(Vector2f origin, Vector2f siz, Font& font, string initialText, VertexArray& verts, int ind, Box* container) : Leaf(origin, size, verts, ind, container), text(font, initialText)
+	{
+
+	}
+	void draw(RenderWindow& window) {
+		text.draw(window);
+	}
+	EText text;
+};
+
+class ClickableTextContainer : public TextContainer, public Clickable{
+public:
+	ClickableTextContainer(Vector2f origin, Vector2f siz, Font& font, string initialText, VertexArray& verts, int ind, void (*clickFunction)(void*), Box* container) :
+		 TextContainer(origin, siz, font, initialText, verts, ind, container), Clickable(clickFunction)
+	{
+		isClickable = true;
+	}
+
+};
+
+class TextButton : public ClickableTextContainer
+{
+public:
+	TextButton(VertexArray& verts, int ind, Vector2f origin, Vector2f siz, void (*clickFunction)(void*), Box* container, string initialText, Font& font)
+		: ClickableTextContainer(origin, siz, font, initialText, verts, ind, clickFunction, container)
+	{
+		containsText = true;
+		this->text.setPosition(origin);
+		this->text.setSize(this->size);
+		container->notifyTextChanged(true);
+	}
+	~TextButton() {
+		container->notifyTextChanged(false);
+	}
+
+
+	void r() {
+		cout << "origin " << origin.x << ", " << origin.y << endl;
+		this->text.setPosition(origin);
+		this->text.setSize(this->size);
+	}
+
+};
+
+
+
+class Branch : public Box {
+public:
+	Branch(Box* container, Vector2f origin, Vector2f siz) : Box(container, origin, siz)
+	{
+		isLeaf = false;
+	}
+	vector<Box*> children;
+	void add(Box* child)
+	{
+		children.push_back(child);
+		notifyChange();
+	}
+	virtual void calcPositions() {};
+	void drawText(RenderWindow& window)
+	{
+		for (Box* child : children)
+		{
+			
+			if (child->containsText)
+			{
+				if (child->isLeaf)
+				{
+					static_cast<TextButton*>(child)->draw(window);//need to refactor to make this better!
+				}
+				else
+				{
+					static_cast<Branch*>(child)->drawText(window);
+				}
+			}
+		}
+	}
+	void updateChildren()
+	{
+		calcPositions();
+		for (Box* child : children)
+		{
+			if (child->contentChanged)
+			{
+				if (child->isLeaf)
+				{
+					static_cast<Leaf*>(child)->updateVerticesPosition();
+					if(child->containsText)
+					{
+						static_cast<TextButton*>(child)->r();
+					}
+				}
+				else
+				{
+					static_cast<Branch*>(child)->updateChildren();
+				}
+			}
+		}
+		contentChanged = false;
+	}
+	void clickedAt(Vector2i pos)
+	{
+		for (Box* child: children)
+		{
+			if (child->isPointWithin(pos))
+			{
+				if (child->isLeaf)
+				{
+					if (child->isClickable)
+					{
+						cout << "MMM";
+						static_cast<ClickableLeaf*>(child)->clickedAt(pos);
+					}
+				}
+				else
+				{
+					//may wish to add support for clickable branches????
+					cout << "MFFMM";
+
+					static_cast<Branch*>(child)->clickedAt(pos);
+				}
+				break;//no need to search the rest of the tree
+			}
+		}
+	}
+};
+
+class HorizontalSpacedBar :  public Branch{
+private:
+//	vector<Button*> buttons;
+public:
+	HorizontalSpacedBar(Vector2f origin, Vector2f siz, Box* container) : Branch(container, origin, siz){
+		//buttons = vector<Button*>();
+		//size = siz;
+		//this->origin = origin;
+		//antiOrigin = Vector2f(origin.x + siz.x, origin.y + siz.y);
+
+	}
+
+	void calcPositions() override
+	{
+		float buttonWidth = size.x / children.size();
+		float buttonHeight = antiOrigin.y - origin.y;
+		Vector2f buttonSize(buttonWidth, buttonHeight);
+		int leftX = origin.x;
+		for (Box* box : children)
+		{
+			Vector2f buttonOrigin(leftX, origin.y);
+			box->setOrigin(buttonOrigin);
+			box->setSize(buttonSize);
+
+
+			leftX += buttonWidth;
+		}
+	}
+};
+
+class VertexArrayManager
+{
+private:
+	sf::RenderStates states;
+	Texture atlas;
+	
+protected:
+	//vector<Button*> buttonVector;
+	VertexArray vertices;
+	int vertexCount = 0;
+	int addVertices(int numToAdd) {
+		vertexCount += numToAdd * 2;
+		vertices.resize(vertexCount);
+		return vertexCount - numToAdd;
+	}
+public:
+	VertexArrayManager() {
+		vertices = VertexArray(sf::PrimitiveType::Triangles, 0);
+	}
+
+};
+
+class UI : public Branch, VertexArrayManager{
+private:
+	sf::Font font;
+public:
+	UI() : Branch(nullptr, Vector2f(0, 0), Vector2f(300, 300)){
+		if (!font.openFromFile("Terminal.ttf")) {
+			cout << "font could not be loaded" << endl;
+		}
+	}
+	void draw(RenderWindow& const window)
+	{
+		bool t = contentChanged;
+		if (contentChanged)
+		{
+			updateChildren();
+		}
+		window.draw(vertices);
+		//draw text
+		if (containsText)
+		{
+			drawText(window);
+		}
+
+
+
+	}
+	//origin - top right courner of the button
+	//size - length of the button in the x and y dimensions
+	Button* addButton(Vector2f origin, Vector2f size, void (*onClick)(void*), Box* container)
+	{
+		int startIndex = addVertices(6);
+		Button* newButton = new Button(vertices, startIndex, origin, size, onClick, container);
+		return newButton;
+	}
+	TextButton* addTextButton(Vector2f origin, Vector2f size, void (*onClick)(void*), Box* container, string initialText)
+	{
+		int startIndex = addVertices(6);
+		TextButton* newButton = new TextButton(vertices, startIndex, origin, size, onClick, container, initialText, font);
+		return newButton;
+	}
+};
+
+void g(void *) {
+	cout << "clicked";
+}
+
+int height = 10;
+int width = 10;
+void incrementSize(void* param) {
+	cout << "clicked 2" << endl;
+	//Button* b = (Button*)param;
+	//height += 10;
+	//width += 10;
+	//b->setSize(Vector2f(width, height));
+}
+
+int main()
+{
+	RenderWindow window(VideoMode({ 300, 300 }), "Mandelbrot");
+	CircleShape shape(100.f);
+	shape.setFillColor(Color::Green);
+	cout << incrementSize << endl;
+	UI ui = UI();
+
+	Vector2f UIOrigin(0, 0);
+	Vector2f UISize(300, 300);
+	ui.setOrigin(UIOrigin);
+	ui.setSize(UISize);
+
+
+	Vector2f o(30, 30);
+	Vector2f s(200, 40);
+	HorizontalSpacedBar h(o, s, &ui);
+
+	Vector2f buttonOrigin = Vector2f(30, 30);
+	Vector2f buttonSize = Vector2f(40, 30);
+	Button* gh = ui.addButton(buttonOrigin, buttonSize, g, &h);
+	h.add(gh);
+	gh->setColor(Color::Red);
+
+	Vector2f buttonOrigin2 = Vector2f(90, 90);
+	Vector2f buttonSize2 = Vector2f(40, 30);
+	TextButton* j = ui.addTextButton(buttonOrigin2, buttonSize2, incrementSize, &h, "hello");
+	h.add(j);
+	//j->setParam(j);
+	j->r();
+	ui.add(&h);
+
+	while (window.isOpen())
+	{
+		while (std::optional event = window.pollEvent())
+		{
+			if (event->is<Event::Closed>())
+			{
+				window.close();
+			}
+			if (event->getIf<Event::MouseButtonPressed>())
+			{
+				ui.clickedAt(Mouse::getPosition(window));
+			}
+		}
+		window.clear();
+		window.draw(shape);
+		ui.draw(window);
+		window.display();
+	}
+	return 0;
+}

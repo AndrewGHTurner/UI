@@ -1,0 +1,13 @@
+- when adding to the ui tree structure parent child relationships will be formed via parent.add() structure	
+	this leads to the workflow of creating/configuring a widget and then adding it to its container which is
+	cleaner and more intuitive than passing the container into a widgets constructor. also deliberatly putting 
+	the add logic in the parent will prevent duplicate logic in the child
+
+- a custom alocator for UI nodes may improve performance if the number of nodes grows very high. it would be
+	faster than calling new etc ... block alocator when a bunch of ui nodes are added to the tree at once
+
+- treeNodes can have a list(or better datastructure) of properties such as centered that would allow for a 
+	reduction in ui tree depth
+
+- the ui tree is held together using unique pointers from parents to children which allows the ui tree to 
+	automatically handle node cleanup
