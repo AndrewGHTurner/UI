@@ -179,8 +179,11 @@
     <ClInclude Include="Facade.h" />
     <ClInclude Include="HorizontalProportionalSpacedBar.h" />
     <ClInclude Include="Leaf.h" />
+    <ClInclude Include="Page.h" />
+    <ClInclude Include="PageHolder.h" />
     <ClInclude Include="Properties.h" />
     <ClInclude Include="TextBox.h" />
+    <ClInclude Include="TreeHolder.h" />
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="VerticalScroll.h" />

@@ -16,6 +16,9 @@
     <Filter Include="Header Files\facades">
       <UniqueIdentifier>{354ef31d-2ee8-4c21-b70e-eb2e8ae60dff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\pageManaging">
+      <UniqueIdentifier>{297cd85f-56f1-4e7d-bdbf-33f98271d657}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -100,6 +103,15 @@
     </ClInclude>
     <ClInclude Include="Facade.h">
       <Filter>Header Files\facades</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeHolder.h">
+      <Filter>Header Files\pageManaging</Filter>
+    </ClInclude>
+    <ClInclude Include="PageHolder.h">
+      <Filter>Header Files\pageManaging</Filter>
+    </ClInclude>
+    <ClInclude Include="Page.h">
+      <Filter>Header Files\pageManaging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

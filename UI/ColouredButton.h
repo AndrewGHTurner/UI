@@ -31,6 +31,11 @@ public:
 	{
 		return colouredBox()->colour;
 	}
+
+	int getID()
+	{
+		return rootNode->id;
+	}
 private:
 	inline ColouredBox* colouredBox()
 	{

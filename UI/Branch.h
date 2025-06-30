@@ -59,6 +59,23 @@ public:
 		notifyRecalcNeeded();
 	}
 
+	void remove(int childID)
+	{
+		for (auto it = children.begin(); it != children.end(); ++it)
+		{
+			if ((*it)->id == childID)
+			{
+				children.erase(it);
+				notifyRecalcNeeded();
+				if (this->numTexts > 0)
+				{
+					notifyTextChanged(true);
+				}
+				return;
+			}
+		}
+	}
+
 	virtual void calcPositions() {};
 	void drawText(int currentCharIndex = -1, TextBox* currentTextBox = nullptr)
 	{

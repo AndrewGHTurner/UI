@@ -47,7 +47,7 @@ public:
 	void add(Facade& facade)
 	{
 		facade.rootNode->parentNode = this;
-		children.push_back(unique_ptr<TreeNode>(facade.rootNode));
+		this->add(unique_ptr<TreeNode>(facade.rootNode));
 	}
 };
 

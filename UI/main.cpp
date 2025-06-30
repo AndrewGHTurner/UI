@@ -14,6 +14,7 @@ DESIGN CHOICES
 #include <memory>
 #include "HorizontalSpacedBar.h"
 #include "HorizontalProportionalSpacedBar.h"
+#include <tuple>
 
 #include "UI.h"
 #include "ColouredButton.h"
@@ -58,6 +59,43 @@ void changeColourBtn(ColouredButton* button)
 		button->setColor(Color::Blue);
 	}
 }
+
+void removeTreeNode(tuple<Branch*, int>* tuple)
+{
+	Branch* branch = get<0>(*tuple);
+	int id = get<1>(*tuple);
+	branch->remove(id);
+	delete tuple;//Clean up the dynamically allocated memory
+}
+int t = 0;
+void addTreeNode(VerticalScroll* branch)
+{
+	Color f;
+	if (t == 0)
+	{
+		f = Color::Red;
+	}
+	else if (t == 1)
+	{
+		f = Color::Green;
+	}
+	else if (t == 2)
+	{
+		f = Color::Blue;
+	}
+	else if (t == 3)
+	{
+		f = Color::Magenta;
+		t = -1;
+	}
+	t += 1;
+
+	ColouredButton btn(f);
+	btn.onClick(makeCallBack(removeTreeNode, new tuple<Branch*, int>(branch, btn.getID())), *UI::ui);
+	branch->add(btn);
+}
+
+
 
 RenderTexture* Leaf::screenTexture = nullptr;
 RenderTexture* EText::screenTexture = nullptr;
@@ -122,12 +160,12 @@ int main()
 	unique_ptr<VerticalScroll> verticalScroll = make_unique<VerticalScroll>(&ui, Vector2f(200, 400), Vector2f(200, 200));
 
 	ColouredButton btn1(Color::Yellow);
-	Callback c1 = makeCallBack(changeColourBtn, &btn1);
+	Callback c1 = makeCallBack(addTreeNode, verticalScroll.get());
 	btn1.onClick(c1, ui);
 	verticalScroll->add(btn1);
 
 	ColouredButton btn2(Color::Black);
-	Callback c2 = makeCallBack(changeColourBtn, &btn2);
+	Callback c2 = makeCallBack(removeTreeNode, new std::tuple<Branch*, int>(verticalScroll.get(), btn2.getID()));
 	btn2.onClick(c2, ui);
 	verticalScroll->add(btn2);
 
