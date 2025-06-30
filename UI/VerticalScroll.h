@@ -40,6 +40,10 @@ public:
 			box->setSize(childSize);
 			//Y += MIN_WIDGET_HEIGHT;
 			Y += heightPerWidget;
+			if (box->hasText)
+			{
+				box->notifyTextChanged(true);
+			}	
 		}
 		setRecalcNeededFalse();
 	}

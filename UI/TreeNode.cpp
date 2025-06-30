@@ -27,7 +27,7 @@ TreeNode::TreeNode(TreeNode* parent, Vector2f origin, Vector2f siz)
 	setSize(siz);
 }
 
-void TreeNode::notifyTextChanged(bool added)//bool for if text object was added or not
+void TreeNode::notifyTextChanged(bool added)//bool for if text object was added or not THIS NEEDS TO BE FIXED TO ALLW FOR NOTIFICATIONS WITHOUT CHANGING STUFF
 {
 
 	if (added)
