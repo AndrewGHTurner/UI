@@ -10,6 +10,8 @@ private:
 	vector<int> proportions;
 	int totalProportion = 0;
 public:
+	HorizontalProportionalSpacedBar() : Branch() {
+	}
 	HorizontalProportionalSpacedBar(Vector2f origin, Vector2f siz) : Branch(origin, siz) {
 	}
 	using Branch::add;

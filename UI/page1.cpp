@@ -3,11 +3,19 @@
 #include "CallBack.h"  
 #include "HorizontalProportionalSpacedBar.h"  
 #include <memory>  
+#include "PageSwitcher.h"
 
 class Page1 : public Page {  
-public:  
-   Page1() {  
-   }  
+private:
+
+public:
+    int page2ID;
+    PageSwitcher& pageSwitcher; // Reference to the PageSwitcher to switch back to Page1
+    Page1(PageSwitcher& pageSwitcher) : pageSwitcher(pageSwitcher){
+    }
+	void setPage2ID(int id) {
+		Page1::page2ID = id;
+	}
    void createTree() override  
    {  
        Vector2f buttonOrigin2 = Vector2f(90, 90);  
@@ -31,7 +39,8 @@ public:
        verticalScroll->add(btn2);  
 
        ColouredButton btn3 = ColouredButton(Color::Blue);
-       unique_ptr<Callback> c3 = makeCallBack(changeColourBtn, btn3.getRootNode());
+	   void* u = nullptr;
+       unique_ptr<Callback> c3 = makeCallBack(switchToPage2, this);
        btn3.onClick(move(c3), *ui);
        verticalScroll->add(btn3);  //CANNOT MOVE IT TWICE
 
@@ -129,5 +138,9 @@ public:
        branch->remove(id);  
        delete tuple;//Clean up the dynamically allocated memory  
    }  
+
+   static void switchToPage2(Page1* page1) {
+       page1->pageSwitcher.showPage(page1->page2ID);
+   }
 
 };  

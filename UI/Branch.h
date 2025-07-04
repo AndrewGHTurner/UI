@@ -55,8 +55,8 @@ public:
 		{
 			notifyTextChanged(true);
 		}
+		child->notifyRecalcNeeded();
 		children.push_back(move(child));
-		notifyRecalcNeeded();
 	}
 
 	void add(Facade& facade)

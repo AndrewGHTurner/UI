@@ -22,6 +22,7 @@ DESIGN CHOICES
 #include "Page.h"
 #include "PageSwitcher.h"
 #include "Page1.cpp"
+#include "Page2.cpp"
 
 using namespace std;
 using namespace sf;
@@ -129,88 +130,15 @@ int main()
 	Vector2f UISize(700, 700);
 	ui.setOrigin(UIOrigin);
 	ui.setSize(UISize);
-	
 
-//	Vector2f o(30, 30);
-//	Vector2f s(250, 200);
-
-
-
-
-
-
-
-	//Vector2f buttonOrigin = Vector2f(30, 30);
-	//Vector2f buttonSize = Vector2f(40, 30);
-	//Button* gh = ui.addButton(buttonOrigin, buttonSize, &h);
-
-	//ui.addOnClick(g, nullptr, gh->id);
-
-	//h.add(gh);
-	//gh->setColor(Color::Red);
-
-/*	Vector2f buttonOrigin2 = Vector2f(90, 90);
-	Vector2f buttonSize2 = Vector2f(40, 30);
-	unique_ptr<TextBox> j = ui.addButton(buttonOrigin2, buttonSize2, "hello");
-
-
-	//j->r();
-
-	//ui.addAnimation(j);
-	Callback c(incrementSize, nullptr);
-	ui.addOnClick(c, j->id);//WOUDL NEED TO MAKE A FOX
-
-	//create the scroll area
-	unique_ptr<VerticalScroll> verticalScroll = make_unique<VerticalScroll>(&ui, Vector2f(200, 400), Vector2f(200, 200));
-
-	ColouredButton btn1(Color::Yellow);
-	Callback c1 = makeCallBack(addTreeNode, verticalScroll.get());
-	btn1.onClick(c1, ui);
-	verticalScroll->add(btn1);
-
-	ColouredButton btn2(Color::Black);
-	Callback c2 = makeCallBack(removeTreeNode, new std::tuple<Branch*, int>(verticalScroll.get(), btn2.getID()));
-	btn2.onClick(c2, ui);
-	verticalScroll->add(btn2);
-
-	ColouredButton btn3(Color::Blue);
-	Callback c3 = makeCallBack(changeColourBtn, &btn3);
-	btn3.onClick(c3, ui);
-	verticalScroll->add(btn3);
-
-	ColouredButton btn4(Color::Magenta);
-	Callback c4 = makeCallBack(changeColourBtn, &btn4);
-	btn4.onClick(c4, ui);
-	verticalScroll->add(btn4);
-
-	verticalScroll->add(move(j));
-
-	ColouredButton btn5(Color::Cyan);
-	Callback c5 = makeCallBack(changeColourBtn, &btn5);
-	btn5.onClick(c5, ui);
-	verticalScroll->add(btn5);
-
-	unique_ptr<HorizontalProportionalSpacedBar>ggg = make_unique<HorizontalProportionalSpacedBar>(ui.getOrigin(), ui.getSize());
-
-	ColouredButton btna(Color::Blue);
-	Callback ca = makeCallBack(changeColourBtn, &btna);
-	btna.onClick(ca, ui);
-
-	ColouredButton btnb(Color::Blue);
-	Callback cb = makeCallBack(changeColourBtn, &btnb);
-	btnb.onClick(cb, ui);
-
-	ggg->add(btna, 20);
-	ggg->add(move(verticalScroll), 50);
-	ggg->add(btnb, 20);
-
-	ui.add(move(ggg));*/
 
 	PageSwitcher pageSwitcher(ui);//on the stack but may need to be on heap if functions returns
-	unique_ptr<Page1> page1 = make_unique<Page1>();
+	unique_ptr<Page1> page1 = make_unique<Page1>(pageSwitcher);
+	Page1* page1Ptr = page1.get(); // Get a raw pointer to the unique_ptr
 	int page1ID = pageSwitcher.addPage(move(page1));
-
-	pageSwitcher.showPage(page1ID);
+	int page2ID = pageSwitcher.addPage(make_unique<Page2>(pageSwitcher, page1ID)); // Create Page2 with a reference to PageSwitcher and Page1 ID
+	page1Ptr->setPage2ID(page2ID);
+	pageSwitcher.showPage(page2ID);
 
 	
 	while (window.isOpen())

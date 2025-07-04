@@ -22,6 +22,9 @@ class VerticalScroll : public Branch {
 private:
 	vector<TreeNode*> contents;
 public:
+	VerticalScroll() :
+		Branch() {
+	}
 	VerticalScroll(Vector2f origin, Vector2f siz) :
 		Branch(origin, siz) {
 	}

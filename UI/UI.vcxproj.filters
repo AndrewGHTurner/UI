@@ -57,6 +57,9 @@
     <ClCompile Include="Page.cpp">
       <Filter>Source Files\pageManagers</Filter>
     </ClCompile>
+    <ClCompile Include="page2.cpp">
+      <Filter>Source Files\experimental</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box.h">
