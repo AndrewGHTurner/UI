@@ -5,19 +5,27 @@
 #include "CallBack.h"
 #include "ui.h"
 #include "Facade.h"
+#include <memory>
+using namespace std;
 
 class ColouredButton : public Facade
 {
-public:
+private:
 
+public:
 	ColouredButton(Color c)
 	{
-		rootNode = new ColouredBox(c);
+		rootNode = new ColouredBox(c);//potential memory leak if not moved to a unique_ptr
 	}
 
-	ColouredButton& onClick(Callback callback, UI& ui)
+	ColouredBox* getRootNode() override
 	{
-		ui.addOnClick(callback, rootNode->id);
+		return static_cast<ColouredBox*>(rootNode);
+	}
+
+	ColouredButton& onClick(unique_ptr<Callback> callback, UI& ui)
+	{
+		ui.addOnClick(move(callback), rootNode->id);
 		return *this;
 	}
 
@@ -37,10 +45,10 @@ public:
 		return rootNode->id;
 	}
 private:
-	inline ColouredBox* colouredBox()
-	{
+    inline ColouredBox* colouredBox()  
+    {  
 		return static_cast<ColouredBox*>(rootNode);
-	}
+    }
 };
 
 #endif

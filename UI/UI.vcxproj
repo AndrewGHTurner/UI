@@ -161,6 +161,8 @@
     <ClCompile Include="CenterAligner.cpp" />
     <ClCompile Include="HorizontalSpacedBar.h" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Page.cpp" />
+    <ClCompile Include="page1.cpp" />
     <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
@@ -180,7 +182,7 @@
     <ClInclude Include="HorizontalProportionalSpacedBar.h" />
     <ClInclude Include="Leaf.h" />
     <ClInclude Include="Page.h" />
-    <ClInclude Include="PageHolder.h" />
+    <ClInclude Include="PageSwitcher.h" />
     <ClInclude Include="Properties.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TreeHolder.h" />

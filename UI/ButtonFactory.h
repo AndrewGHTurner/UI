@@ -78,16 +78,16 @@ namespace ButtonBuilders
 			callbacks.push_back(callBack);
 			return GetParamStage(*this, callbacks.back(), colouredBox);
 		}
-		unique_ptr<ColouredBox> get()
-		{
-			for (Callback callBack : callbacks)
-			{
-				ui->addOnClick(callBack, colouredBox.get()->id);
-			}
-			colouredBox->setColour(buttonColour);
-			colouredBox->parentNode = branch;
-			return move(colouredBox);
-		}
+		//unique_ptr<ColouredBox> get()
+		//{
+		//	for (Callback callBack : callbacks)
+		//	{
+		//		ui->addOnClick(callBack, colouredBox.get()->id);
+		//	}
+		//	colouredBox->setColour(buttonColour);
+		//	colouredBox->parentNode = branch;
+		//	return move(colouredBox);
+		//}
 	};
 }
 
@@ -101,22 +101,22 @@ public:
 
 	
 
-	TreeNode* makeColouredButton(Color colour, void (*onClick)(void*), void* param = nullptr, Branch* container = nullptr)
-	{
+	//TreeNode* makeColouredButton(Color colour, void (*onClick)(void*), void* param = nullptr, Branch* container = nullptr)
+	//{
 
-		ColouredBox* newColoredBox = new ColouredBox(colour, container);
-		if (param == nullptr)
-		{
-			param = newColoredBox;
-		}
-		Callback callBack(onClick, param);
-		ui.addOnClick(callBack, newColoredBox->id);
-		if (container != nullptr)
-		{
-			container->add(unique_ptr<ColouredBox>(newColoredBox));
-		}
-		return newColoredBox;
-	}
+	//	ColouredBox* newColoredBox = new ColouredBox(colour, container);
+	//	if (param == nullptr)
+	//	{
+	//		param = newColoredBox;
+	//	}
+	//	Callback callBack(onClick, param);
+	//	ui.addOnClick(callBack, newColoredBox->id);
+	//	if (container != nullptr)
+	//	{
+	//		container->add(unique_ptr<ColouredBox>(newColoredBox));
+	//	}
+	//	return newColoredBox;
+	//}
 
 
 };

@@ -9,11 +9,11 @@ using namespace std;
 class BehviourManager {
 protected:
 	static uint32_t nextID;
-	unordered_map<int, vector<Callback>> clickHandelers;
+	unordered_map<int, vector<unique_ptr<Callback>>> clickHandelers;
 public:
 	static uint32_t newID();
 
-	int addLeftDownCallback(Callback& newCallback, int boxID);//returns unique id of new callback
+	void addLeftDownCallback(unique_ptr<Callback> newCallback, int boxID);//returns unique id of new callback
 };
 
 #endif

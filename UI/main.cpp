@@ -19,6 +19,10 @@ DESIGN CHOICES
 #include "UI.h"
 #include "ColouredButton.h"
 #include "ButtonFactory.h"
+#include "Page.h"
+#include "PageSwitcher.h"
+#include "Page1.cpp"
+
 using namespace std;
 using namespace sf;
 using namespace ButtonBuilders;
@@ -106,7 +110,7 @@ int main()
 {
 	UI ui = UI();
 	TreeNode::ui = &ui;
-
+	Page::ui = &ui;
 
 	RenderWindow window(VideoMode({ 700, 700 }), "Mandelbrot");
 	EText::window = &window;
@@ -127,8 +131,8 @@ int main()
 	ui.setSize(UISize);
 	
 
-	Vector2f o(30, 30);
-	Vector2f s(250, 200);
+//	Vector2f o(30, 30);
+//	Vector2f s(250, 200);
 
 
 
@@ -136,8 +140,8 @@ int main()
 
 
 
-	Vector2f buttonOrigin = Vector2f(30, 30);
-	Vector2f buttonSize = Vector2f(40, 30);
+	//Vector2f buttonOrigin = Vector2f(30, 30);
+	//Vector2f buttonSize = Vector2f(40, 30);
 	//Button* gh = ui.addButton(buttonOrigin, buttonSize, &h);
 
 	//ui.addOnClick(g, nullptr, gh->id);
@@ -145,12 +149,12 @@ int main()
 	//h.add(gh);
 	//gh->setColor(Color::Red);
 
-	Vector2f buttonOrigin2 = Vector2f(90, 90);
+/*	Vector2f buttonOrigin2 = Vector2f(90, 90);
 	Vector2f buttonSize2 = Vector2f(40, 30);
 	unique_ptr<TextBox> j = ui.addButton(buttonOrigin2, buttonSize2, "hello");
 
 
-	j->r();
+	//j->r();
 
 	//ui.addAnimation(j);
 	Callback c(incrementSize, nullptr);
@@ -200,7 +204,13 @@ int main()
 	ggg->add(move(verticalScroll), 50);
 	ggg->add(btnb, 20);
 
-	ui.add(move(ggg));
+	ui.add(move(ggg));*/
+
+	PageSwitcher pageSwitcher(ui);//on the stack but may need to be on heap if functions returns
+	unique_ptr<Page1> page1 = make_unique<Page1>();
+	int page1ID = pageSwitcher.addPage(move(page1));
+
+	pageSwitcher.showPage(page1ID);
 
 	
 	while (window.isOpen())

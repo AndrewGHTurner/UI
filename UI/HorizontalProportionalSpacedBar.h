@@ -16,7 +16,7 @@ public:
 	//proportion is the amount of space the widget needs... will be relative to the proportions given to other widgets
 	void add(Facade& facade, int proportion)
 	{
-		this->add(unique_ptr<TreeNode>(facade.rootNode));
+		this->add(facade);
 		proportions.resize(children.size(), 0);//make sure that the proportions vector length matches the child vector length
 		proportions.back() = proportion;
 		totalProportion += proportion;

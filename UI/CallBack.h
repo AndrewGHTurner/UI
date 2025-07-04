@@ -1,6 +1,9 @@
 #ifndef CALLBACK_H
 #define CALLBACK_H
 
+#include <memory>
+using namespace std;
+
 class UI;
 //Callback id - unique ID of the callback which allows it to be removed from the button etc at a later time
 class Callback {
@@ -23,9 +26,9 @@ public:
 };
 
 template <typename T>
-static Callback makeCallBack(void (*onClickFunk)(T*), T* p)
+unique_ptr<Callback> makeCallBack(void (*onClickFunk)(T*), T* p)
 {
-	return Callback(
+	return make_unique<Callback>(
 		reinterpret_cast<void(*)(void*)>(onClickFunk),
 		static_cast<void*>(p)
 	);

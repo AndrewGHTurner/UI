@@ -22,8 +22,8 @@ class VerticalScroll : public Branch {
 private:
 	vector<TreeNode*> contents;
 public:
-	VerticalScroll(TreeNode* container, Vector2f origin, Vector2f siz) :
-		Branch(container, origin, siz) {
+	VerticalScroll(Vector2f origin, Vector2f siz) :
+		Branch(origin, siz) {
 	}
 	void calcPositions() override
 	{
@@ -46,12 +46,6 @@ public:
 			}	
 		}
 		setRecalcNeededFalse();
-	}
-	using Branch::add;//bring method add from branch into scope
-	void add(Facade& facade)
-	{
-		facade.rootNode->parentNode = this;
-		this->add(unique_ptr<TreeNode>(facade.rootNode));
 	}
 };
 

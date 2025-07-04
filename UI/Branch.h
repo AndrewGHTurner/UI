@@ -4,7 +4,7 @@
 #include "Leaf.h"
 #include <vector>
 #include "TextBox.h"
-
+#include "Facade.h"
 
 using namespace std;
 
@@ -57,6 +57,32 @@ public:
 		}
 		children.push_back(move(child));
 		notifyRecalcNeeded();
+	}
+
+	void add(Facade& facade)
+	{
+		facade.getRootNode()->parentNode = this;
+		this->add(unique_ptr<TreeNode>(facade.getRootNode()));
+	}
+
+	//remove a child by id and transfer ownership of the child to the caller
+	unique_ptr<TreeNode> retrieve(int childID)
+	{
+		for (int i = 0; i < children.size(); ++i)
+		{
+			if (children[i]->id == childID)
+			{
+				unique_ptr<TreeNode> child = move(children[i]);
+				children.erase(children.begin() + i);
+				notifyRecalcNeeded();
+				if (this->numTexts > 0)
+				{
+					notifyTextChanged(true);
+				}
+				return child;
+			}
+		}
+		return nullptr;
 	}
 
 	void remove(int childID)

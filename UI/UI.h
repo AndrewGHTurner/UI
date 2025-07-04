@@ -445,7 +445,7 @@ public:
 		}
 	}
 
-	void executeHandelers(unordered_map<int, vector<Callback>> handelers, Vector2i pos)
+	void executeHandelers(const unordered_map<int, vector<unique_ptr<Callback>>>& handelers, Vector2i pos)
 	{
 		//get a list of the boxIDs that are at position
 		vector<int> boxIDs;
@@ -456,17 +456,17 @@ public:
 			auto it = handelers.find(boxID);
 			if (it != handelers.end())//if a vector of handellers exists for this ID
 			{
-				for (Callback callback : it->second)
+				for (const unique_ptr<Callback>& callback : it->second)
 				{
-					callback.run();
+					callback->run();
 				}
 			}
 		}
 	}
 
-	void addOnClick(Callback& callback, int boxID)//wrapper name as more intuitive
+	void addOnClick(unique_ptr<Callback> callback, int boxID)//wrapper name as more intuitive
 	{
-		addLeftDownCallback(callback, boxID);
+		addLeftDownCallback(move(callback), boxID);
 	}
 
 	//origin - top right courner of the button
@@ -479,7 +479,7 @@ public:
 		return newButton;
 	}
 	VerticalScroll* makeVerticalScroll(Vector2f origin, Vector2f size) {
-		VerticalScroll* newVerticalScroll = new VerticalScroll(this, origin, size);
+		VerticalScroll* newVerticalScroll = new VerticalScroll(origin, size);
 		return newVerticalScroll;
 	}
 };
