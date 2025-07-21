@@ -164,6 +164,7 @@
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="page1.cpp" />
     <ClCompile Include="page2.cpp" />
+    <ClCompile Include="PageTypes.cpp" />
     <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>

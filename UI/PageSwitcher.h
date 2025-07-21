@@ -16,10 +16,28 @@ public:
 		holder = &branch;
 	}
 
+	int newPageID() {
+		unique_ptr<Page> nullPage = nullptr;
+		int id = pages.size();
+		pages.push_back(move(nullPage)); //add a null page to the vector
+		return id;
+	}
+
 	int addPage(unique_ptr<Page> page) {
 		int id = pages.size();
 		pages.push_back(move(page));
 		return id;
+	}
+
+	void setPage(int pageID, unique_ptr<Page> page) {
+		if (pageID < 0 || pageID >= pages.size()) {
+			throw std::out_of_range("Page ID is out of range");
+		}
+		unique_ptr<Page>& existingPage = pages[pageID];
+		if (existingPage != nullptr) {
+			throw std::runtime_error("Page with this ID already exists");
+		}
+		existingPage = move(page); //set the page at the specified ID
 	}
 
     void showPage(int pageID)

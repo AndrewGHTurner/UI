@@ -19,11 +19,11 @@
     <Filter Include="Header Files\pageManaging">
       <UniqueIdentifier>{297cd85f-56f1-4e7d-bdbf-33f98271d657}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\experimental">
-      <UniqueIdentifier>{250c1e47-b27a-4dbd-b229-b5a29f5dfd68}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\pageManagers">
       <UniqueIdentifier>{142b8b91-b4a9-456d-af74-56915843dd52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tester">
+      <UniqueIdentifier>{250c1e47-b27a-4dbd-b229-b5a29f5dfd68}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -52,13 +52,16 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="page1.cpp">
-      <Filter>Source Files\experimental</Filter>
+      <Filter>Source Files\tester</Filter>
     </ClCompile>
     <ClCompile Include="Page.cpp">
       <Filter>Source Files\pageManagers</Filter>
     </ClCompile>
     <ClCompile Include="page2.cpp">
-      <Filter>Source Files\experimental</Filter>
+      <Filter>Source Files\tester</Filter>
+    </ClCompile>
+    <ClCompile Include="PageTypes.cpp">
+      <Filter>Source Files\tester</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

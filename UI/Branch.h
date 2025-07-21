@@ -84,7 +84,7 @@ public:
 		}
 		return nullptr;
 	}
-
+	//class UI;
 	void remove(int childID)
 	{
 		for (auto it = children.begin(); it != children.end(); ++it)
@@ -100,6 +100,7 @@ public:
 				return;
 			}
 		}
+	//	this->ui->clearID(childID); // Clear the ID from the UI's behaviour manager
 	}
 
 	virtual void calcPositions() {};

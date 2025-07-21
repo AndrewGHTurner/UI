@@ -14,6 +14,9 @@ public:
 	static uint32_t newID();
 
 	void addLeftDownCallback(unique_ptr<Callback> newCallback, int boxID);//returns unique id of new callback
+	void clearID(int id) {
+		//clickHandelers.erase(id);
+	}
 };
 
 #endif

@@ -133,13 +133,13 @@ int main()
 
 
 	PageSwitcher pageSwitcher(ui);//on the stack but may need to be on heap if functions returns
-	unique_ptr<Page1> page1 = make_unique<Page1>(pageSwitcher);
-	Page1* page1Ptr = page1.get(); // Get a raw pointer to the unique_ptr
-	int page1ID = pageSwitcher.addPage(move(page1));
-	int page2ID = pageSwitcher.addPage(make_unique<Page2>(pageSwitcher, page1ID)); // Create Page2 with a reference to PageSwitcher and Page1 ID
-	page1Ptr->setPage2ID(page2ID);
-	pageSwitcher.showPage(page2ID);
-
+	int page1ID = pageSwitcher.newPageID(); // Create a new page ID for Page1
+	int page2ID = pageSwitcher.newPageID(); // Create a new page ID for Page2
+	unique_ptr<Page1> page1 = make_unique<Page1>(pageSwitcher, page2ID);
+	unique_ptr<Page2> page2 = make_unique<Page2>(pageSwitcher, page1ID); // Create Page2 with a reference to PageSwitcher and Page1 ID
+	pageSwitcher.setPage(page1ID, move(page1)); // Set Page1 in the PageSwitcher
+	pageSwitcher.setPage(page2ID, move(page2)); // Set Page2 in the PageSwitcher
+	pageSwitcher.showPage(page1ID); // Show Page1 initially
 	
 	while (window.isOpen())
 	{
