@@ -1,0 +1,6 @@
+The facade class is designed to be extended to create facades around the widget and layout treeNode implementations.
+The intention is to keep low level optimisations available to the user of the UI library while still providing a 
+simple API.
+
+Benefits of effective facades:
+-programmer doesn't have to worry about ownership eg manageing unique pointers

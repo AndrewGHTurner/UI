@@ -160,11 +160,13 @@
     <ClCompile Include="CallBack.cpp" />
     <ClCompile Include="CenterAligner.cpp" />
     <ClCompile Include="HorizontalSpacedBar.h" />
+    <ClCompile Include="Label.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="page1.cpp" />
     <ClCompile Include="page2.cpp" />
     <ClCompile Include="PageTypes.cpp" />
+    <ClCompile Include="TextButton.h" />
     <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
@@ -173,7 +175,6 @@
     <ClInclude Include="BehaviourManager.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Branch.h" />
-    <ClInclude Include="Button.h" />
     <ClInclude Include="ButtonFactory.h" />
     <ClInclude Include="CallBack.h" />
     <ClInclude Include="CenterAligner.h" />
@@ -182,10 +183,12 @@
     <ClInclude Include="EText.h" />
     <ClInclude Include="Facade.h" />
     <ClInclude Include="HorizontalProportionalSpacedBar.h" />
+    <ClInclude Include="Label.h" />
     <ClInclude Include="Leaf.h" />
     <ClInclude Include="Page.h" />
     <ClInclude Include="PageSwitcher.h" />
     <ClInclude Include="Properties.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TreeHolder.h" />
     <ClInclude Include="TreeNode.h" />
@@ -194,9 +197,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="designChoices.txt" />
+    <Text Include="explain.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="UI.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

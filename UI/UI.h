@@ -26,11 +26,13 @@ enum ArrowDirection {
 
 class UI : public Branch, public BehviourManager, public AnnimationManager {
 private:
-	sf::Font font;
+	
 	TextBox* currentTextBox = nullptr;
 	int currentCharIndex = 0;//could make a typeing handeller class?// should probably hold this in the EText class
 
 public:
+
+	sf::Font font;
 	UI() : BehviourManager(), Branch(Vector2f(0, 0), Vector2f(300, 300)) {
 		id = newID();//set the id of the ui element (root branch)
 		if (!font.openFromFile("Terminal.ttf")) {

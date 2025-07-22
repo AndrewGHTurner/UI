@@ -48,6 +48,12 @@ public:
 		//allocate some vertices ... this should probs go into a child class
 		vertices = VertexArray(sf::PrimitiveType::Triangles, 6);
 	}
+
+	Leaf() : TreeNode(nullptr)
+	{
+		setIsLeafTrue();
+		vertices = VertexArray(sf::PrimitiveType::Triangles, 6);
+	}
 	//called when content changed each frame
 
 };

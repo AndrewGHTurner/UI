@@ -4,6 +4,7 @@
 #include "HorizontalProportionalSpacedBar.h"  
 #include <memory>  
 #include "PageSwitcher.h"
+#include "Label.h"
 
 class Page1 : public Page {  
 private:
@@ -26,9 +27,12 @@ public:
        //create the scroll area  
        unique_ptr<VerticalScroll> verticalScroll = make_unique<VerticalScroll>(Vector2f(200, 400), Vector2f(200, 200));  
 
+	   unique_ptr<Label> label = make_unique<Label>("first label", Vector2f(0, 0), Vector2f(200, 30));
+	   verticalScroll->add(move(label));
+
 	   ColouredButton btn1 = ColouredButton(Color::Yellow);
        unique_ptr<Callback> c1 = makeCallBack(addTreeNode, verticalScroll.get());  
-       btn1.onClick(move(c1), *ui);  
+       btn1.onClick(move(c1), *ui);  //could make onclick templated to improve usability
        verticalScroll->add(btn1);  
 
        ColouredButton btn2 = ColouredButton(Color::Black);
