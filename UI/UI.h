@@ -1,4 +1,4 @@
-#ifndef  UI_H
+#ifndef UI_H
 #define UI_H
 #include "TreeNode.h"
 #include "Branch.h"
@@ -11,6 +11,10 @@
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <memory>
+#include "Page.h"
+
+class Page;
 
 using namespace std;
 
@@ -29,16 +33,81 @@ private:
 	
 	TextBox* currentTextBox = nullptr;
 	int currentCharIndex = 0;//could make a typeing handeller class?// should probably hold this in the EText class
-
+	unique_ptr<RenderTexture> screenTexture;//this is the texture that all UI elements will be drawn onto
 public:
 
 	sf::Font font;
-	UI() : BehviourManager(), Branch(Vector2f(0, 0), Vector2f(300, 300)) {
+	UI(RenderWindow& window) : BehviourManager(), Branch(Vector2f(0, 0), Vector2f(300, 300)) {
 		id = newID();//set the id of the ui element (root branch)
 		if (!font.openFromFile("Terminal.ttf")) {
 			cout << "font could not be loaded" << endl;
 		}
+		Callback::ui = this;
+		TreeNode::ui = this;
+		Page::ui = this;
+		EText::window = &window;
+		screenTexture = make_unique<RenderTexture>(window.getSize());
+		Leaf::setTexture(screenTexture.get());
+		EText::screenTexture = screenTexture.get();
 	}
+
+	void runUI(RenderWindow& window)
+	{
+		bool displayNeeded = false;
+		while (std::optional event = window.pollEvent())
+		{
+			if (event->is<Event::Closed>())//can definitly fiddle with the ordering and else if these if statements to get better performamce(minute though)
+			{
+				window.close();
+			}
+			if (event->is<Event::Resized>())
+			{
+				auto resized = event->getIf<sf::Event::Resized>();
+				if (resized) {
+					//update the SFML view to match the new window size
+					float width = static_cast<float>(resized->size.x);
+					float height = static_cast<float>(resized->size.y);
+					sf::View view(sf::FloatRect(Vector2f(0.f, 0.f), Vector2f(width, height)));
+					window.setView(view);
+
+
+					displayNeeded = true;
+
+					// 2. Notify your UI system of the new size
+				//	ui.updateLayout(newSize.x, newSize.y);
+				}
+			}
+			if (event->getIf<Event::MouseButtonPressed>())
+			{
+				leftDownAt(Mouse::getPosition(window));
+			}
+			if (auto textEvent = event->getIf<Event::TextEntered>())
+			{
+				char newChar = static_cast<char>(textEvent->unicode);
+				handleTypeEvent(newChar);
+			}
+			if (event->getIf<Event::KeyPressed>())
+			{
+				auto keyEvent = event->getIf<Event::KeyPressed>();
+				switch (keyEvent->code)
+				{
+				case Keyboard::Key::Up:
+					handleArrowEvent(ArrowDirection::UP);
+					break;
+				case Keyboard::Key::Left:
+					handleArrowEvent(ArrowDirection::LEFT);
+					break;
+				case Keyboard::Key::Right:
+					handleArrowEvent(ArrowDirection::RIGHT);
+					break;
+				case Keyboard::Key::Down:
+					handleArrowEvent(ArrowDirection::DOWN);
+				}
+			}
+		}
+		drawUI(window, displayNeeded);
+	}
+
 	void drawUI(RenderWindow& const window, bool displayNeeded = false)
 	{
 		if (isRecalcNeeded())
@@ -83,7 +152,7 @@ public:
 
 		if (displayNeeded)
 		{
-			window.clear();
+			//window.clear();
 			Leaf::screenTexture->display();
 			sf::Sprite sprite(Leaf::screenTexture->getTexture());
 			window.draw(sprite);

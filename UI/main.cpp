@@ -107,28 +107,16 @@ RenderWindow* EText::window = nullptr;
 
 int main()
 {
-	UI ui = UI();
-	TreeNode::ui = &ui;
-	Page::ui = &ui;
-
-	RenderWindow window(VideoMode({ 700, 700 }), "Mandelbrot");
-	EText::window = &window;
-	RenderTexture texture(Vector2u(700, 700), {});
-	Leaf::setTexture(&texture);
-	EText::screenTexture = &texture;
+	Vector2u screenSize(700, 700); // Set the screen size to 700x700 pixels
+	RenderWindow window(VideoMode(screenSize), "Mandelbrot");
 	window.setFramerateLimit(10);
 
-
-
-	//ButtonBuilders::BuildColouredButton::ui = ui;
-	Callback::ui = &ui;
-
+	UI ui = UI(window);
 
 	Vector2f UIOrigin(0, 0);
 	Vector2f UISize(700, 700);
 	ui.setOrigin(UIOrigin);
 	ui.setSize(UISize);
-
 
 	PageSwitcher pageSwitcher(ui);//on the stack but may need to be on heap if functions returns
 	int page1ID = pageSwitcher.newPageID(); // Create a new page ID for Page1
@@ -141,62 +129,7 @@ int main()
 	
 	while (window.isOpen())
 	{
-		bool displayNeeded = false;
-		while (std::optional event = window.pollEvent())
-		{
-			if (event->is<Event::Closed>())//can definitly fiddle with the ordering and else if these if statements to get better performamce(minute though)
-			{
-				window.close();
-			}
-			if (event->is<Event::Resized>())
-			{
-				auto resized = event->getIf<sf::Event::Resized>();
-				if (resized) {
-					//update the SFML view to match the new window size
-					float width = static_cast<float>(resized->size.x);
-					float height = static_cast<float>(resized->size.y);
-					sf::View view(sf::FloatRect(Vector2f(0.f, 0.f), Vector2f(width, height)));
-					window.setView(view);
-					
-
-					displayNeeded = true;
-
-					// 2. Notify your UI system of the new size
-				//	ui.updateLayout(newSize.x, newSize.y);
-				}
-			}
-			if (event->getIf<Event::MouseButtonPressed>())
-			{
-				ui.leftDownAt(Mouse::getPosition(window));
-			}
-			if (auto textEvent = event->getIf<Event::TextEntered>())
-			{
-				char newChar = static_cast<char>(textEvent->unicode);
-				ui.handleTypeEvent(newChar);
-			}
-			if (event->getIf<Event::KeyPressed>())
-			{
-				auto keyEvent = event->getIf<Event::KeyPressed>();
-				switch (keyEvent->code)
-				{
-				case Keyboard::Key::Up:
-					ui.handleArrowEvent(ArrowDirection::UP);
-					break;
-				case Keyboard::Key::Left:
-					ui.handleArrowEvent(ArrowDirection::LEFT);
-					break;
-				case Keyboard::Key::Right:
-					ui.handleArrowEvent(ArrowDirection::RIGHT);
-					break;
-				case Keyboard::Key::Down:
-					ui.handleArrowEvent(ArrowDirection::DOWN);
-				}
-			}
-		}
-		//window.clear();
-		//window.draw(shape);
-		ui.drawUI(window, displayNeeded);
-		//window.display();
+		ui.runUI(window);
 	}
 	return 0;
 }
