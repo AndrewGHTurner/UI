@@ -4,26 +4,53 @@
 #include "EText.h"
 #include "Facade.h"
 #include <memory>
+#include "Label.h"
+#include "CallBack.h"
+#include "UI.h"
 
 class TextButton : public Facade
-{
-private:
-	unique_ptr<EText> text;
+{	
 public:
-	TextButton(Font& font, Vector2f origin, Vector2f size, string initialText)
+	TextButton(string initialText)
 	{
-		text = make_unique<EText>(font, initialText);
-		text->setPosition(origin);
-		text->setSize(size);
+		rootNode = make_unique<Label>(initialText);
 	}
+
+	unique_ptr<TreeNode> getRootNodeOwnership() override
+	{
+		return move(rootNode);
+	}
+
+	Label* getRootNodePointer() override
+	{
+		return label();
+	}
+
+	TextButton& onClick(unique_ptr<Callback> callback, UI& ui)
+	{
+		ui.addOnClick(move(callback), rootNode->id);
+		return *this;
+	}
+
+	TextButton& setColour(Color c)
+	{
+		label()->setColour(c);
+		return *this;
+	}
+
 	TextButton& setText(string newText)
 	{
-		this->text->setText(newText);
-		return *this;
+		//this->text->setText(newText);
+		//return *this;
 	}
 	string getText()
 	{
-		return this->text->getText();
+		//return this->text->getText();
+	}
+private:
+	Label* label()
+	{
+		return static_cast<Label*>(rootNode.get());
 	}
 
 };

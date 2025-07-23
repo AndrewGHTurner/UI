@@ -15,12 +15,18 @@ private:
 public:
 	ColouredButton(Color c)
 	{
-		rootNode = new ColouredBox(c);//potential memory leak if not moved to a unique_ptr
+		auto b = make_unique<ColouredBox>(c);
+		rootNode = unique_ptr<TreeNode>(move(b));
 	}
 
-	ColouredBox* getRootNode() override
+	unique_ptr<TreeNode> getRootNodeOwnership() override
 	{
-		return static_cast<ColouredBox*>(rootNode);
+		return move(rootNode);
+	}
+
+	ColouredBox* getRootNodePointer() override
+	{
+		return colouredBox();
 	}
 
 	ColouredButton& onClick(unique_ptr<Callback> callback, UI& ui)
@@ -47,7 +53,7 @@ public:
 private:
     inline ColouredBox* colouredBox()  
     {  
-		return static_cast<ColouredBox*>(rootNode);
+		return static_cast<ColouredBox*>(rootNode.get());
     }
 };
 

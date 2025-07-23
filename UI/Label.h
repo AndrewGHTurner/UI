@@ -10,6 +10,8 @@ class Label : public Leaf
 
 public:
 	Label(string initialText, Vector2f origin, Vector2f siz);
+	Label(string initialText);
+	void setColour(Color c);
 private:
 	unique_ptr<EText> text; // Pointer to the EText object for label text
 };

@@ -60,7 +60,7 @@ public:
 	{
 		return (*text)->getText();
 	}
-	void setColor(Color c)
+	void setColour(Color c)
 	{
 		vertices[0].color = c;
 		vertices[1].color = c;

@@ -146,6 +146,9 @@
     <ClInclude Include="TextBox.h">
       <Filter>Header Files\widgets</Filter>
     </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="designChoices.txt" />

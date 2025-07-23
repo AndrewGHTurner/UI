@@ -7,9 +7,10 @@
 class Facade
 {
 protected:
-	TreeNode* rootNode;//this is the root ui node of the UI element managed by the facade
+	unique_ptr<TreeNode> rootNode;//this is the root ui node of the UI element managed by the facade
 public:
-	virtual TreeNode* getRootNode() = 0;
+	virtual unique_ptr<TreeNode> getRootNodeOwnership() = 0;
+	virtual TreeNode* getRootNodePointer() = 0; //returns a pointer to the root node, not ownership
 };
 
 #endif

@@ -15,14 +15,12 @@ DESIGN CHOICES
 #include "HorizontalSpacedBar.h"
 #include "HorizontalProportionalSpacedBar.h"
 #include <tuple>
-
+#include "main.h"
 #include "UI.h"
 #include "ColouredButton.h"
 #include "ButtonFactory.h"
 #include "Page.h"
 #include "PageSwitcher.h"
-#include "Page1.cpp"
-#include "Page2.cpp"
 
 using namespace std;
 using namespace sf;

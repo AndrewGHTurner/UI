@@ -1,5 +1,6 @@
 #include "Page.h"  
 #include "ColouredButton.h"  
+#include "TextButton.h"
 #include "CallBack.h"  
 #include "HorizontalProportionalSpacedBar.h"  
 #include <memory>  
@@ -30,10 +31,12 @@ public:
 	   unique_ptr<Label> label = make_unique<Label>("first label", Vector2f(0, 0), Vector2f(200, 30));
 	   verticalScroll->add(move(label));
 
-	   ColouredButton btn1 = ColouredButton(Color::Yellow);
-       unique_ptr<Callback> c1 = makeCallBack(addTreeNode, verticalScroll.get());  
-       btn1.onClick(move(c1), *ui);  //could make onclick templated to improve usability
-       verticalScroll->add(btn1);  
+
+	   TextButton TB("Add Button");
+	   TB.onClick(move(makeCallBack(addTreeNode, verticalScroll.get())), *ui).setColour(Color::Yellow);
+	   verticalScroll->add(TB);
+
+
 
        ColouredButton btn2 = ColouredButton(Color::Black);
        unique_ptr<Callback> c2 = makeCallBack(removeTreeNode, new std::tuple<Branch*, int>(verticalScroll.get(), btn2.getID()));
@@ -47,25 +50,25 @@ public:
        verticalScroll->add(btn3);  //CANNOT MOVE IT TWICE
 
        ColouredButton btn4 = ColouredButton(Color::Magenta);
-       unique_ptr<Callback> c4 = makeCallBack(changeColourBtn, btn4.getRootNode());
+       unique_ptr<Callback> c4 = makeCallBack(changeColourBtn, btn4.getRootNodePointer());
        btn4.onClick(move(c4), *ui);  
        verticalScroll->add(btn4);  
 
        verticalScroll->add(move(j));  
 
        ColouredButton btn5 = ColouredButton(Color::Cyan);
-       unique_ptr<Callback> c5 = makeCallBack(changeColourBtn, btn5.getRootNode());
+       unique_ptr<Callback> c5 = makeCallBack(changeColourBtn, btn5.getRootNodePointer());
        btn5.onClick(move(c5), *ui);  
        verticalScroll->add(btn5);  
 
        unique_ptr<HorizontalProportionalSpacedBar>ggg = make_unique<HorizontalProportionalSpacedBar>(ui->getOrigin(), ui->getSize());  
 
        ColouredButton btna(Color::Blue);  
-       unique_ptr<Callback> ca = makeCallBack(changeColourBtn, btna.getRootNode());
+       unique_ptr<Callback> ca = makeCallBack(changeColourBtn, btna.getRootNodePointer());
        btna.onClick(move(ca), *ui);  
 
        ColouredButton btnb(Color::Blue);  
-       unique_ptr<Callback> cb = makeCallBack(changeColourBtn, btnb.getRootNode());
+       unique_ptr<Callback> cb = makeCallBack(changeColourBtn, btnb.getRootNodePointer());
        btnb.onClick(move(cb), *ui);  
 
        ggg->add(btna, 20);  

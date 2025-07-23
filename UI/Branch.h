@@ -61,8 +61,8 @@ public:
 
 	void add(Facade& facade)
 	{
-		facade.getRootNode()->parentNode = this;
-		this->add(unique_ptr<TreeNode>(facade.getRootNode()));
+		facade.getRootNodePointer()->parentNode = this;
+		this->add(unique_ptr<TreeNode>(facade.getRootNodeOwnership()));
 	}
 
 	//remove a child by id and transfer ownership of the child to the caller
