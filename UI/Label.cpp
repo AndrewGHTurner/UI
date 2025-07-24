@@ -2,7 +2,7 @@
 #include "UI.h"
 
 Label::Label(string initialText, Vector2f origin, Vector2f siz) {
-	text = make_unique<EText>(this->ui->font, initialText);
+	text = make_unique<EText>(ui->font, initialText);
 	text->setPosition(origin);
 	text->setSize(siz);
 
@@ -13,7 +13,7 @@ Label::Label(string initialText, Vector2f origin, Vector2f siz) {
 }
 
 Label::Label(string initialText){
-	text = make_unique<EText>(this->ui->font, initialText);
+	text = make_unique<EText>(ui->font, initialText);
 	//hasText = true;
 	setRedrawTextNeededTrue();
 	notifyTextChanged(true);
@@ -27,4 +27,17 @@ void Label::setColour(Color c) {
 	vertices[3].color = c;
 	vertices[4].color = c;
 	vertices[5].color = c;
+}
+
+void Label::resizeText()
+{
+	//if (text)
+	{
+		text.get()->setPosition(origin);
+		text.get()->setSize(this->size);
+	}
+}
+
+Color Label::getColour() {
+	return vertices[0].color;
 }

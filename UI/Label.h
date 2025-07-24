@@ -4,16 +4,19 @@
 #include "EText.h"
 #include <memory>
 #include "Leaf.h"
+#include "ETextContainer.h"
 
-class Label : public Leaf
+class Label : public Leaf, public ETextContainer
 {
 
 public:
 	Label(string initialText, Vector2f origin, Vector2f siz);
 	Label(string initialText);
 	void setColour(Color c);
+	void resizeText() override;
+	Color getColour();
 private:
-	unique_ptr<EText> text; // Pointer to the EText object for label text
+	Color colour; // Colour of the label
 };
 
 

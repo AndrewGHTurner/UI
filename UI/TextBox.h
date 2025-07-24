@@ -6,21 +6,21 @@
 #include <memory>
 #include "Animation.h"
 #include "EText.h"
+#include "ETextContainer.h"
 
 using namespace std;
 
-class TextBox : public Leaf, public Animation {
+class TextBox : public Leaf, public Animation, public ETextContainer {
 
 public:
-	std::optional<std::unique_ptr<EText>> text;
 	TextBox(Font& font, Vector2f origin, Vector2f siz, string initialText)
 		: Leaf(nullptr)
 	{
 		hasText = true;
 		setRedrawTextNeededTrue();
 		text = make_unique<EText>(font, initialText);
-		(*text).get()->setPosition(origin);
-		(*text).get()->setSize(siz);
+		text.get()->setPosition(origin);
+		text.get()->setSize(siz);
 		notifyTextChanged(true);
 
 		updateVerticesPosition();
@@ -30,35 +30,35 @@ public:
 
 	void setCurrentCharIndex(int index)
 	{
-		text->get()->currentCharIndex = index;
+		text.get()->currentCharIndex = index;
 	}
 
 	bool drawAnimation() override {
 
 		draw();
-		text->get()->draw();
+		text.get()->draw();
 		return true;
 	}
 
 	TextBox(const TextBox&) = delete;  // Prevent copying
 
-	void r()
+	void resizeText() override
 	{
-		if (text)
+	//	if (text)
 		{
-			(*text)->setPosition(origin);
-			(*text)->setSize(this->size);
+			text.get()->setPosition(origin);
+			text.get()->setSize(this->size);
 		}
 	}
 	void setText(string newText)
 	{
-		(*text)->setText(newText);
+		text.get()->setText(newText);
 		notifyRedrawNeeded();
 		notifyTextChanged(1);
 	}
 	string getText()
 	{
-		return (*text)->getText();
+		return text.get()->getText();
 	}
 	void setColour(Color c)
 	{

@@ -7,13 +7,15 @@
 #include "Label.h"
 #include "CallBack.h"
 #include "UI.h"
+#include "TreeNode.h"
 
 class TextButton : public Facade
 {	
 public:
 	TextButton(string initialText)
 	{
-		rootNode = make_unique<Label>(initialText);
+		unique_ptr<Label> label = make_unique<Label>(initialText);	
+		rootNode = unique_ptr<TreeNode>(move(label));
 	}
 
 	unique_ptr<TreeNode> getRootNodeOwnership() override
@@ -26,9 +28,15 @@ public:
 		return label();
 	}
 
-	TextButton& onClick(unique_ptr<Callback> callback, UI& ui)
+	TextButton& onClickLeftDown(unique_ptr<Callback> callback, UI& ui)
 	{
 		ui.addOnClick(move(callback), rootNode->id);
+		return *this;
+	}
+
+	TextButton& onClickLeftUp(unique_ptr<Callback> callback, UI& ui)
+	{
+		ui.addLeftUpCallback(move(callback), rootNode->id);
 		return *this;
 	}
 

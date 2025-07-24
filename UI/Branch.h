@@ -61,8 +61,9 @@ public:
 
 	void add(Facade& facade)
 	{
-		facade.getRootNodePointer()->parentNode = this;
-		this->add(unique_ptr<TreeNode>(facade.getRootNodeOwnership()));
+		unique_ptr<TreeNode> node = facade.getRootNodeOwnership();
+		node->parentNode = this;
+		this->add(move(node));
 	}
 
 	//remove a child by id and transfer ownership of the child to the caller
@@ -120,10 +121,10 @@ public:
 						{
 							textBox->setRedrawTextNeededFalse();
 							//		textBox->setCurrentCharIndex(currentCharIndex);
-							textBox->text->get()->draw();// currentCharIndex);
+							textBox->text.get()->draw();// currentCharIndex);
 						}
 						//	textBox->setCurrentCharIndex(-1);
-						textBox->text->get()->draw();// -1);
+						textBox->text.get()->draw();// -1);
 
 					}
 
@@ -149,7 +150,7 @@ public:
 					TextBox* b = static_cast<TextBox*>(child.get());
 					if (b->isRedrawTextNeeded())
 					{
-						b->r();
+						b->resizeText();
 					}
 				}
 				else

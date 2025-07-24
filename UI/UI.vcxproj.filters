@@ -31,6 +31,12 @@
     <Filter Include="Source Files\widgets">
       <UniqueIdentifier>{9afd8909-ae79-4f86-9bc3-b77b94b1f029}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{85522e22-314d-49ba-a749-7e8afc9b87ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI\eventHandlers">
+      <UniqueIdentifier>{9122ae38-86d6-4d17-b86c-fbac6ddae030}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -74,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="Label.cpp">
       <Filter>Source Files\widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="eventDispatchers.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="mouse.cpp">
+      <Filter>Source Files\UI\eventHandlers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -33,7 +33,8 @@ public:
 
 
 	   TextButton TB("Add Button");
-	   TB.onClick(move(makeCallBack(addTreeNode, verticalScroll.get())), *ui).setColour(Color::Yellow);
+       TB.onClickLeftDown(move(makeCallBack(addTreeNode, verticalScroll.get())), *ui);
+           TB.onClickLeftDown(move(makeCallBack(addTreeNode, verticalScroll.get())), *ui).setColour(Color::Yellow);
 	   verticalScroll->add(TB);
 
 
@@ -113,17 +114,18 @@ public:
        branch->add(btn);  
    }  
 
- /*  void changeColor(ColouredBox* b)  
-   {  
-       ColouredBox* box = (ColouredBox*)b;  
-       if (box->colour == Color::Blue)  
-       {  
-           box->setColour(Color::Red);  
-       }  
-       else {  
-           box->setColour(Color::Blue);  
-       }  
-   } */ 
+
+
+   static void changeColorLabel(Label* label)
+   {
+       if (label->getColour() == Color::Yellow)
+       {
+           label->setColour(Color::Cyan);
+       }
+       else {
+           label->setColour(Color::Yellow);
+       }
+   }
 
    static void changeColourBtn(ColouredBox* button)
    {  

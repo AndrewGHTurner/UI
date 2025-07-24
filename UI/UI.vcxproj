@@ -159,9 +159,11 @@
     <ClCompile Include="BehaviourManager.cpp" />
     <ClCompile Include="CallBack.cpp" />
     <ClCompile Include="CenterAligner.cpp" />
+    <ClCompile Include="eventDispatchers.cpp" />
     <ClCompile Include="HorizontalSpacedBar.h" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mouse.cpp" />
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="page1.cpp" />
     <ClCompile Include="page2.cpp" />
@@ -181,6 +183,7 @@
     <ClInclude Include="ColouredBox.h" />
     <ClInclude Include="ColouredButton.h" />
     <ClInclude Include="EText.h" />
+    <ClInclude Include="ETextContainer.h" />
     <ClInclude Include="Facade.h" />
     <ClInclude Include="HorizontalProportionalSpacedBar.h" />
     <ClInclude Include="Label.h" />

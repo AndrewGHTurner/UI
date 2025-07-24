@@ -51,6 +51,9 @@ public:
 		EText::screenTexture = screenTexture.get();
 	}
 
+	//this method will recieve all ui events and call the appropriate event handlers
+	void eventDispatcher(optional<Event>& event, RenderWindow& window);
+
 	void runUI(RenderWindow& window)
 	{
 		bool displayNeeded = false;
@@ -77,10 +80,9 @@ public:
 				//	ui.updateLayout(newSize.x, newSize.y);
 				}
 			}
-			if (event->getIf<Event::MouseButtonPressed>())
-			{
-				leftDownAt(Mouse::getPosition(window));
-			}
+
+			eventDispatcher(event, window);
+
 			if (auto textEvent = event->getIf<Event::TextEntered>())
 			{
 				char newChar = static_cast<char>(textEvent->unicode);
@@ -473,31 +475,8 @@ public:
 	*/
 
 
-	void leftDownAt(Vector2i pos)
-	{
-		//detect if clicked on any textBoxes
-		Leaf* leaf = getLeafAt(pos, this);
-		if (leaf != nullptr && leaf->hasText)
-		{
-			currentTextBox = static_cast<TextBox*>(leaf);
-
-			//COULD ADD TEXTBOX ANNIMATION HERE????
-			currentCharIndex = currentTextBox->getText().length();
-			currentTextBox->setCurrentCharIndex(currentCharIndex);
-			addAnimation(currentTextBox);
-
-			currentCharIndex = currentTextBox->getText().length();
-		}
-		else
-		{
-			removeAnimation(currentTextBox);
-			currentTextBox = nullptr;
-		}
-
-		//call click handellers
-		executeHandelers(clickHandelers, pos);
-	}
-	void leftUpAt();
+	void leftDownAt(Vector2i pos);
+	void leftUpAt(Vector2i pos);
 	void hoverAt();
 
 	void getBoxesAt(Vector2i pos, vector<int>& boxIDs, TreeNode* box)//change this to be non recursive to improve performance
@@ -516,7 +495,7 @@ public:
 		}
 	}
 
-	void executeHandelers(const unordered_map<int, vector<unique_ptr<Callback>>>& handelers, Vector2i pos)
+	void executeRelevantCallbacks(const unordered_map<int, vector<unique_ptr<Callback>>>& handelers, Vector2i pos)
 	{
 		//get a list of the boxIDs that are at position
 		vector<int> boxIDs;
@@ -547,7 +526,7 @@ public:
 	{
 		unique_ptr<TextBox> newButton = make_unique<TextBox>(font, origin, size, initialText);
 
-		return newButton;
+		return move(newButton);
 	}
 	VerticalScroll* makeVerticalScroll(Vector2f origin, Vector2f size) {
 		VerticalScroll* newVerticalScroll = new VerticalScroll(origin, size);
