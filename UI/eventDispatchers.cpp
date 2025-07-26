@@ -5,4 +5,8 @@ void UI::eventDispatcher(optional<Event>& event, RenderWindow &window) {
 	{
 		leftDownAt(Mouse::getPosition(window));
 	}
+	else if (event->getIf<Event::MouseButtonReleased>())
+	{
+		leftUpAt(Mouse::getPosition(window));
+	}
 }

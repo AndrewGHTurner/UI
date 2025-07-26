@@ -8,18 +8,45 @@
 #include "CallBack.h"
 #include "UI.h"
 #include "TreeNode.h"
+#include <vector>
+using namespace std;
 
-class TextButton : public Facade
+struct LabelColour {
+	Color colour = Color::Black;
+	Label* label = nullptr;
+	LabelColour(Color colour, Label* label) : colour(colour), label(label) {}
+	LabelColour() = default; // Default constructor for empty initialization
+};
+
+class TextButtonMaker : public Facade
 {	
 public:
-	TextButton(string initialText)
+	//this must be a member of the page holding the buttons so that callback params are persisted and not destroyed when it goes out of scope
+	TextButtonMaker()
 	{
-		unique_ptr<Label> label = make_unique<Label>(initialText);	
-		rootNode = unique_ptr<TreeNode>(move(label));
 	}
-
+	//will be called when the rootNode object is finished.... needs to handle some creation
 	unique_ptr<TreeNode> getRootNodeOwnership() override
 	{
+		if (releasedColour.has_value())
+		{
+			label()->setColour(releasedColour.value()); // Set the label's colour to the released colour
+		}if (pressedColour.has_value())
+		{
+			//add the click callbacks necessary to change the colours
+			unique_ptr<LabelColour> labelColour = make_unique<LabelColour>(releasedColour.value(), label());
+			
+			unique_ptr<LabelColour> pressedLabelColour = make_unique<LabelColour>(pressedColour.value(), label());
+
+
+
+			unique_ptr<Callback> release = makeCallBack(changeColorLabel, labelColour.get());
+			unique_ptr<Callback> press = makeCallBack(changeColorLabel, pressedLabelColour.get());
+			UI::ui->addLeftDownCallback(move(press), rootNode->id); // Add the callback for left down click
+			UI::ui->addLeftUpCallback(move(release), rootNode->id); // Add the callback for left up click
+			labelColours.push_back(move(labelColour)); // Store the released colour and label for later use
+			labelColours.push_back(move(pressedLabelColour)); // Store the pressed colour and label for later use
+		}
 		return move(rootNode);
 	}
 
@@ -28,25 +55,38 @@ public:
 		return label();
 	}
 
-	TextButton& onClickLeftDown(unique_ptr<Callback> callback, UI& ui)
+	TextButtonMaker& onClickLeftDown(unique_ptr<Callback> callback, UI& ui)
 	{
 		ui.addOnClick(move(callback), rootNode->id);
 		return *this;
 	}
 
-	TextButton& onClickLeftUp(unique_ptr<Callback> callback, UI& ui)
+	TextButtonMaker& createButton(string initialText)
+	{
+		unique_ptr<Label> label = make_unique<Label>(initialText);
+		rootNode = unique_ptr<TreeNode>(move(label));
+		return *this;
+	}
+
+	TextButtonMaker& onClickLeftUp(unique_ptr<Callback> callback, UI& ui)
 	{
 		ui.addLeftUpCallback(move(callback), rootNode->id);
 		return *this;
 	}
 
-	TextButton& setColour(Color c)
+	TextButtonMaker& setColour(Color c)
 	{
-		label()->setColour(c);
+		releasedColour = c; // Store the released colour
 		return *this;
 	}
 
-	TextButton& setText(string newText)
+	TextButtonMaker& setPressedColour(Color c)
+	{
+		pressedColour = c; // Store the pressed colour
+		return *this;
+	}
+
+	TextButtonMaker& setText(string newText)
 	{
 		//this->text->setText(newText);
 		//return *this;
@@ -56,9 +96,21 @@ public:
 		//return this->text->getText();
 	}
 private:
+	vector<unique_ptr<LabelColour>> labelColours = vector<unique_ptr<LabelColour>>(); //store the params for callbacks to change label colours
+	optional<Color> pressedColour; // Store the pressed colour
+	optional<Color> releasedColour; // Store the released colour
 	Label* label()
 	{
 		return static_cast<Label*>(rootNode.get());
+	}
+
+	static void changeColorLabel(LabelColour* labelColour)
+	{
+		if (labelColour->colour == Color::Green)
+		{
+			int  t = 0;;;
+		}
+		labelColour->label->setColour(labelColour->colour); // Set the label's colour to the stored colour
 	}
 
 };

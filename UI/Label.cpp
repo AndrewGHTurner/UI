@@ -27,6 +27,8 @@ void Label::setColour(Color c) {
 	vertices[3].color = c;
 	vertices[4].color = c;
 	vertices[5].color = c;
+	notifyRedrawNeeded();
+	notifyTextChanged(true);
 }
 
 void Label::resizeText()

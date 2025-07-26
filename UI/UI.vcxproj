@@ -165,7 +165,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="Page.cpp" />
-    <ClCompile Include="page1.cpp" />
+    <ClCompile Include="page1.h" />
     <ClCompile Include="page2.cpp" />
     <ClCompile Include="PageTypes.cpp" />
     <ClCompile Include="TextButton.h" />

@@ -7,9 +7,13 @@
 #include "PageSwitcher.h"
 #include "Label.h"
 
+
+
 class Page1 : public Page {  
 private:
-
+   // LabelColour TBpressedColour;
+	//LabelColour TBreleasedColour; // Store the label and its colour for later use
+    TextButtonMaker TB = TextButtonMaker();
 public:
     int page2ID;
     PageSwitcher& pageSwitcher; // Reference to the PageSwitcher to switch back to Page
@@ -31,10 +35,11 @@ public:
 	   unique_ptr<Label> label = make_unique<Label>("first label", Vector2f(0, 0), Vector2f(200, 30));
 	   verticalScroll->add(move(label));
 
-
-	   TextButton TB("Add Button");
-       TB.onClickLeftDown(move(makeCallBack(addTreeNode, verticalScroll.get())), *ui);
-           TB.onClickLeftDown(move(makeCallBack(addTreeNode, verticalScroll.get())), *ui).setColour(Color::Yellow);
+       TB.createButton("Add Button")
+           .onClickLeftDown(move(makeCallBack(addTreeNode, verticalScroll.get())), *ui)
+           .onClickLeftDown(move(makeCallBack(addTreeNode, verticalScroll.get())), *ui)
+		   .setPressedColour(Color::Green) // Set the pressed colour for the button
+           .setColour(Color::Yellow);      
 	   verticalScroll->add(TB);
 
 
@@ -116,16 +121,7 @@ public:
 
 
 
-   static void changeColorLabel(Label* label)
-   {
-       if (label->getColour() == Color::Yellow)
-       {
-           label->setColour(Color::Cyan);
-       }
-       else {
-           label->setColour(Color::Yellow);
-       }
-   }
+
 
    static void changeColourBtn(ColouredBox* button)
    {  

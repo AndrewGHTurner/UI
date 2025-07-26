@@ -63,7 +63,7 @@
     <ClCompile Include="BehaviourManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="page1.cpp">
+    <ClCompile Include="page1.h">
       <Filter>Source Files\tester</Filter>
     </ClCompile>
     <ClCompile Include="Page.cpp">
@@ -159,6 +159,9 @@
       <Filter>Header Files\widgets</Filter>
     </ClInclude>
     <ClInclude Include="main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ETextContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
