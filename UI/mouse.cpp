@@ -20,6 +20,11 @@ void UI::leftDownAt(Vector2i pos)
 		removeAnimation(currentTextBox);
 		currentTextBox = nullptr;
 	}
+	//THERE IS A BUG THAT WHEN YOU CLICK A BUTTON, IF THAT BUTTON CHANGES SHAPE SUCH THAT IT LEAVES THE CLICK POS, THE RELEVANT LEFT UP CALLGACKS
+	//ARE NEVER CALLED. TO SOLVE THIS WE NEED TO HOLD A VECTOR OF RELEVANT CALLBACKS WHICH WILL NEED TO BE GATHERED HERE AND USED WHEN LEFT UP EVENT
+	//OCCURES. AT THE MOMENT THIS IS A SMALL BUG SO I WILL NOT BOTHER
+
+
 	//run any left press callbacks associated with the position
 	executeRelevantCallbacks(leftDownCallbacks, pos);
 }

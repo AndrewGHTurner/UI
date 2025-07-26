@@ -31,6 +31,7 @@ public:
 
        //create the scroll area  
        unique_ptr<VerticalScroll> verticalScroll = make_unique<VerticalScroll>(Vector2f(200, 400), Vector2f(200, 200));  
+	   verticalScroll->setMargin(4); // Set the margin between elements in the scroll area
 
 	   unique_ptr<Label> label = make_unique<Label>("first label", Vector2f(0, 0), Vector2f(200, 30));
 	   verticalScroll->add(move(label));
@@ -124,12 +125,12 @@ public:
 
    static void changeColourBtn(ColouredBox* button)
    {  
-       if (button->colour == Color::Blue)
+       if (button->colour == Color::Cyan)
        {  
-           button->setColour(Color::Red);
+           button->setColour(Color::Magenta);
        }  
        else {  
-           button->setColour(Color::Blue);
+           button->setColour(Color::Cyan);
        }  
    }  
 

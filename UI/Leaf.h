@@ -15,15 +15,14 @@ public:
 	static RenderTexture* screenTexture;
 	void updateVerticesPosition()
 	{
-		int index = 0;
 		//first triangle
-		vertices[index].position = origin;
-		vertices[index + 1].position = Vector2f(origin.x, antiOrigin.y);
-		vertices[index + 2].position = Vector2f(antiOrigin.x, origin.y);
+		vertices[0].position = origin;
+		vertices[1].position = Vector2f(origin.x, antiOrigin.y);
+		vertices[2].position = Vector2f(antiOrigin.x, origin.y);
 		//second triangle
-		vertices[index + 3].position = Vector2f(antiOrigin.x, origin.y);
-		vertices[index + 4].position = Vector2f(origin.x, antiOrigin.y);
-		vertices[index + 5].position = Vector2f(antiOrigin.x, antiOrigin.y);
+		vertices[3].position = Vector2f(antiOrigin.x, origin.y);
+		vertices[4].position = Vector2f(origin.x, antiOrigin.y);
+		vertices[5].position = Vector2f(antiOrigin.x, antiOrigin.y);
 
 		//draw the vertices on the window
 
