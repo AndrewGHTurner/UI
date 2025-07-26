@@ -34,6 +34,9 @@ private:
 	TextBox* currentTextBox = nullptr;
 	int currentCharIndex = 0;//could make a typeing handeller class?// should probably hold this in the EText class
 	unique_ptr<RenderTexture> screenTexture;//this is the texture that all UI elements will be drawn onto
+
+	//releaseOn callbacks vs releaseOff callbacks???
+	Vector2i prevPressAt;//press location held so release callbacks can be called can be called even if the user moved away
 public:
 
 	sf::Font font;

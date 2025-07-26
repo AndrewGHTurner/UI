@@ -37,7 +37,6 @@ public:
 
        TB.createButton("Add Button")
            .onClickLeftDown(move(makeCallBack(addTreeNode, verticalScroll.get())), *ui)
-           .onClickLeftDown(move(makeCallBack(addTreeNode, verticalScroll.get())), *ui)
 		   .setPressedColour(Color::Green) // Set the pressed colour for the button
            .setColour(Color::Yellow);      
 	   verticalScroll->add(TB);
