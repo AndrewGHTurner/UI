@@ -36,7 +36,7 @@ private:
 	unique_ptr<RenderTexture> screenTexture;//this is the texture that all UI elements will be drawn onto
 
 	//releaseOn callbacks vs releaseOff callbacks???
-	Vector2i prevPressAt;//press location held so release callbacks can be called can be called even if the user moved away
+	vector<Callback*> leftReleaseCallbacks;//hold the release callbacks on press do that the correct ones are called on release(even if a button resizes)
 public:
 
 	sf::Font font;
@@ -498,16 +498,16 @@ public:
 		}
 	}
 
-	void executeRelevantCallbacks(const unordered_map<int, vector<unique_ptr<Callback>>>& handelers, Vector2i pos)
+	void executeRelevantCallbacks(const unordered_map<int, vector<unique_ptr<Callback>>>& handlers, Vector2i pos)
 	{
 		//get a list of the boxIDs that are at position
 		vector<int> boxIDs;
 		getBoxesAt(pos, boxIDs, this);
-		//run the callbacks from the handelers map
+		//run the callbacks from the handlers map
 		for (int boxID : boxIDs)
 		{
-			auto it = handelers.find(boxID);
-			if (it != handelers.end())//if a vector of handellers exists for this ID
+			auto it = handlers.find(boxID);
+			if (it != handlers.end())//if a vector of handlers exists for this ID
 			{
 				for (const unique_ptr<Callback>& callback : it->second)
 				{
@@ -515,6 +515,27 @@ public:
 				}
 			}
 		}
+	}
+
+	vector<Callback*> retrieveRelevantCallbacks(const unordered_map<int, vector<unique_ptr<Callback>>>& handlers, Vector2i pos)
+	{
+		vector<Callback*> relevantCallbacks;
+		//get a list of the boxIDs that are at position
+		vector<int> boxIDs;
+		getBoxesAt(pos, boxIDs, this);
+		//get the callbacks from the handlers map
+		for (int boxID : boxIDs)
+		{
+			auto it = handlers.find(boxID);
+			if (it != handlers.end())//if a vector of handlers exists for this ID
+			{
+				for (const unique_ptr<Callback>& callback : it->second)
+				{
+					relevantCallbacks.push_back(callback.get());//add the callback to the vector
+				}
+			}
+		}
+		return relevantCallbacks;
 	}
 
 	void addOnClick(unique_ptr<Callback> callback, int boxID)//wrapper name as more intuitive
