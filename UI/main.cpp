@@ -71,7 +71,7 @@ void removeTreeNode(tuple<Branch*, int>* tuple)
 	delete tuple;//Clean up the dynamically allocated memory
 }
 int t = 0;
-void addTreeNode(VerticalScroll* branch)
+void addTreeNode(Vertical* branch)
 {
 	Color f;
 	if (t == 0)
@@ -100,7 +100,6 @@ void addTreeNode(VerticalScroll* branch)
 
 
 
-RenderTexture* Leaf::screenTexture = nullptr;
 RenderTexture* EText::screenTexture = nullptr;
 RenderWindow* EText::window = nullptr;
 

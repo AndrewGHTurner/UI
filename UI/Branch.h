@@ -10,6 +10,9 @@ using namespace std;
 
 //container for leaves and other branches
 class Branch : public TreeNode {
+protected:
+	Color backgroundColour;
+
 public:
 	Branch() {
 		setIsLeafFalse();
@@ -24,8 +27,23 @@ public:
 	{
 		setIsLeafFalse();
 	}
+
+	void setBackgroundColour(Color colour)
+	{
+		backgroundColour = colour;
+		setPreDrawNeededTrue();
+	}	
+	virtual void preDraw()
+	{
+
+		
+	}
 	void draw()
 	{
+		if (isPreDrawNeeded())
+		{
+			preDraw();
+		}
 		for (const unique_ptr<TreeNode>& child : children)
 		{
 			if (child->isLeaf())
@@ -40,7 +58,7 @@ public:
 				static_cast<Branch*>(child.get())->draw();
 			}
 		}
-		setRecalcNeededFalse();
+		setRedrawNeededFalse();
 	}
 
 

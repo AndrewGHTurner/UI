@@ -3,6 +3,7 @@
 #include "HorizontalProportionalSpacedBar.h"
 #include "ColouredBox.h"
 #include "ColouredButton.h"
+#include "Vertical.h"
 
 class Page2 : public Page {
 private:
@@ -18,7 +19,7 @@ public:
 		unique_ptr<HorizontalProportionalSpacedBar>horBar = make_unique<HorizontalProportionalSpacedBar>(ui->getOrigin(), ui->getSize());
 		unique_ptr<ColouredBox> box1 = make_unique<ColouredBox>(Color::Green);
 		horBar->add(move(box1), 10);
-		unique_ptr<VerticalScroll> verticalScroll = make_unique<VerticalScroll>();
+		unique_ptr<Vertical> verticalScroll = make_unique<Vertical>();
 		unique_ptr<ColouredBox> box2 = make_unique<ColouredBox>(Color::Black);
 		verticalScroll->add(move(box2));
 		ColouredButton btn1(Color::Red);

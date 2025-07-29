@@ -12,7 +12,7 @@ protected:
 
 	VertexArray vertices;
 public:
-	static RenderTexture* screenTexture;
+	
 	void updateVerticesPosition()
 	{
 		//first triangle

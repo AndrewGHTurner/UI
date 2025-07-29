@@ -6,6 +6,7 @@
 #include <memory>  
 #include "PageSwitcher.h"
 #include "Label.h"
+#include "Vertical.h"
 
 
 
@@ -30,8 +31,9 @@ public:
        ui->addOnClick(move(c), j->id);//WOUDL NEED TO MAKE A FOX  
 
        //create the scroll area  
-       unique_ptr<VerticalScroll> verticalScroll = make_unique<VerticalScroll>(Vector2f(200, 400), Vector2f(200, 200));  
+       unique_ptr<Vertical> verticalScroll = make_unique<Vertical>(Vector2f(200, 400), Vector2f(200, 200));  
 	   verticalScroll->setMargin(4); // Set the margin between elements in the scroll area
+       verticalScroll->setBackgroundColour(Color(63, 3, 153)); // Set the background colour of the scroll area
 
 	   unique_ptr<Label> label = make_unique<Label>("first label", Vector2f(0, 0), Vector2f(200, 30));
 	   verticalScroll->add(move(label));
@@ -91,7 +93,7 @@ public:
        //b->setSize(Vector2f(width, height));  
    }  
 
-   static void addTreeNode(VerticalScroll* branch)  
+   static void addTreeNode(Vertical* branch)  
    {  
 	   static int t;
        Color f;  

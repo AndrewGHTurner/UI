@@ -193,11 +193,12 @@
     <ClInclude Include="PageSwitcher.h" />
     <ClInclude Include="Properties.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scroll.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TreeHolder.h" />
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="UI.h" />
-    <ClInclude Include="VerticalScroll.h" />
+    <ClInclude Include="Vertical.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="designChoices.txt" />

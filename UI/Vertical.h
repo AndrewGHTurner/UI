@@ -1,5 +1,5 @@
-#ifndef VERTICAL_SCROLL_H
-#define VERTICAL_SCROLL_H
+#ifndef VERTICAL_H
+#define VERTICAL_H
 
 #define MIN_WIDGET_HEIGHT 40.0
 
@@ -18,15 +18,15 @@ ALTERNATIVELY
 the scroller could maintain a virtual position for each widget and check if the widget is in view when renderring?
 */
 
-class VerticalScroll : public Branch {
+class Vertical : public Branch {
 private:
 	int elementMargin = 0; // Margin between elements in the scroll
 	vector<TreeNode*> contents;
 public:
-	VerticalScroll() :
+	Vertical() :
 		Branch() {
 	}
-	VerticalScroll(Vector2f origin, Vector2f siz) :
+	Vertical(Vector2f origin, Vector2f siz) :
 		Branch(origin, siz) {
 	}
 
@@ -41,7 +41,7 @@ public:
 		if (elementMargin > 0)
 		{
 			//clear the screen area covered by this layout
-			RenderTexture* texture = Leaf::screenTexture;
+			RenderTexture* texture = TreeNode::screenTexture;
 			VertexArray clearVertices(sf::PrimitiveType::Triangles, 6);
 			//first triangle
 			clearVertices[0].position = origin;
@@ -53,13 +53,13 @@ public:
 			clearVertices[5].position = Vector2f(antiOrigin.x, antiOrigin.y);
 
 			//first triangle
-			clearVertices[0].color = Color::Black;
-			clearVertices[1].color = Color::Black;
-			clearVertices[2].color = Color::Black;
+			clearVertices[0].color = backgroundColour;
+			clearVertices[1].color = backgroundColour;
+			clearVertices[2].color = backgroundColour;
 			//second triangle
-			clearVertices[3].color = Color::Black;
-			clearVertices[4].color = Color::Black;
-			clearVertices[5].color = Color::Black;
+			clearVertices[3].color = backgroundColour;
+			clearVertices[4].color = backgroundColour;
+			clearVertices[5].color = backgroundColour;
 			texture->draw(clearVertices);
 		}
 

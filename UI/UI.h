@@ -5,7 +5,6 @@
 #include "Leaf.h"
 #include "AnimationManager.h"
 #include "BehaviourManager.h"
-#include "VerticalScroll.h"
 #include <iostream>
 #include "TextBox.h"
 #include <SFML/Graphics/Font.hpp>
@@ -158,8 +157,8 @@ public:
 		if (displayNeeded)
 		{
 			//window.clear();
-			Leaf::screenTexture->display();
-			sf::Sprite sprite(Leaf::screenTexture->getTexture());
+			TreeNode::screenTexture->display();
+			sf::Sprite sprite(TreeNode::screenTexture->getTexture());
 			window.draw(sprite);
 			window.display();
 		}
@@ -551,10 +550,6 @@ public:
 		unique_ptr<TextBox> newButton = make_unique<TextBox>(font, origin, size, initialText);
 
 		return move(newButton);
-	}
-	VerticalScroll* makeVerticalScroll(Vector2f origin, Vector2f size) {
-		VerticalScroll* newVerticalScroll = new VerticalScroll(origin, size);
-		return newVerticalScroll;
 	}
 };
 #endif

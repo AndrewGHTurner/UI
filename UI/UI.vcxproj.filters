@@ -37,6 +37,9 @@
     <Filter Include="Source Files\UI\eventHandlers">
       <UniqueIdentifier>{9122ae38-86d6-4d17-b86c-fbac6ddae030}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\layouts">
+      <UniqueIdentifier>{c7a8709d-22e5-4fdd-965a-c1d5ba5e5ef5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -116,9 +119,6 @@
     <ClInclude Include="CallBack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="VerticalScroll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ButtonFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -162,6 +162,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ETextContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertical.h">
+      <Filter>Header Files\layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="Scroll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

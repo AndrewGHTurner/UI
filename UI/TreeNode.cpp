@@ -2,7 +2,7 @@
 #include "UI.h"
 
 UI* TreeNode::ui = nullptr;
-
+sf::RenderTexture* TreeNode::screenTexture = nullptr;
 
 
 TreeNode::TreeNode()
