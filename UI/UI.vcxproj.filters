@@ -40,6 +40,9 @@
     <Filter Include="Header Files\layouts">
       <UniqueIdentifier>{c7a8709d-22e5-4fdd-965a-c1d5ba5e5ef5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\layoutsVirtual">
+      <UniqueIdentifier>{2ccf5f38-62e9-4de4-9430-1b56353c6426}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -89,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="mouse.cpp">
       <Filter>Source Files\UI\eventHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="VirtualBranch.h">
+      <Filter>Header Files\layoutsVirtual</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="Scroll.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VirtualVertical.h">
+      <Filter>Header Files\layoutsVirtual</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

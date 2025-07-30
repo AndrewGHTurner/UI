@@ -7,6 +7,7 @@
 #include "PageSwitcher.h"
 #include "Label.h"
 #include "Vertical.h"
+#include "Scroll.h"
 
 
 
@@ -75,13 +76,30 @@ public:
        unique_ptr<Callback> ca = makeCallBack(changeColourBtn, btna.getRootNodePointer());
        btna.onClick(move(ca), *ui);  
 
-       ColouredButton btnb(Color::Blue);  
-       unique_ptr<Callback> cb = makeCallBack(changeColourBtn, btnb.getRootNodePointer());
-       btnb.onClick(move(cb), *ui);  
+	   unique_ptr<Vertical> vert = make_unique<Vertical>(Vector2f(0, 0), Vector2f(200, 200));
 
-       ggg->add(btna, 20);  
+	   unique_ptr<Scroll> scroll = make_unique<Scroll>();
+       scroll->setBackgroundColour(Color::Green);
+       for (int t = 0; t < 20; t++) {
+           ColouredButton btnb(Color::Blue);
+           unique_ptr<Callback> cb = makeCallBack(changeColourBtn, btnb.getRootNodePointer());
+           btnb.onClick(move(cb), *ui);
+           scroll->add(btnb); // Add btnb to the scroll area
+       }
+
+       ColouredButton btny(Color::Blue);
+       unique_ptr<Callback> cy = makeCallBack(changeColourBtn, btny.getRootNodePointer());
+       btny.onClick(move(cy), *ui);
+       ui->addMouseWheelCallback(move(makeScrollCallBack(printText, scroll.get())), scroll->id); // Add mouse wheel callback to the scroll area
+
+       vert->add(btny); // Add btny to the vertical scroll
+	   vert->add(move(scroll)); // Add the scroll area to the vertical scroll
+	   
+
+
+       ggg->add(move(vert), 30);  
        ggg->add(move(verticalScroll), 50);  
-       ggg->add(btnb, 20);  
+       ggg->add(btna, 20);  
 
        treeRoot = move(ggg);  
    }  
@@ -92,6 +110,14 @@ public:
        //width += 10;  
        //b->setSize(Vector2f(width, height));  
    }  
+
+   static void printText(tuple<Scroll*, int> param) {
+       
+	   cout << "clicked" << endl;
+	   cout << "delta: " << get<1>(param) << endl;
+	   Scroll* scroll = get<0>(param);
+	   scroll->incrementOffset(get<1>(param)); // Increment the scroll offset by the delta value
+   }
 
    static void addTreeNode(Vertical* branch)  
    {  

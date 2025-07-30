@@ -11,7 +11,7 @@ using namespace std;
 //container for leaves and other branches
 class Branch : public TreeNode {
 protected:
-	Color backgroundColour;
+	Color backgroundColour = Color::Transparent;
 
 public:
 	Branch() {
@@ -38,6 +38,11 @@ public:
 
 		
 	}
+
+	virtual void postDraw()
+	{
+	}
+
 	void draw()
 	{
 		if (isPreDrawNeeded())
@@ -57,6 +62,10 @@ public:
 			{
 				static_cast<Branch*>(child.get())->draw();
 			}
+		}
+		if (isPostDrawNeeded())
+		{
+			postDraw();
 		}
 		setRedrawNeededFalse();
 	}
@@ -155,8 +164,38 @@ public:
 		}
 		setRedrawTextNeededFalse();
 	}
+
+	void renderBackground()
+	{
+		//clear the screen area covered by this layout
+		RenderTexture* texture = TreeNode::screenTexture;
+		VertexArray clearVertices(sf::PrimitiveType::Triangles, 6);
+		//first triangle
+		clearVertices[0].position = origin;
+		clearVertices[1].position = Vector2f(origin.x, antiOrigin.y);
+		clearVertices[2].position = Vector2f(antiOrigin.x, origin.y);
+		//second triangle
+		clearVertices[3].position = Vector2f(antiOrigin.x, origin.y);
+		clearVertices[4].position = Vector2f(origin.x, antiOrigin.y);
+		clearVertices[5].position = Vector2f(antiOrigin.x, antiOrigin.y);
+
+		//first triangle
+		clearVertices[0].color = backgroundColour;
+		clearVertices[1].color = backgroundColour;
+		clearVertices[2].color = backgroundColour;
+		//second triangle
+		clearVertices[3].color = backgroundColour;
+		clearVertices[4].color = backgroundColour;
+		clearVertices[5].color = backgroundColour;
+		texture->draw(clearVertices);
+	}
+
 	void updateChildren()
 	{
+		if (backgroundColour != Color::Transparent)
+		{
+			renderBackground();
+		}
 		calcPositions();
 		for (const unique_ptr<TreeNode>& child : children)
 		{

@@ -479,6 +479,7 @@ public:
 
 	void leftDownAt(Vector2i pos);
 	void leftUpAt(Vector2i pos);
+	void mouseWheelScrollAt(Vector2i pos, int delta);//delta is the amount of scroll
 	void hoverAt();
 
 	void getBoxesAt(Vector2i pos, vector<int>& boxIDs, TreeNode* box)//change this to be non recursive to improve performance

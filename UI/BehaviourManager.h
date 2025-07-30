@@ -11,11 +11,13 @@ protected:
 	static uint32_t nextID;
 	unordered_map<int, vector<unique_ptr<Callback>>> leftDownCallbacks;//callbacks for when the left mouse button is pressed down
 	unordered_map<int, vector<unique_ptr<Callback>>> leftUpCallbacks;
+	unordered_map<int, vector<unique_ptr<Callback>>> mouseWheelScrollCallbacks;//callbacks for when the mouse wheel is scrolled
 public:
 	static uint32_t newID();
 
 	void addLeftDownCallback(unique_ptr<Callback> newCallback, int boxID);//returns unique id of new callback
 	void addLeftUpCallback(unique_ptr<Callback> newCallback, int boxID);//returns unique id of new callback
+	void addMouseWheelCallback(unique_ptr<Callback> newCallback, int boxID);//returns unique id of new callback
 	void clearID(int id) {
 		//clickHandelers.erase(id);
 	}
