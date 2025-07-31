@@ -80,13 +80,21 @@ public:
 
 	   unique_ptr<Scroll> scroll = make_unique<Scroll>();
        scroll->setBackgroundColour(Color::Green);
+
+	   unique_ptr<Vertical> vert2 = make_unique<Vertical>();
+	   vert2->setMargin(4); // Set the margin between elements in the vertical scroll area
+
+
+	   int vert2Height = 0; // Initialize the height of the vertical scroll area
        for (int t = 0; t < 20; t++) {
            ColouredButton btnb(Color::Blue);
            unique_ptr<Callback> cb = makeCallBack(changeColourBtn, btnb.getRootNodePointer());
            btnb.onClick(move(cb), *ui);
-           scroll->add(btnb); // Add btnb to the scroll area
+           vert2->add(btnb); // Add btnb to the scroll area
+		   vert2Height += 40; // Increment the height for each button added
        }
-
+	   vert2->setSize(Vector2f(200, vert2Height)); // Set the size of the vertical scroll area based on the number of buttons
+	   scroll->add(move(vert2)); // Add the vertical scroll to the scroll area
        ColouredButton btny(Color::Blue);
        unique_ptr<Callback> cy = makeCallBack(changeColourBtn, btny.getRootNodePointer());
        btny.onClick(move(cy), *ui);

@@ -31,10 +31,21 @@ public:
 		int Y = origin.y + scrollOffset.y;
 		for (const unique_ptr<TreeNode>& child : children)
 		{
+			int elmHeight = 0;
+			if (child->getSize().y != 0)
+			{
+				elmHeight = child->getSize().y;
+			}
+			else
+			{
+				elmHeight = heightPerElement; // Default height if not set
+			}
+
+
 			child->setOrigin(Vector2f(X, Y));
-			child->setSize(Vector2f(size.x, heightPerElement));
-			Y += heightPerElement; // Increment Y position for the next element
-			stackHeight += heightPerElement;//edit this for varied height elements
+			child->setSize(Vector2f(size.x, elmHeight));
+			Y += elmHeight; // Increment Y position for the next element
+			stackHeight += elmHeight;//edit this for varied height elements
 
 		}
 		setRecalcNeededFalse();
