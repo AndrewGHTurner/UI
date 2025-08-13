@@ -3,10 +3,10 @@
 
 #include "Branch.h"  
 #include <memory>  
-
+#include "UI_DLL_Interface.h"
 using namespace std;  
 
-class Page {  
+class UI_API Page {  
 public:  
 	static UI* ui; // Declaration only  
 	unique_ptr<Branch> treeRoot; // the ui tree  

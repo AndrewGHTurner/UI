@@ -6,50 +6,33 @@
 #include "ui.h"
 #include "Facade.h"
 #include <memory>
+
+#include "UI_DLL_Interface.h"
+
 using namespace std;
 
-class ColouredButton : public Facade
+class UI_API ColouredButton : public Facade
 {
 private:
 
 public:
-	ColouredButton(Color c)
-	{
-		auto b = make_unique<ColouredBox>(c);
-		rootNode = unique_ptr<TreeNode>(move(b));
-	}
+	ColouredButton(const ColouredButton&) = delete;             // disable copy constructor
+	ColouredButton& operator=(const ColouredButton&) = delete;  // disable copy assignment
+	ColouredButton(ColouredButton&&) noexcept = default;        // enable move constructor
+	ColouredButton& operator=(ColouredButton&&) noexcept = default; // enable move assignment
+	ColouredButton(Color c);
 
-	unique_ptr<TreeNode> getRootNodeOwnership() override
-	{
-		return move(rootNode);
-	}
+	unique_ptr<TreeNode> getRootNodeOwnership() override;
 
-	ColouredBox* getRootNodePointer() override
-	{
-		return colouredBox();
-	}
+	ColouredBox* getRootNodePointer() override;
 
-	ColouredButton& onClick(unique_ptr<Callback> callback, UI& ui)
-	{
-		ui.addOnClick(move(callback), rootNode->id);
-		return *this;
-	}
+	ColouredButton& onClick(unique_ptr<Callback> callback, UI& ui);
 
-	ColouredButton& setColor(Color c)
-	{
-		colouredBox()->setColour(c);
-		return *this;
-	}
+	ColouredButton& setColor(Color c);
 
-	Color getColor()
-	{
-		return colouredBox()->colour;
-	}
+	Color getColor();
 
-	int getID()
-	{
-		return rootNode->id;
-	}
+	int getID();
 private:
     inline ColouredBox* colouredBox()  
     {  

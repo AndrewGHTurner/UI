@@ -1,8 +1,8 @@
 #ifndef COLOURED_BOX_H
 #define COLOURED_BOX_H
 #include "Leaf.h"
-
-class ColouredBox : public Leaf
+#include "UI_DLL_Interface.h"
+class UI_API ColouredBox : public Leaf
 {
 public:
 	Color colour;

@@ -2,11 +2,12 @@
 #define CALLBACK_H
 
 #include <memory>
+#include "UI_DLL_Interface.h"
 using namespace std;
 
 class UI;
 //Callback id - unique ID of the callback which allows it to be removed from the button etc at a later time
-class Callback {
+class UI_API Callback {
 protected:
 	void* param = nullptr;
 	void (*function)(void*);

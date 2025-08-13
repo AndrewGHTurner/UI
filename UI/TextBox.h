@@ -7,10 +7,10 @@
 #include "Animation.h"
 #include "EText.h"
 #include "ETextContainer.h"
-
+#include "UI_DLL_Interface.h"
 using namespace std;
 
-class TextBox : public Leaf, public Animation, public ETextContainer {
+class UI_API TextBox : public Leaf, public Animation, public ETextContainer {
 
 public:
 	TextBox(Font& font, Vector2f origin, Vector2f siz, string initialText)

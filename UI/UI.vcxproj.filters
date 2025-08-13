@@ -22,9 +22,6 @@
     <Filter Include="Source Files\pageManagers">
       <UniqueIdentifier>{142b8b91-b4a9-456d-af74-56915843dd52}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\tester">
-      <UniqueIdentifier>{250c1e47-b27a-4dbd-b229-b5a29f5dfd68}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\widgets">
       <UniqueIdentifier>{7b638c81-de07-4e69-8ad7-7c9414d0f3cc}</UniqueIdentifier>
     </Filter>
@@ -43,11 +40,14 @@
     <Filter Include="Header Files\layoutsVirtual">
       <UniqueIdentifier>{2ccf5f38-62e9-4de4-9430-1b56353c6426}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\facades">
+      <UniqueIdentifier>{dfb4834e-e2f5-4854-a327-4e27cb3a5b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\layouts">
+      <UniqueIdentifier>{99245782-8c3c-465b-9c6d-f6d1838b8289}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,17 +69,8 @@
     <ClCompile Include="BehaviourManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="page1.h">
-      <Filter>Source Files\tester</Filter>
-    </ClCompile>
     <ClCompile Include="Page.cpp">
       <Filter>Source Files\pageManagers</Filter>
-    </ClCompile>
-    <ClCompile Include="page2.cpp">
-      <Filter>Source Files\tester</Filter>
-    </ClCompile>
-    <ClCompile Include="PageTypes.cpp">
-      <Filter>Source Files\tester</Filter>
     </ClCompile>
     <ClCompile Include="TextButton.h">
       <Filter>Header Files\facades</Filter>
@@ -95,6 +86,24 @@
     </ClCompile>
     <ClCompile Include="VirtualBranch.h">
       <Filter>Header Files\layoutsVirtual</Filter>
+    </ClCompile>
+    <ClCompile Include="EText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ColouredButton.cpp">
+      <Filter>Source Files\facades</Filter>
+    </ClCompile>
+    <ClCompile Include="HorizontalProportionalSpacedBar.cpp">
+      <Filter>Source Files\layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="PageSwitcher.cpp">
+      <Filter>Source Files\pageManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="Vertical.cpp">
+      <Filter>Source Files\layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="Scroll.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,9 +143,6 @@
     <ClInclude Include="Properties.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HorizontalProportionalSpacedBar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ColouredButton.h">
       <Filter>Header Files\facades</Filter>
     </ClInclude>
@@ -164,9 +170,6 @@
     <ClInclude Include="TextBox.h">
       <Filter>Header Files\widgets</Filter>
     </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ETextContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -178,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="VirtualVertical.h">
       <Filter>Header Files\layoutsVirtual</Filter>
+    </ClInclude>
+    <ClInclude Include="HorizontalProportionalSpacedBar.h">
+      <Filter>Header Files\layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_DLL_Interface.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

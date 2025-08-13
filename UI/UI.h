@@ -12,6 +12,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <memory>
 #include "Page.h"
+#include "UI_DLL_Interface.h"
 
 class Page;
 
@@ -27,7 +28,7 @@ enum ArrowDirection {
 //SHOULD PROBABLE MAKE A CONFIGURABLE UI CLASS WHICH WILL BE BUILT IN A BUILDER PATTERN AND ALLOW FOR 
 //ONLY NEEDED FUNCTIONALITY TO BE CREATED VIA COMPOSITION
 
-class UI : public Branch, public BehviourManager, public AnnimationManager {
+class UI_API UI : public Branch, public BehviourManager, public AnnimationManager {
 private:
 	
 	TextBox* currentTextBox = nullptr;
@@ -39,9 +40,13 @@ private:
 public:
 
 	sf::Font font;
+	UI(const UI&) = delete;             // disable copy constructor
+	UI& operator=(const UI&) = delete;  // disable copy assignment
+	UI(UI&&) noexcept = default;        // enable move constructor
+	UI& operator=(UI&&) noexcept = default; // enable move assignment
 	UI(RenderWindow& window) : BehviourManager(), Branch(Vector2f(0, 0), Vector2f(300, 300)) {
 		id = newID();//set the id of the ui element (root branch)
-		if (!font.openFromFile("Terminal.ttf")) {
+		if (!font.openFromFile("C:/Users/andre/Desktop/Root/utils/fonts/Terminal.ttf")) {
 			cout << "font could not be loaded" << endl;
 		}
 		Callback::ui = this;

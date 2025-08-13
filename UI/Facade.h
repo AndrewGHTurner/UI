@@ -3,8 +3,9 @@
 
 #include "TreeNode.h"
 #include <memory>
+#include "UI_DLL_Interface.h"
 
-class Facade
+class UI_API Facade
 {
 protected:
 	unique_ptr<TreeNode> rootNode;//this is the root ui node of the UI element managed by the facade

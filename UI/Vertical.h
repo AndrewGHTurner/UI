@@ -2,7 +2,7 @@
 #define VERTICAL_H
 
 #define MIN_WIDGET_HEIGHT 40.0
-
+#include "UI_DLL_Interface.h"
 #include "Branch.h"
 #include "Facade.h"
 //PLAN FOR VERTICAL/HORIZONTAL SCROLLABLE LIST VIEW
@@ -18,47 +18,17 @@ ALTERNATIVELY
 the scroller could maintain a virtual position for each widget and check if the widget is in view when renderring?
 */
 
-class Vertical : public Branch {
+class UI_API Vertical : public Branch {
 private:
 	int elementMargin = 0; // Margin between elements in the scroll
 	vector<TreeNode*> contents;
 public:
-	Vertical() :
-		Branch() {
-	}
-	Vertical(Vector2f origin, Vector2f siz) :
-		Branch(origin, siz) {
-	}
+	Vertical();
+	Vertical(Vector2f origin, Vector2f siz);
 
-	void setMargin(int margin)
-	{
-		elementMargin = margin;
-		notifyRecalcNeeded();
-	}
+	void setMargin(int margin);
 
-	void calcPositions() override
-	{
-
-		float heightPerWidget = static_cast<float>(this->size.y) / children.size();
-		//Vector2f childSize(this->size.x, MIN_WIDGET_HEIGHT);
-		Vector2f childSize((int)this->size.x - (2 * elementMargin), heightPerWidget - (elementMargin));
-		float Y = this->origin.y + elementMargin;
-		float X = this->origin.x + elementMargin;
-		for (unique_ptr<TreeNode>& box : children)
-		{
-			Vector2f childOrigin(X, Y);
-
-			box->setOrigin(childOrigin);
-			box->setSize(childSize);
-			//Y += MIN_WIDGET_HEIGHT;
-			Y += heightPerWidget;
-			if (box->hasText)
-			{
-				box->notifyTextChanged(true);
-			}	
-		}
-		setRecalcNeededFalse();
-	}
+	void calcPositions() override;
 };
 
 #endif

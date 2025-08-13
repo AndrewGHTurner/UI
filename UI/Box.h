@@ -3,9 +3,9 @@ using namespace sf;
 
 #ifndef BOX_H
 #define BOX_H
-
+#include "UI_DLL_Interface.h"
 //2d box on the screen
-class Box {
+class UI_API Box {
 protected:
 	Vector2f origin;//top right
 	Vector2f antiOrigin;//bottom left

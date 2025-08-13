@@ -3,10 +3,11 @@
 #include "TreeNode.h"
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
+#include "UI_DLL_Interface.h"
 //this is a box that draws itself as UI ... 
 
 
-class Leaf : public TreeNode
+class UI_API Leaf : public TreeNode
 {
 protected:
 

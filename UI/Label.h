@@ -5,8 +5,9 @@
 #include <memory>
 #include "Leaf.h"
 #include "ETextContainer.h"
+#include "UI_DLL_Interface.h"
 
-class Label : public Leaf, public ETextContainer
+class UI_API Label : public Leaf, public ETextContainer
 {
 
 public:

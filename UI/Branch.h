@@ -5,11 +5,11 @@
 #include <vector>
 #include "TextBox.h"
 #include "Facade.h"
-
+#include "UI_DLL_Interface.h"
 using namespace std;
 
 //container for leaves and other branches
-class Branch : public TreeNode {
+class UI_API Branch : public TreeNode {
 protected:
 	Color backgroundColour = Color::Transparent;
 

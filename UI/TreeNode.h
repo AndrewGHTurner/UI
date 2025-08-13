@@ -6,6 +6,7 @@
 #include <cstdint>
 #include "Properties.h"
 #include <SFML/Graphics/RenderTexture.hpp>
+#include "UI_DLL_Interface.h"
 using namespace sf;
 
 enum TreeNodeFlagBits {
@@ -25,10 +26,14 @@ enum PropertyFlagBits {
 class UI;
 
 //TreeNode in the UI tree
-class TreeNode : public Box {
+class UI_API TreeNode : public Box {
 
 public:
 	static sf::RenderTexture* screenTexture;
+	TreeNode(const TreeNode&) = delete;             // disable copy constructor
+	TreeNode& operator=(const TreeNode&) = delete;  // disable copy assignment
+//	TreeNode(TreeNode&&) noexcept = default;        // enable move constructor
+//	TreeNode& operator=(TreeNode&&) noexcept = default; // enable move assignment
 	bool hasText = false;//THIS FLAG SHOULD GO IN flags
 	TreeNode();
 	TreeNode(TreeNode* parent);

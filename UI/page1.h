@@ -19,6 +19,7 @@ private:
 public:
     int page2ID;
     PageSwitcher& pageSwitcher; // Reference to the PageSwitcher to switch back to Page
+	Page1(Page1&& other) = default; // Move constructor for Page1
     Page1(PageSwitcher& pageSwitcher, int page2ID) : pageSwitcher(pageSwitcher){
 		this->page2ID = page2ID; // Store the Page2 ID for switching later  
     }

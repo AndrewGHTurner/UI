@@ -3,68 +3,23 @@
 
 #include "Branch.h"
 #include <SFML/OpenGL.hpp>
+#include "UI_DLL_Interface.h"
+#include "UI.h"
 
-class Scroll : public Branch {
+class UI_API Scroll : public Branch {
 private:
 	Vector2f scrollOffset;
 	int stackHeight = 0;//this is the combined heights of all the elements in the scroll
 public:
-	Scroll() : Branch() {
-		setPreDrawNeededTrue();
-		setPostDrawNeededTrue();
-	}
+	Scroll();
 
-	void preDraw() override {
-		glEnable(GL_SCISSOR_TEST);
-		int flippedY = ui->getSize().y - (origin.y + size.y);
-		glScissor(origin.x, flippedY, size.x, size.y);
-	}
+	void preDraw() override;
 
-	void postDraw() override {
-		glDisable(GL_SCISSOR_TEST);
-	}
+	void postDraw() override;
 
-	void calcPositions() override {
-		stackHeight = 0;
-		int heightPerElement = 40; // Example height for each element
-		int X = origin.x;
-		int Y = origin.y + scrollOffset.y;
-		for (const unique_ptr<TreeNode>& child : children)
-		{
-			int elmHeight = 0;
-			if (child->getSize().y != 0)
-			{
-				elmHeight = child->getSize().y;
-			}
-			else
-			{
-				elmHeight = heightPerElement; // Default height if not set
-			}
+	void calcPositions() override;
 
-
-			child->setOrigin(Vector2f(X, Y));
-			child->setSize(Vector2f(size.x, elmHeight));
-			Y += elmHeight; // Increment Y position for the next element
-			stackHeight += elmHeight;//edit this for varied height elements
-
-		}
-		setRecalcNeededFalse();
-	};
-
-	void incrementOffset(int delta) {
-		scrollOffset.y += (delta * 15);
-		if (scrollOffset.y > 0)
-		{
-			scrollOffset.y = 0; // Prevent scrolling above the top
-		}
-		const unique_ptr<TreeNode>& lastChild = children.back();
-
-		if (stackHeight - size.y + scrollOffset.y < 0)
-		{
-			scrollOffset.y = -(stackHeight - size.y);
-		}
-		notifyRecalcNeeded();
-	}
+	void incrementOffset(int delta);
 };
 
 #endif

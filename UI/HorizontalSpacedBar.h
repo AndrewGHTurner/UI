@@ -2,7 +2,7 @@
 #define HORIZONTAL_SPACED_BAR
 #include "Branch.h"
 #include <memory>
-
+#include "UI_DLL_Interface.h"
 //PLAN FOR VERTICAL/HORIZONTAL SCROLLABLE LIST VIEW
 /*
 each widget has an origin and a size.
@@ -15,7 +15,7 @@ the widgets in view will have a scroll offset
 ALTERNATIVELY
 the scroller could maintain a virtual position for each widget and check if the widget is in view when renderring?
 */
-class HorizontalSpacedBar : public Branch {
+class UI_API HorizontalSpacedBar : public Branch {
 private:
 
 public:

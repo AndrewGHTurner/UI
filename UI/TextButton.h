@@ -9,16 +9,17 @@
 #include "UI.h"
 #include "TreeNode.h"
 #include <vector>
+#include "UI_DLL_Interface.h"
 using namespace std;
 
-struct LabelColour {
+struct UI_API LabelColour {
 	Color colour = Color::Black;
 	Label* label = nullptr;
 	LabelColour(Color colour, Label* label) : colour(colour), label(label) {}
 	LabelColour() = default; // Default constructor for empty initialization
 };
 
-class TextButtonMaker : public Facade
+class UI_API TextButtonMaker : public Facade
 {	
 public:
 	//this must be a member of the page holding the buttons so that callback params are persisted and not destroyed when it goes out of scope
@@ -86,15 +87,15 @@ public:
 		return *this;
 	}
 
-	TextButtonMaker& setText(string newText)
-	{
-		//this->text->setText(newText);
-		//return *this;
-	}
-	string getText()
-	{
-		//return this->text->getText();
-	}
+	//TextButtonMaker& setText(string newText)
+	//{
+	//	//this->text->setText(newText);
+	//	//return *this;
+	//}
+	//string getText()
+	//{
+	//	return this->text->getText();
+	//}
 private:
 	vector<unique_ptr<LabelColour>> labelColours = vector<unique_ptr<LabelColour>>(); //store the params for callbacks to change label colours
 	optional<Color> pressedColour; // Store the pressed colour

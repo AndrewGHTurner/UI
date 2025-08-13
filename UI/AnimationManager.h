@@ -2,9 +2,10 @@
 #define ANIMATION_MANAGER_H
 #include "Animation.h"
 #include <vector>
+#include "UI_DLL_Interface.h"
 using namespace std;
 
-class AnnimationManager {
+class UI_API AnnimationManager {
 private:
 	vector<Animation*> animations = vector<Animation*>();
 public:

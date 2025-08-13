@@ -3,8 +3,8 @@
 
 #include <memory>
 #include "EText.h"
-
-class ETextContainer
+#include "UI_DLL_Interface.h"
+class UI_API ETextContainer
 {
 	
 public:

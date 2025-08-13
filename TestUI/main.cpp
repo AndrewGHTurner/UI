@@ -14,13 +14,21 @@ DESIGN CHOICES
 #include <memory>
 #include "HorizontalSpacedBar.h"
 #include "HorizontalProportionalSpacedBar.h"
+#include "CallBack.h"
 #include <tuple>
-#include "main.h"
+//#include "main.h"
 #include "UI.h"
 #include "ColouredButton.h"
 #include "ButtonFactory.h"
 #include "Page.h"
 #include "PageSwitcher.h"
+#include <Vertical.h>
+#include <page1.h>
+#include <page2.h>
+#include <tuple>
+
+
+//#include "testPage.h"
 
 using namespace std;
 using namespace sf;
@@ -94,14 +102,15 @@ void addTreeNode(Vertical* branch)
 	t += 1;
 
 	ColouredButton btn(f);
-	btn.onClick(makeCallBack(removeTreeNode, new tuple<Branch*, int>(branch, btn.getID())), *UI::ui);
+	tuple<Branch*, int>* btnTuple = new std::tuple<Branch*, int>(branch, btn.getID());
+	btn.onClick(makeCallBack(removeTreeNode, btnTuple), *UI::ui);
 	branch->add(btn);
 }
 
 
 
-RenderTexture* EText::screenTexture = nullptr;
-RenderWindow* EText::window = nullptr;
+//RenderTexture* EText::screenTexture = nullptr;
+//RenderWindow* EText::window = nullptr;
 
 
 int main()
@@ -121,11 +130,50 @@ int main()
 	int page1ID = pageSwitcher.newPageID(); // Create a new page ID for Page1
 	int page2ID = pageSwitcher.newPageID(); // Create a new page ID for Page2
 	unique_ptr<Page1> page1 = make_unique<Page1>(pageSwitcher, page2ID);
+
+
+	/*
+
+	HMODULE testPageLibraryPointer = LoadLibraryA("testPage.dll");
+	if (!testPageLibraryPointer)
+	{
+		cout << "testPage.dll could not be loaded" << endl;
+		return -1;
+	}
+
+	////get the function pointer for the testPage function
+
+	unique_ptr<Page2> (*testPage)(PageSwitcher& switcher, int page1id ) = (unique_ptr<Page2>(*)(PageSwitcher & switcher, int page1id))GetProcAddress(testPageLibraryPointer, "testPage");
+
+	if (!testPage)
+	{
+		cout << "testPage function could not be found in testPage.dll" << endl;
+		return -1;
+	}
+
+	unique_ptr<Page2> page2 = testPage(pageSwitcher, page1ID); // Call the testPage function to create Page2 with a reference to PageSwitcher and Page1 ID
+
+
+
+	*/
+
+
 	unique_ptr<Page2> page2 = make_unique<Page2>(pageSwitcher, page1ID); // Create Page2 with a reference to PageSwitcher and Page1 ID
+
+
+
+
 	pageSwitcher.setPage(page1ID, move(page1)); // Set Page1 in the PageSwitcher
 	pageSwitcher.setPage(page2ID, move(page2)); // Set Page2 in the PageSwitcher
 	pageSwitcher.showPage(page1ID); // Show Page1 initially
-	
+
+
+
+	//testPage(); // Call the testPage function from the DLL
+
+
+//	testPage();
+
 	while (window.isOpen())
 	{
 		ui.runUI(window);

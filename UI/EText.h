@@ -8,10 +8,12 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+
+#include "UI_DLL_Interface.h"
 using namespace sf;
 using namespace std;
 
-class EText {
+class UI_API EText {
 private:
 	Text textSfml;
 	string text;
