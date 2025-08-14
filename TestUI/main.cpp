@@ -132,31 +132,6 @@ int main()
 	unique_ptr<Page1> page1 = make_unique<Page1>(pageSwitcher, page2ID);
 
 
-	/*
-
-	HMODULE testPageLibraryPointer = LoadLibraryA("testPage.dll");
-	if (!testPageLibraryPointer)
-	{
-		cout << "testPage.dll could not be loaded" << endl;
-		return -1;
-	}
-
-	////get the function pointer for the testPage function
-
-	unique_ptr<Page2> (*testPage)(PageSwitcher& switcher, int page1id ) = (unique_ptr<Page2>(*)(PageSwitcher & switcher, int page1id))GetProcAddress(testPageLibraryPointer, "testPage");
-
-	if (!testPage)
-	{
-		cout << "testPage function could not be found in testPage.dll" << endl;
-		return -1;
-	}
-
-	unique_ptr<Page2> page2 = testPage(pageSwitcher, page1ID); // Call the testPage function to create Page2 with a reference to PageSwitcher and Page1 ID
-
-
-
-	*/
-
 
 	unique_ptr<Page2> page2 = make_unique<Page2>(pageSwitcher, page1ID); // Create Page2 with a reference to PageSwitcher and Page1 ID
 
