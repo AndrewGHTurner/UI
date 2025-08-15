@@ -79,16 +79,11 @@ bool TreeNode::isPointWithin(Vector2i point)
 void TreeNode::notifyRecalcNeeded()
 {
 	setRecalcNeededTrue();
-	//if vertices recalculation is needed then redrawing is definitly needed so might as well call it here.
+	//if vertices recalculation is needed then redrawing is definitely needed so might as well call it here.
 	setRedrawNeededTrue();
 	if (parentNode)
 	{
 		parentNode->notifyRecalcNeeded();
-		parentNode->notifyRedrawNeeded();
-	}
-	else
-	{
-
 	}
 }
 void TreeNode::notifyRedrawNeeded()

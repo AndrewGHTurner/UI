@@ -130,15 +130,18 @@ public:
 		if (isRedrawNeeded())
 		{
 			displayNeeded = true;
-			for (unique_ptr<TreeNode>& node : children)
+			for (unique_ptr<TreeNode>& child : children)
 			{
-				if (node->isLeaf())
+				if (child->isRedrawNeeded())
 				{
-					static_cast<Leaf*>(node.get())->draw();
-				}
-				else
-				{
-					static_cast<Branch*>(node.get())->draw();
+					if (child->isLeaf())
+					{
+						static_cast<Leaf*>(child.get())->draw();
+					}
+					else
+					{
+						static_cast<Branch*>(child.get())->draw();
+					}
 				}
 			}
 			setRedrawNeededFalse();

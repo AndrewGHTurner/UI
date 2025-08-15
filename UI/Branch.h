@@ -51,16 +51,16 @@ public:
 		}
 		for (const unique_ptr<TreeNode>& child : children)
 		{
-			if (child->isLeaf())
+			if (child->isRedrawNeeded())
 			{
-				if (child->isRedrawNeeded())
+				if (child->isLeaf())
 				{
 					static_cast<Leaf*>(child.get())->draw();
 				}
-			}
-			else
-			{
-				static_cast<Branch*>(child.get())->draw();
+				else
+				{
+					static_cast<Branch*>(child.get())->draw();
+				}
 			}
 		}
 		if (isPostDrawNeeded())
