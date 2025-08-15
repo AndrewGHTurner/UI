@@ -13,22 +13,19 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\tester">
-      <UniqueIdentifier>{d30a1327-a6f8-4cee-b111-5afa5b91de79}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\UI\page1.h">
-      <Filter>Header Files\tester</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="..\UI\page2.h">
-      <Filter>Header Files\tester</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="..\UI\PageTypes.cpp">
-      <Filter>Header Files\tester</Filter>
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
