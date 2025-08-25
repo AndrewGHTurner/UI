@@ -8,7 +8,6 @@ using namespace std;
 
 class UI_API Page {  
 public:  
-	static UI* ui; // Declaration only  
 	unique_ptr<Branch> treeRoot; // the ui tree  
 	virtual void createTree() = 0; // method to create the ui tree, must be implemented by derived classes  
 	Page() {  

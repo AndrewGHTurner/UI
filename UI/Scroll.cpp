@@ -8,7 +8,7 @@
 
 	void Scroll::preDraw() {
 		glEnable(GL_SCISSOR_TEST);
-		int flippedY = ui->getSize().y - (origin.y + size.y);
+		int flippedY = UI::getInstance()->getSize().y - (origin.y + size.y);
 		glScissor(origin.x, flippedY, size.x, size.y);
 	}
 

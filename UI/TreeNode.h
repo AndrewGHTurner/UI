@@ -44,7 +44,6 @@ public:
 	TreeNode(TreeNode* parent);
 	TreeNode(Vector2f origin, Vector2f size);
 	TreeNode(TreeNode* parent, Vector2f origin, Vector2f siz);
-	static UI* ui;
 	
 	
 	

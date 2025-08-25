@@ -1,19 +1,18 @@
 #include "TreeNode.h"
 #include "UI.h"
 
-UI* TreeNode::ui = nullptr;
 sf::RenderTexture* TreeNode::screenTexture = nullptr;
 
 
 TreeNode::TreeNode()
 {
-	id = ui->newID();
+	id = UI::getInstance()->newID();
 }
 
 TreeNode::TreeNode(TreeNode* parent)
 {
 	parentNode = parent;//this is needed for TextBox so that the text draws on ui start
-	id = ui->newID();
+	id = UI::getInstance()->newID();
 }
 TreeNode::TreeNode(Vector2f origin, Vector2f size)
 {
@@ -22,7 +21,7 @@ TreeNode::TreeNode(Vector2f origin, Vector2f size)
 }
 TreeNode::TreeNode(TreeNode* parent, Vector2f origin, Vector2f siz)
 {
-	id = ui->newID();
+	id = UI::getInstance()->newID();
 	setOrigin(origin);
 	setSize(siz);
 }

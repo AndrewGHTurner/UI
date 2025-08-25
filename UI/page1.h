@@ -25,6 +25,7 @@ public:
     }
    void createTree() override  
    {   
+	   UI* ui = UI::getInstance();
        unique_ptr<TextBox> j = ui->addButton("hello");  
        void* d = nullptr;
        unique_ptr<Callback> c = makeCallBack(incrementSize, d);
@@ -150,7 +151,7 @@ public:
        t += 1;  
 
        ColouredButton btn(f);  
-       btn.onClick(makeCallBack(removeTreeNode, new tuple<Branch*, int>(branch, btn.getID())), *UI::ui);  
+       btn.onClick(makeCallBack(removeTreeNode, new tuple<Branch*, int>(branch, btn.getID())), *UI::getInstance());
        branch->add(btn);  
    }  
 

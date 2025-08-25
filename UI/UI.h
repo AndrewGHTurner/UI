@@ -47,9 +47,6 @@ private:
 		if (!font.openFromFile("C:/Users/andre/Desktop/Root/utils/fonts/Terminal.ttf")) {
 			cout << "font could not be loaded" << endl;
 		}
-		Callback::ui = this;
-		TreeNode::ui = this;
-		Page::ui = this;
 		EText::window = &window;
 		screenTexture = make_unique<RenderTexture>(window.getSize());
 		Leaf::setTexture(screenTexture.get());
@@ -64,9 +61,14 @@ public:
 		instance = new UI(window);
 		return instance;
 	}
+	/**
+	*@brief Get the instance of the UI singleton
+	*@note for other classes that use the UI instance a static pointer to the UI could be used to increase speed but this will produce little benefit
+	
+	*/
 	static UI* getInstance()
 	{
-		assert(instance != nullptr && "UI instance is not initialized. Call initInstance first."); // Ensure instance is initialized before use
+		assert(instance != nullptr && "UI instance is not initialized. Call initInstance first"); // Ensure instance is initialized before use
 		return instance;
 	}
 
@@ -580,15 +582,15 @@ public:
 		//this is a scroll callback for a TextBox
 		TextBox* textBox = static_cast<TextBox*>(std::get<0>(param));
 		int delta = std::get<1>(param);
-		if (Page::ui->currentTextBox == textBox)
+		if (UI::getInstance()->currentTextBox == textBox)
 		{
 			if (delta > 0)
 			{
-				Page::ui->handleArrowEvent(ArrowDirection::UP);
+				UI::getInstance()->handleArrowEvent(ArrowDirection::UP);
 			}
 			else if (delta < 0)
 			{
-				Page::ui->handleArrowEvent(ArrowDirection::DOWN);
+				UI::getInstance()->handleArrowEvent(ArrowDirection::DOWN);
 			}
 
 		}

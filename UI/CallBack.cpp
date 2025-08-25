@@ -1,11 +1,9 @@
 #include "CallBack.h"
 #include "UI.h"
 
-UI* Callback::ui = nullptr;
-
 Callback::Callback(void (*onClickFunk)(void*), void* p, bool scroll)
 {
-	id = ui->newID();
+	id = UI::getInstance()->newID();
 	function = onClickFunk;
 	param = p;
 	isScrollCallback = scroll;

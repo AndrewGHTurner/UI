@@ -2,7 +2,7 @@
 #include "UI.h"
 
 Label::Label(string initialText, Vector2f origin, Vector2f siz) {
-	text = make_unique<EText>(ui->font, initialText);
+	text = make_unique<EText>(UI::getInstance()->font, initialText);
 	text->setPosition(origin);
 	text->setSize(siz);
 
@@ -13,7 +13,7 @@ Label::Label(string initialText, Vector2f origin, Vector2f siz) {
 }
 
 Label::Label(string initialText){
-	text = make_unique<EText>(ui->font, initialText);
+	text = make_unique<EText>(UI::getInstance()->font, initialText);
 	//hasText = true;
 	setRedrawTextNeededTrue();
 	notifyTextChanged(true);
