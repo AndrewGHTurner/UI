@@ -28,6 +28,19 @@ public:
 
 	}
 
+	TextBox(Font& font, string initialText)
+		: Leaf(nullptr)
+	{
+		hasText = true;
+		setRedrawTextNeededTrue();
+		text = make_unique<EText>(font, initialText);
+		notifyTextChanged(true);
+
+		updateVerticesPosition();
+		//	ui->addAnimation(this);
+
+	}
+
 	void setCurrentCharIndex(int index)
 	{
 		text.get()->currentCharIndex = index;

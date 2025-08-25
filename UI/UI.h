@@ -577,9 +577,9 @@ public:
 		}
 	}
 
-	unique_ptr<TextBox> addButton(Vector2f origin, Vector2f size, string initialText)
+	unique_ptr<TextBox> addButton(string initialText)
 	{
-		unique_ptr<TextBox> newButton = make_unique<TextBox>(font, origin, size, initialText);
+		unique_ptr<TextBox> newButton = make_unique<TextBox>(font, initialText);
 		unique_ptr<Callback> callback = makeScrollCallBack(scrollText, newButton.get());
 		addMouseWheelCallback(move(callback), newButton->id);
 		return move(newButton);

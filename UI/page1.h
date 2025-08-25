@@ -24,10 +24,8 @@ public:
 		this->page2ID = page2ID; // Store the Page2 ID for switching later  
     }
    void createTree() override  
-   {  
-       Vector2f buttonOrigin2 = Vector2f(90, 90);  
-       Vector2f buttonSize2 = Vector2f(40, 30);  
-       unique_ptr<TextBox> j = ui->addButton(buttonOrigin2, buttonSize2, "hello");  
+   {   
+       unique_ptr<TextBox> j = ui->addButton("hello");  
        void* d = nullptr;
        unique_ptr<Callback> c = makeCallBack(incrementSize, d);
        ui->addOnClick(move(c), j->id);//WOUDL NEED TO MAKE A FOX  
