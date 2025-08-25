@@ -56,9 +56,9 @@ public:
 		return label();
 	}
 
-	TextButtonMaker& onClickLeftDown(unique_ptr<Callback> callback, UI& ui)
+	TextButtonMaker& onClickLeftDown(unique_ptr<Callback> callback)
 	{
-		ui.addOnClick(move(callback), rootNode->id);
+		UI::getInstance()->addOnClick(move(callback), rootNode->id);
 		return *this;
 	}
 
@@ -69,9 +69,9 @@ public:
 		return *this;
 	}
 
-	TextButtonMaker& onClickLeftUp(unique_ptr<Callback> callback, UI& ui)
+	TextButtonMaker& onClickLeftUp(unique_ptr<Callback> callback)
 	{
-		ui.addLeftUpCallback(move(callback), rootNode->id);
+		UI::getInstance()->addLeftUpCallback(move(callback), rootNode->id);
 		return *this;
 	}
 

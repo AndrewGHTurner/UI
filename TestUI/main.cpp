@@ -103,7 +103,7 @@ void addTreeNode(Vertical* branch)
 
 	ColouredButton btn(f);
 	tuple<Branch*, int>* btnTuple = new std::tuple<Branch*, int>(branch, btn.getID());
-	btn.onClick(makeCallBack(removeTreeNode, btnTuple), *UI::getInstance());
+	btn.onClick(makeCallBack(removeTreeNode, btnTuple));
 	branch->add(btn);
 }
 

@@ -25,7 +25,7 @@ public:
 		verticalScroll->add(move(box2));
 		ColouredButton btn1(Color::Red);
 		void* u = 0;
-		btn1.onClick(makeCallBack(switchToPage1, this), *UI::getInstance());
+		btn1.onClick(makeCallBack(switchToPage1, this));
 		verticalScroll->add(btn1);
 		unique_ptr<ColouredBox> box3 = make_unique<ColouredBox>(Color::Black);
 		verticalScroll->add(move(box3));

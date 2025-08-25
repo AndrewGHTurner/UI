@@ -40,7 +40,7 @@ public:
 	   verticalScroll->add(move(label));
 
        TB.createButton("Add Button")
-           .onClickLeftDown(move(makeCallBack(addTreeNode, verticalScroll.get())), *ui)
+           .onClickLeftDown(move(makeCallBack(addTreeNode, verticalScroll.get())))
 		   .setPressedColour(Color::Green) // Set the pressed colour for the button
            .setColour(Color::Yellow);      
 	   verticalScroll->add(TB);
@@ -49,32 +49,32 @@ public:
 
        ColouredButton btn2 = ColouredButton(Color::Black);
        unique_ptr<Callback> c2 = makeCallBack(removeTreeNode, new std::tuple<Branch*, int>(verticalScroll.get(), btn2.getID()));
-       btn2.onClick(move(c2), *ui);
+       btn2.onClick(move(c2));
        verticalScroll->add(btn2);  
 
        ColouredButton btn3 = ColouredButton(Color::Blue);
 	   void* u = nullptr;
        unique_ptr<Callback> c3 = makeCallBack(switchToPage2, this);
-       btn3.onClick(move(c3), *ui);
+       btn3.onClick(move(c3));
        verticalScroll->add(btn3);  //CANNOT MOVE IT TWICE
 
        ColouredButton btn4 = ColouredButton(Color::Magenta);
        unique_ptr<Callback> c4 = makeCallBack(changeColourBtn, btn4.getRootNodePointer());
-       btn4.onClick(move(c4), *ui);  
+       btn4.onClick(move(c4));  
        verticalScroll->add(btn4);  
 
        verticalScroll->add(move(j));  
 
        ColouredButton btn5 = ColouredButton(Color::Cyan);
        unique_ptr<Callback> c5 = makeCallBack(changeColourBtn, btn5.getRootNodePointer());
-       btn5.onClick(move(c5), *ui);  
+       btn5.onClick(move(c5));  
        verticalScroll->add(btn5);  
 
        unique_ptr<HorizontalProportionalSpacedBar>ggg = make_unique<HorizontalProportionalSpacedBar>(ui->getOrigin(), ui->getSize());  
 
        ColouredButton btna(Color::Blue);  
        unique_ptr<Callback> ca = makeCallBack(changeColourBtn, btna.getRootNodePointer());
-       btna.onClick(move(ca), *ui);  
+       btna.onClick(move(ca));  
 
 	   unique_ptr<Vertical> vert = make_unique<Vertical>(Vector2f(0, 0), Vector2f(200, 200));
 
@@ -89,7 +89,7 @@ public:
        for (int t = 0; t < 20; t++) {
            ColouredButton btnb(Color::Blue);
            unique_ptr<Callback> cb = makeCallBack(changeColourBtn, btnb.getRootNodePointer());
-           btnb.onClick(move(cb), *ui);
+           btnb.onClick(move(cb));
            vert2->add(btnb); // Add btnb to the scroll area
 		   vert2Height += 40; // Increment the height for each button added
        }
@@ -97,7 +97,7 @@ public:
 	   scroll->add(move(vert2)); // Add the vertical scroll to the scroll area
        ColouredButton btny(Color::Blue);
        unique_ptr<Callback> cy = makeCallBack(changeColourBtn, btny.getRootNodePointer());
-       btny.onClick(move(cy), *ui);
+       btny.onClick(move(cy));
        ui->addMouseWheelCallback(move(makeScrollCallBack(printText, scroll.get())), scroll->id); // Add mouse wheel callback to the scroll area
 
        vert->add(btny); // Add btny to the vertical scroll
@@ -151,7 +151,7 @@ public:
        t += 1;  
 
        ColouredButton btn(f);  
-       btn.onClick(makeCallBack(removeTreeNode, new tuple<Branch*, int>(branch, btn.getID())), *UI::getInstance());
+       btn.onClick(makeCallBack(removeTreeNode, new tuple<Branch*, int>(branch, btn.getID())));
        branch->add(btn);  
    }  
 

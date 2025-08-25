@@ -26,7 +26,7 @@ public:
 
 	ColouredBox* getRootNodePointer() override;
 
-	ColouredButton& onClick(unique_ptr<Callback> callback, UI& ui);
+	ColouredButton& onClick(unique_ptr<Callback> callback);
 
 	ColouredButton& setColor(Color c);
 
