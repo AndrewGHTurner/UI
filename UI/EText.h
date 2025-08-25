@@ -15,12 +15,15 @@ using namespace std;
 
 class UI_API EText {
 private:
+	/** SFML Text object that handles the rendering of the text */
 	Text textSfml;
+	/** The text content */
 	string text;
 public:
 	static RenderTexture* screenTexture;
 	static RenderWindow* window;
-	RenderTexture renderTexture;
+	/** For drawing the text and the cursor to. This texture is then rendered to the screen texture */
+	RenderTexture cachedTexture;
 	Vector2f windowPosition;
 	Vector2f windowSize;
 	sf::Clock clock;
@@ -40,13 +43,11 @@ public:
 	{
 		if (currentCharIndex != oldCharIndex && currentCharIndex != -1)//if the user has used the arrow keys to move in the string
 		{
-			//	cout << currentCharIndex << endl;
-				//cout << oldCharIndex << endl;
 			elapsedTime = 0;//make sure that the cursor is drawn
 			oldCharIndex = currentCharIndex;
-			renderTexture.clear(Color::Transparent);
-			renderTexture.draw(textSfml);
-			renderTexture.display();
+			cachedTexture.clear(Color::Transparent);
+			cachedTexture.draw(textSfml);
+			cachedTexture.display();
 		}
 
 
@@ -55,43 +56,57 @@ public:
 			elapsedTime += clock.restart().asSeconds();
 			if (elapsedTime < 0.25) {
 				Vector2f cursorPosition = textSfml.findCharacterPos(currentCharIndex);
-				RectangleShape rect;//rect is the cursor
+				RectangleShape cursor;//rect is the cursor
 				//redraw text so that the old curser line is removed
-				renderTexture.clear(Color::Transparent);
-				renderTexture.draw(textSfml);
+				cachedTexture.clear(Color::Transparent);
+				cachedTexture.draw(textSfml);
 
 				cursorPosition.y += 1;//get it pixel perfect
 
-				rect.setPosition(cursorPosition);
-				//	cout << cursorPosition.x << endl;
-				if (cursorPosition.x < 0)
+				cursor.setPosition(cursorPosition);
+
+				//handle moving the SFML Text object position to keep the cursor within the bounds of the cached texture
+				Vector2f textPosition = textSfml.getPosition();
+				int cursorHeight = textSfml.getFont().getLineSpacing(textSfml.getCharacterSize());
+				if (cursorPosition.x < 0)//if the cursor is to the left of the cachedTexture
 				{
-					Vector2f currentPosition = textSfml.getPosition();
-					currentPosition.x -= cursorPosition.x;
-					cursorPosition.x = 0;
-					textSfml.setPosition(currentPosition);
+					
+					textPosition.x -= (cursorPosition.x - 10);
+					cursorPosition.x = 10;
 				}
-				else if (cursorPosition.x > renderTexture.getSize().x)
+				else if (cursorPosition.x > cachedTexture.getSize().x)//if the cursor is to the right of the cachedTexture
 				{
-					Vector2f currentPosition = textSfml.getPosition();
-					currentPosition.x -= (cursorPosition.x - renderTexture.getSize().x) + cursorWidth;
-					cursorPosition.x = renderTexture.getSize().x - cursorWidth;
-					textSfml.setPosition(currentPosition);
+					textPosition.x -= (cursorPosition.x - cachedTexture.getSize().x) + cursorWidth;
+					cursorPosition.x = cachedTexture.getSize().x - cursorWidth;
+				}
+				if (cursorPosition.y < 0)//if the cursor is above the cachedTexture
+				{
+					textPosition.y -= cursorPosition.y;
+					cursorPosition.y = 0;
+				}
+				else if (cursorPosition.y + cursorHeight > cachedTexture.getSize().y)//if the cursor is below the cachedTexture
+				{
+					textPosition.y -= (cursorPosition.y - cachedTexture.getSize().y) + cursorHeight + 10;
+					cursorPosition.y = cachedTexture.getSize().y + cursorHeight + 10;
+				}
+				if (textPosition != textSfml.getPosition())//if the text position has changed, redraw the text
+				{
+					textSfml.setPosition(textPosition);
 				}
 
 				unsigned int k = textSfml.getCharacterSize();
-				rect.setSize(Vector2f(cursorWidth, textSfml.getFont().getLineSpacing(k)));
-				rect.setFillColor(Color::Magenta);
-				renderTexture.draw(rect);
+				cursor.setSize(Vector2f(cursorWidth, textSfml.getFont().getLineSpacing(k)));
+				cursor.setFillColor(Color::Magenta);
+				cachedTexture.draw(cursor);
 
 
-				renderTexture.display();
+				cachedTexture.display();
 			}
 			else if (elapsedTime < 0.5)
 			{
-				renderTexture.clear(Color::Transparent);
-				renderTexture.draw(textSfml);
-				renderTexture.display();
+				cachedTexture.clear(Color::Transparent);
+				cachedTexture.draw(textSfml);
+				cachedTexture.display();
 
 			}
 			else {
@@ -101,10 +116,10 @@ public:
 		}
 
 
-		sf::Sprite sprite(renderTexture.getTexture());
+		sf::Sprite sprite(cachedTexture.getTexture());
 		sprite.setPosition(windowPosition);
 
-		RenderTexture j = RenderTexture(renderTexture.getSize());
+		RenderTexture j = RenderTexture(cachedTexture.getSize());
 		j.clear(Color::Cyan);
 
 		Sprite G = Sprite(j.getTexture());
@@ -116,23 +131,25 @@ public:
 		//window.display();
 		return false;
 	}
-
+	/**
+	* 
+	*/
 	void setPosition(Vector2f position)
 	{
 		position.x += 10;
 		windowPosition = position;
-		renderTexture.clear(sf::Color::Transparent);
-		renderTexture.draw(textSfml);
-		renderTexture.display();
+		cachedTexture.clear(sf::Color::Transparent);
+		cachedTexture.draw(textSfml);
+		cachedTexture.display();
 	}
 	void setSize(Vector2f size)
 	{
 		size.x -= 20;
-		renderTexture.resize({ static_cast<unsigned int>(size.x), static_cast<unsigned int>(size.y) });
+		cachedTexture.resize({ static_cast<unsigned int>(size.x), static_cast<unsigned int>(size.y) });
 		windowSize = size;
-		renderTexture.clear(sf::Color::Transparent);
-		renderTexture.draw(textSfml);
-		renderTexture.display();
+		cachedTexture.clear(sf::Color::Transparent);
+		cachedTexture.draw(textSfml);
+		cachedTexture.display();
 	}
 	void setText(string newText)
 	{

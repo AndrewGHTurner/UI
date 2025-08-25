@@ -46,6 +46,9 @@
     <Filter Include="Source Files\layouts">
       <UniqueIdentifier>{99245782-8c3c-465b-9c6d-f6d1838b8289}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\treeClasses">
+      <UniqueIdentifier>{c202e4f2-f86b-4fa7-9991-553a46ce2fda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UI.cpp">
@@ -107,19 +110,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Box.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TreeNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="UI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Branch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Leaf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
@@ -187,6 +178,18 @@
     </ClInclude>
     <ClInclude Include="UI_DLL_Interface.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Header Files\treeClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Leaf.h">
+      <Filter>Header Files\treeClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeNode.h">
+      <Filter>Header Files\treeClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Branch.h">
+      <Filter>Header Files\treeClasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

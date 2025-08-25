@@ -25,7 +25,12 @@ enum PropertyFlagBits {
 
 class UI;
 
-//TreeNode in the UI tree
+/**
+* @class TreeNode
+* @brief Parent class of all nodes in the UI tree
+* @details 
+* @note 
+*/
 class UI_API TreeNode : public Box {
 
 public:
@@ -54,35 +59,97 @@ public:
 	TreeNode* parentNode = nullptr;//this is the Branch (container) that contains the widget
 
 	void notifyTextChanged(bool added);//bool for if text object was added or not
-	//change the rendered position of the node and notify parent
+
+	/**
+	* @brief Sets the rendered position of the treeNode and notifies the parent of the change
+	* @details Sets the origin, calculates the antiOrigin, and notifies the parent node that a recalculation is needed
+	* @note Calculating the antiOrigin may be removed if the antiOrigin is removed to save memory
+	* @param origin The new origin of the treeNode as x, y from the top left corner of the screen
+	*/
 	void setOrigin(Vector2f origin);
-	//change the rendered size of the node and notify parent
+
+	/**
+	* @brief Sets the rendered size of the treeNode and notifies the parent of the change
+	* @details Sets the size, calculates the antiOrigin, and notifies the parent node that a recalculation is needed
+	* @note Calculating the antiOrigin may be removed if the antiOrigin is removed to save memory
+	* @param siz The new size of the treeNode as width, height
+	*/
 	void setSize(Vector2f siz);
+
+	/**
+	* @brief Shows if a 2d point on the screen is within this treeNode
+	* @details Compares the point to the origin and antiOrigin of the treeNode
+	* @note Implementation will have to change if the antiOrigin is removed to save memory
+	* @param point The point to check if it is within the treeNode as x and y coordinates from the top left corner of the screen
+	* @return true if the point is within the treeNode, otherwise false
+	*/
 	bool isPointWithin(Vector2i point);
 
-	//notify any changes in the positions of the verticies in the vertex array
-	//this allows vertices to be updated at most once per frame which is more efficient if adding many leaves to a layout
+	/**
+	* @brief Sets flags to recalculate the vertices of this treeNode and it's parents
+	* @details Notifies the parent to recalculate sizes of its children and to redraw them. A flag is set in this object and subsequent parents showing recalculation is needed. 
+	* For each parent child layer a calcPositions method is called to calculate the positions of the children but the other children
+	* wont have the recalculate flag set and so minimal computation is needed
+	* Notification is done so that, in the
+	* next frame, the UI can do the recalculation and redraw all changes at once which is more efficient than one at a time. The
+	* biggest benefit with this system is when adding many leaves to a layout which would otherwise lead to many needless updates
+	* @note Recalculation also redraws the elements
+	*/
 	void notifyRecalcNeeded();
+
+	/**
+	* @brief Sets flags to redraw this treeNode and its parents
+	* @details Notifies parents and sets a flag so that the UI can redraw this treeNode at the next frame
+	*/
 	void notifyRedrawNeeded();
+
 	//helper setters
+	//IS_LEAF
+
+	/**
+	*@brief Sets the flag to show that this treeNode is a leaf
+	*/
 	inline void setIsLeafTrue() { flags |= IS_LEAF; }
+
+	/**
+	*@brief Sets the flag to show that this treeNode is not a leaf
+	*/
 	inline void setIsLeafFalse() { flags &= ~IS_LEAF; }
+
 	//REDRAW_NEEDED
+
+	/**
+	*@brief Sets the flag to show that redraw of this treeNode is needed
+	*/
 	inline void setRedrawNeededTrue() { flags |= REDRAW_NEEDED; }
+
+	/**
+	*@brief Sets the flag to show that redraw of this treeNode is not needed
+	*/
 	inline void setRedrawNeededFalse() { flags &= ~REDRAW_NEEDED; }
+
 	//RECALC_NEEDED
+
 	inline void setRecalcNeededTrue() { flags |= RECALC_NEEDED; }
 	inline void setRecalcNeededFalse() { flags &= ~RECALC_NEEDED; }
+
 	//REDRAW_TEXT_NEEDED
+
 	inline void setRedrawTextNeededTrue() { flags |= REDRAW_TEXT_NEEDED; }
 	inline void setRedrawTextNeededFalse() { flags &= ~REDRAW_TEXT_NEEDED; }
+
 	//PREE_DRAW_NEEDED
+
 	inline void setPreDrawNeededTrue() { flags |= PREE_DRAW_NEEDED; }
 	inline void setPreDrawNeededFalse() { flags &= ~PREE_DRAW_NEEDED; }
+
 	//POST_DRAW_NEEDED
+
 	inline void setPostDrawNeededTrue() { flags |= POST_DRAW_NEEDED; }
 	inline void setPostDrawNeededFalse() { flags &= ~POST_DRAW_NEEDED; }
+
 	//helper testers
+
 	inline bool isLeaf() const { return flags & IS_LEAF; }
 	inline bool isRedrawNeeded() const { return flags & REDRAW_NEEDED; }
 	inline bool isRecalcNeeded() const { return flags & RECALC_NEEDED; }

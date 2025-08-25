@@ -25,20 +25,24 @@ enum ArrowDirection {
 	DOWN
 };
 
+class UI;
+
+
+
 //SHOULD PROBABLE MAKE A CONFIGURABLE UI CLASS WHICH WILL BE BUILT IN A BUILDER PATTERN AND ALLOW FOR 
 //ONLY NEEDED FUNCTIONALITY TO BE CREATED VIA COMPOSITION
 
 class UI_API UI : public Branch, public BehviourManager, public AnnimationManager {
 private:
 	
-	TextBox* currentTextBox = nullptr;
+	
 	int currentCharIndex = 0;//could make a typeing handeller class?// should probably hold this in the EText class
 	unique_ptr<RenderTexture> screenTexture;//this is the texture that all UI elements will be drawn onto
 
 	//releaseOn callbacks vs releaseOff callbacks???
 	vector<Callback*> leftReleaseCallbacks;//hold the release callbacks on press do that the correct ones are called on release(even if a button resizes)
 public:
-
+	TextBox* currentTextBox = nullptr;
 	sf::Font font;
 	UI(const UI&) = delete;             // disable copy constructor
 	UI& operator=(const UI&) = delete;  // disable copy assignment
@@ -554,11 +558,33 @@ public:
 	//origin - top right courner of the button
 	//size - length of the button in the x and y dimensions
 
+	static void scrollText(tuple<TextBox*, int> param)
+	{
+		//this is a scroll callback for a TextBox
+		TextBox* textBox = static_cast<TextBox*>(std::get<0>(param));
+		int delta = std::get<1>(param);
+		if (Page::ui->currentTextBox == textBox)
+		{
+			if (delta > 0)
+			{
+				Page::ui->handleArrowEvent(ArrowDirection::UP);
+			}
+			else if (delta < 0)
+			{
+				Page::ui->handleArrowEvent(ArrowDirection::DOWN);
+			}
+
+		}
+	}
+
 	unique_ptr<TextBox> addButton(Vector2f origin, Vector2f size, string initialText)
 	{
 		unique_ptr<TextBox> newButton = make_unique<TextBox>(font, origin, size, initialText);
-
+		unique_ptr<Callback> callback = makeScrollCallBack(scrollText, newButton.get());
+		addMouseWheelCallback(move(callback), newButton->id);
 		return move(newButton);
 	}
 };
+
+
 #endif
