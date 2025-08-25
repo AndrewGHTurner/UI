@@ -13,6 +13,7 @@
 #include <memory>
 #include "Page.h"
 #include "UI_DLL_Interface.h"
+#include <cassert>
 
 class Page;
 
@@ -34,20 +35,13 @@ class UI;
 
 class UI_API UI : public Branch, public BehviourManager, public AnnimationManager {
 private:
-	
-	
 	int currentCharIndex = 0;//could make a typeing handeller class?// should probably hold this in the EText class
 	unique_ptr<RenderTexture> screenTexture;//this is the texture that all UI elements will be drawn onto
 
 	//releaseOn callbacks vs releaseOff callbacks???
 	vector<Callback*> leftReleaseCallbacks;//hold the release callbacks on press do that the correct ones are called on release(even if a button resizes)
-public:
-	TextBox* currentTextBox = nullptr;
-	sf::Font font;
-	UI(const UI&) = delete;             // disable copy constructor
-	UI& operator=(const UI&) = delete;  // disable copy assignment
-	UI(UI&&) noexcept = default;        // enable move constructor
-	UI& operator=(UI&&) noexcept = default; // enable move assignment
+
+
 	UI(RenderWindow& window) : BehviourManager(), Branch(Vector2f(0, 0), Vector2f(300, 300)) {
 		id = newID();//set the id of the ui element (root branch)
 		if (!font.openFromFile("C:/Users/andre/Desktop/Root/utils/fonts/Terminal.ttf")) {
@@ -61,6 +55,29 @@ public:
 		Leaf::setTexture(screenTexture.get());
 		EText::screenTexture = screenTexture.get();
 	}
+
+	static UI* instance;
+public:
+	static UI* initInstance(RenderWindow& window)
+	{
+		assert(instance == nullptr && "UI instance is reinitialized which shouldn't happen"); // Ensure instance is only created once
+		instance = new UI(window);
+		return instance;
+	}
+	static UI* getInstance()
+	{
+		assert(instance != nullptr && "UI instance is not initialized. Call initInstance first."); // Ensure instance is initialized before use
+		return instance;
+	}
+
+
+	TextBox* currentTextBox = nullptr;
+	sf::Font font;
+	UI(const UI&) = delete;             // disable copy constructor
+	UI& operator=(const UI&) = delete;  // disable copy assignment
+	UI(UI&&) noexcept = default;        // enable move constructor
+	UI& operator=(UI&&) noexcept = default; // enable move assignment
+
 
 	//this method will recieve all ui events and call the appropriate event handlers
 	void eventDispatcher(optional<Event>& event, RenderWindow& window);

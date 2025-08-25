@@ -119,14 +119,14 @@ int main()
 	RenderWindow window(VideoMode(screenSize), "Mandelbrot");
 	window.setFramerateLimit(10);
 
-	UI ui = UI(window);
+	UI* ui = UI::initInstance(window);
 
 	Vector2f UIOrigin(0, 0);
 	Vector2f UISize(700, 700);
-	ui.setOrigin(UIOrigin);
-	ui.setSize(UISize);
+	ui->setOrigin(UIOrigin);
+	ui->setSize(UISize);
 
-	PageSwitcher pageSwitcher(ui);//on the stack but may need to be on heap if functions returns
+	PageSwitcher pageSwitcher(*ui);//on the stack but may need to be on heap if functions returns
 	int page1ID = pageSwitcher.newPageID(); // Create a new page ID for Page1
 	int page2ID = pageSwitcher.newPageID(); // Create a new page ID for Page2
 	unique_ptr<Page1> page1 = make_unique<Page1>(pageSwitcher, page2ID);
@@ -151,7 +151,7 @@ int main()
 
 	while (window.isOpen())
 	{
-		ui.runUI(window);
+		ui->runUI(window);
 	}
 	return 0;
 }
