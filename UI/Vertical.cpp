@@ -1,5 +1,5 @@
 #include "Vertical.h"
-
+#include <memory>
 //PLAN FOR VERTICAL/HORIZONTAL SCROLLABLE LIST VIEW
 /*
 each widget has an origin and a size.
@@ -13,20 +13,20 @@ ALTERNATIVELY
 the scroller could maintain a virtual position for each widget and check if the widget is in view when renderring?
 */
 
-Vertical::Vertical() :
+_Vertical::_Vertical() :
 	Branch() {
 }
-Vertical::Vertical(Vector2f origin, Vector2f siz) :
+_Vertical::_Vertical(Vector2f origin, Vector2f siz) :
 	Branch(origin, siz) {
 }
 
-void Vertical::setMargin(int margin)
+void _Vertical::setMargin(int margin)
 {
 	elementMargin = margin;
 	notifyRecalcNeeded();
 }
 
-void Vertical::calcPositions()
+void _Vertical::calcPositions()
 {
 
 	float heightPerWidget = static_cast<float>(this->size.y) / children.size();
@@ -48,5 +48,10 @@ void Vertical::calcPositions()
 		}
 	}
 	setRecalcNeededFalse();
+}
+
+UI_API VerticalPtr Vertical()
+{
+	return std::make_unique<_Vertical>();
 }
 

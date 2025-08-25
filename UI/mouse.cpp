@@ -29,7 +29,7 @@ void UI::leftDownAt(Vector2i pos)
 void UI::leftUpAt(Vector2i pos)
 {
 	//run the release callbacks that were stored on left down event
-	for (Callback* callback : leftReleaseCallbacks)
+	for (CallBack* callback : leftReleaseCallbacks)
 	{
 		callback->run();
 	}
@@ -46,7 +46,7 @@ void UI::mouseWheelScrollAt(Vector2i pos, int delta)
 		auto it = mouseWheelScrollCallbacks.find(boxID);
 		if (it != mouseWheelScrollCallbacks.end())//if a vector of handlers exists for this ID
 		{
-			for (const unique_ptr<Callback>& callback : it->second)
+			for (const unique_ptr<CallBack>& callback : it->second)
 			{
 				if (callback->isScrollCallback)//provide the delta to the callback
 				{

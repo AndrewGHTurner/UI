@@ -3,7 +3,7 @@
 
 #include "Vertical.h"
 
-class VirtualVertical : public Vertical {
+class VirtualVertical : public _Vertical {
 
 
 

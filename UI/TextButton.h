@@ -41,8 +41,8 @@ public:
 
 
 
-			unique_ptr<Callback> release = makeCallBack(changeColorLabel, labelColour.get());
-			unique_ptr<Callback> press = makeCallBack(changeColorLabel, pressedLabelColour.get());
+			unique_ptr<CallBack> release = makeCallBack(changeColorLabel, labelColour.get());
+			unique_ptr<CallBack> press = makeCallBack(changeColorLabel, pressedLabelColour.get());
 			UI::getInstance()->addLeftDownCallback(move(press), rootNode->id); // Add the callback for left down click
 			UI::getInstance()->addLeftUpCallback(move(release), rootNode->id); // Add the callback for left up click
 			labelColours.push_back(move(labelColour)); // Store the released colour and label for later use
@@ -56,7 +56,7 @@ public:
 		return label();
 	}
 
-	TextButtonMaker& onClickLeftDown(unique_ptr<Callback> callback)
+	TextButtonMaker& onClickLeftDown(unique_ptr<CallBack> callback)
 	{
 		UI::getInstance()->addOnClick(move(callback), rootNode->id);
 		return *this;
@@ -69,7 +69,7 @@ public:
 		return *this;
 	}
 
-	TextButtonMaker& onClickLeftUp(unique_ptr<Callback> callback)
+	TextButtonMaker& onClickLeftUp(unique_ptr<CallBack> callback)
 	{
 		UI::getInstance()->addLeftUpCallback(move(callback), rootNode->id);
 		return *this;

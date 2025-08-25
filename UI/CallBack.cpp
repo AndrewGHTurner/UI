@@ -1,7 +1,7 @@
 #include "CallBack.h"
 #include "UI.h"
 
-Callback::Callback(void (*onClickFunk)(void*), void* p, bool scroll)
+CallBack::CallBack(void (*onClickFunk)(void*), void* p, bool scroll)
 {
 	id = UI::getInstance()->newID();
 	function = onClickFunk;
@@ -10,17 +10,17 @@ Callback::Callback(void (*onClickFunk)(void*), void* p, bool scroll)
 }
 
 
-void Callback::setParam(void* p)
+void CallBack::setParam(void* p)
 {
 	param = p;
 }
 
-void* Callback::getParam()
+void* CallBack::getParam()
 {
 	return param;
 }
 
-Callback::~Callback()
+CallBack::~CallBack()
 {
 	if (isScrollCallback && param)
 	{

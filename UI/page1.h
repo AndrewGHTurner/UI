@@ -28,11 +28,11 @@ public:
 	   UI* ui = UI::getInstance();
        unique_ptr<TextBox> j = ui->addButton("hello");  
        void* d = nullptr;
-       unique_ptr<Callback> c = makeCallBack(incrementSize, d);
+       unique_ptr<CallBack> c = makeCallBack(incrementSize, d);
        ui->addOnClick(move(c), j->id);//WOUDL NEED TO MAKE A FOX  
 
        //create the scroll area  
-       unique_ptr<Vertical> verticalScroll = make_unique<Vertical>(Vector2f(200, 400), Vector2f(200, 200));  
+	   VerticalPtr verticalScroll = Vertical();
 	   verticalScroll->setMargin(4); // Set the margin between elements in the scroll area
        verticalScroll->setBackgroundColour(Color(63, 3, 153)); // Set the background colour of the scroll area
 
@@ -48,47 +48,47 @@ public:
 
 
        ColouredButton btn2 = ColouredButton(Color::Black);
-       unique_ptr<Callback> c2 = makeCallBack(removeTreeNode, new std::tuple<Branch*, int>(verticalScroll.get(), btn2.getID()));
+       CallBackPtr c2 = makeCallBack(removeTreeNode, new std::tuple<Branch*, int>(verticalScroll.get(), btn2.getID()));
        btn2.onClick(move(c2));
        verticalScroll->add(btn2);  
 
        ColouredButton btn3 = ColouredButton(Color::Blue);
 	   void* u = nullptr;
-       unique_ptr<Callback> c3 = makeCallBack(switchToPage2, this);
+       CallBackPtr c3 = makeCallBack(switchToPage2, this);
        btn3.onClick(move(c3));
        verticalScroll->add(btn3);  //CANNOT MOVE IT TWICE
 
        ColouredButton btn4 = ColouredButton(Color::Magenta);
-       unique_ptr<Callback> c4 = makeCallBack(changeColourBtn, btn4.getRootNodePointer());
+       CallBackPtr c4 = makeCallBack(changeColourBtn, btn4.getRootNodePointer());
        btn4.onClick(move(c4));  
        verticalScroll->add(btn4);  
 
        verticalScroll->add(move(j));  
 
        ColouredButton btn5 = ColouredButton(Color::Cyan);
-       unique_ptr<Callback> c5 = makeCallBack(changeColourBtn, btn5.getRootNodePointer());
+       CallBackPtr c5 = makeCallBack(changeColourBtn, btn5.getRootNodePointer());
        btn5.onClick(move(c5));  
        verticalScroll->add(btn5);  
 
        unique_ptr<HorizontalProportionalSpacedBar>ggg = make_unique<HorizontalProportionalSpacedBar>(ui->getOrigin(), ui->getSize());  
 
        ColouredButton btna(Color::Blue);  
-       unique_ptr<Callback> ca = makeCallBack(changeColourBtn, btna.getRootNodePointer());
+       CallBackPtr ca = makeCallBack(changeColourBtn, btna.getRootNodePointer());
        btna.onClick(move(ca));  
 
-	   unique_ptr<Vertical> vert = make_unique<Vertical>(Vector2f(0, 0), Vector2f(200, 200));
+       VerticalPtr vert = Vertical();//make_unique<Vertical>(Vector2f(0, 0), Vector2f(200, 200));
 
 	   unique_ptr<Scroll> scroll = make_unique<Scroll>();
        scroll->setBackgroundColour(Color::Green);
 
-	   unique_ptr<Vertical> vert2 = make_unique<Vertical>();
+       VerticalPtr vert2 = Vertical();
 	   vert2->setMargin(4); // Set the margin between elements in the vertical scroll area
 
 
 	   int vert2Height = 0; // Initialize the height of the vertical scroll area
        for (int t = 0; t < 20; t++) {
            ColouredButton btnb(Color::Blue);
-           unique_ptr<Callback> cb = makeCallBack(changeColourBtn, btnb.getRootNodePointer());
+           CallBackPtr cb = makeCallBack(changeColourBtn, btnb.getRootNodePointer());
            btnb.onClick(move(cb));
            vert2->add(btnb); // Add btnb to the scroll area
 		   vert2Height += 40; // Increment the height for each button added
@@ -96,7 +96,7 @@ public:
 	   vert2->setSize(Vector2f(200, vert2Height)); // Set the size of the vertical scroll area based on the number of buttons
 	   scroll->add(move(vert2)); // Add the vertical scroll to the scroll area
        ColouredButton btny(Color::Blue);
-       unique_ptr<Callback> cy = makeCallBack(changeColourBtn, btny.getRootNodePointer());
+       CallBackPtr cy = makeCallBack(changeColourBtn, btny.getRootNodePointer());
        btny.onClick(move(cy));
        ui->addMouseWheelCallback(move(makeScrollCallBack(printText, scroll.get())), scroll->id); // Add mouse wheel callback to the scroll area
 
@@ -127,7 +127,7 @@ public:
 	   scroll->incrementOffset(get<1>(param)); // Increment the scroll offset by the delta value
    }
 
-   static void addTreeNode(Vertical* branch)  
+   static void addTreeNode(class _Vertical* branch)  
    {  
 	   static int t;
        Color f;  

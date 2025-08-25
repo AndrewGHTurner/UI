@@ -15,7 +15,7 @@ namespace ButtonBuilders
 	{
 	public:
 
-		GetParamStage(BuildColouredButton& creator, Callback& callBack, unique_ptr<ColouredBox>& colouredBox)
+		GetParamStage(BuildColouredButton& creator, CallBack& callBack, unique_ptr<ColouredBox>& colouredBox)
 			: creator(creator), callBack(callBack), colouredBox(colouredBox)
 		{
 
@@ -34,7 +34,7 @@ namespace ButtonBuilders
 		}
 	private:
 		
-		Callback& callBack;
+		CallBack& callBack;
 		unique_ptr<ColouredBox>& colouredBox;
 		BuildColouredButton& creator;
 	};
@@ -49,12 +49,12 @@ namespace ButtonBuilders
 		int newButtonID;
 		unique_ptr<ColouredBox> colouredBox;
 		UI* ui;
-		vector<Callback> callbacks;
+		vector<CallBack> callbacks;
 	public:
 		
 		BuildColouredButton(UI* ui) : ui(ui)
 		{
-			callbacks = vector<Callback>();
+			callbacks = vector<CallBack>();
 			newButtonID = ui->newID();
 			colouredBox = make_unique<ColouredBox>();
 		}
@@ -70,7 +70,7 @@ namespace ButtonBuilders
 		}
 		GetParamStage addOnClick(void (*onClick)(void*), int* outCallBackID = nullptr)
 		{
-			Callback callBack(onClick, nullptr);
+			CallBack callBack(onClick, nullptr);
 			if (outCallBackID)
 			{
 				*outCallBackID = callBack.id;

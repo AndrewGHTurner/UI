@@ -10,9 +10,9 @@ using namespace std;
 class UI_API BehviourManager {
 protected:
 	static uint32_t nextID;
-	unordered_map<int, vector<unique_ptr<Callback>>> leftDownCallbacks;//callbacks for when the left mouse button is pressed down
-	unordered_map<int, vector<unique_ptr<Callback>>> leftUpCallbacks;
-	unordered_map<int, vector<unique_ptr<Callback>>> mouseWheelScrollCallbacks;//callbacks for when the mouse wheel is scrolled
+	unordered_map<int, vector<unique_ptr<CallBack>>> leftDownCallbacks;//callbacks for when the left mouse button is pressed down
+	unordered_map<int, vector<unique_ptr<CallBack>>> leftUpCallbacks;
+	unordered_map<int, vector<unique_ptr<CallBack>>> mouseWheelScrollCallbacks;//callbacks for when the mouse wheel is scrolled
 public:
 	// Delete copy operations because unique_ptrs cannot be copied
 	BehviourManager(const BehviourManager&) = delete;
@@ -25,9 +25,9 @@ public:
 	BehviourManager() = default;
 	static uint32_t newID();
 
-	void addLeftDownCallback(unique_ptr<Callback> newCallback, int boxID);//returns unique id of new callback
-	void addLeftUpCallback(unique_ptr<Callback> newCallback, int boxID);//returns unique id of new callback
-	void addMouseWheelCallback(unique_ptr<Callback> newCallback, int boxID);//returns unique id of new callback
+	void addLeftDownCallback(unique_ptr<CallBack> newCallback, int boxID);//returns unique id of new callback
+	void addLeftUpCallback(unique_ptr<CallBack> newCallback, int boxID);//returns unique id of new callback
+	void addMouseWheelCallback(unique_ptr<CallBack> newCallback, int boxID);//returns unique id of new callback
 	void clearID(int id) {
 		//clickHandelers.erase(id);
 	}

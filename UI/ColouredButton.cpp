@@ -16,7 +16,7 @@ ColouredBox* ColouredButton::getRootNodePointer()
 	return colouredBox();
 }
 
-ColouredButton& ColouredButton::onClick(unique_ptr<Callback> callback)
+ColouredButton& ColouredButton::onClick(unique_ptr<CallBack> callback)
 {
 	UI::getInstance()->addOnClick(move(callback), rootNode->id);
 	return *this;

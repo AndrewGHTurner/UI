@@ -79,7 +79,7 @@ void removeTreeNode(tuple<Branch*, int>* tuple)
 	delete tuple;//Clean up the dynamically allocated memory
 }
 int t = 0;
-void addTreeNode(Vertical* branch)
+void addTreeNode(class _Vertical* branch)
 {
 	Color f;
 	if (t == 0)
