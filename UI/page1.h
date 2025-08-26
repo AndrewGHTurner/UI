@@ -15,7 +15,8 @@ class Page1 : public Page {
 private:
    // LabelColour TBpressedColour;
 	//LabelColour TBreleasedColour; // Store the label and its colour for later use
-    TextButtonMaker TB = TextButtonMaker();
+    TextButtonMaker addButtonButton = TextButtonMaker();
+	TextButtonMaker page3Button = TextButtonMaker();
 public:
     int page2ID;
     PageSwitcher& pageSwitcher; // Reference to the PageSwitcher to switch back to Page
@@ -26,9 +27,9 @@ public:
    void createTree() override  
    {   
 	   UI* ui = UI::getInstance();
-       unique_ptr<TextBox> j = ui->addButton("hello");  
+       TextBoxPtr j = TextBox("Hello");
        void* d = nullptr;
-       unique_ptr<CallBack> c = makeCallBack(incrementSize, d);
+       CallBackPtr c = makeCallBack(incrementSize, d);
        ui->addOnClick(move(c), j->id);//WOUDL NEED TO MAKE A FOX  
 
        //create the scroll area  
@@ -39,11 +40,11 @@ public:
 	   unique_ptr<Label> label = make_unique<Label>("first label", Vector2f(0, 0), Vector2f(200, 30));
 	   verticalScroll->add(move(label));
 
-       TB.createButton("Add Button")
+       addButtonButton.createButton("Add Button")
            .onClickLeftDown(move(makeCallBack(addTreeNode, verticalScroll.get())))
 		   .setPressedColour(Color::Green) // Set the pressed colour for the button
            .setColour(Color::Yellow);      
-	   verticalScroll->add(TB);
+	   verticalScroll->add(addButtonButton);
 
 
 

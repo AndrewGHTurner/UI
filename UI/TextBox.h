@@ -1,89 +1,47 @@
 #ifndef TEXT_BOX_H
 #define TEXT_BOX_H
 
-#include "Leaf.h"
-#include <SFML/Graphics/Font.hpp>
-#include <memory>
-#include "Animation.h"
-#include "EText.h"
-#include "ETextContainer.h"
+
 #include "UI_DLL_Interface.h"
+#include "ETextContainer.h"
+#include "Animation.h"
+class Leaf;
 using namespace std;
 
-class UI_API TextBox : public Leaf, public Animation, public ETextContainer {
 
-public:
-	TextBox(Font& font, Vector2f origin, Vector2f siz, string initialText)
-		: Leaf(nullptr)
-	{
-		hasText = true;
-		setRedrawTextNeededTrue();
-		text = make_unique<EText>(font, initialText);
-		text.get()->setPosition(origin);
-		text.get()->setSize(siz);
-		notifyTextChanged(true);
 
-		updateVerticesPosition();
-		//	ui->addAnimation(this);
+namespace internal {
+	class UI_API TextBox : public Leaf, public Animation, public ETextContainer {
 
-	}
+	public:
+		TextBox(Font& font, Vector2f origin, Vector2f siz, string initialText);
 
-	TextBox(Font& font, string initialText)
-		: Leaf(nullptr)
-	{
-		hasText = true;
-		setRedrawTextNeededTrue();
-		text = make_unique<EText>(font, initialText);
-		notifyTextChanged(true);
+		TextBox(string initialText);
 
-		updateVerticesPosition();
-		//	ui->addAnimation(this);
+		void setCurrentCharIndex(int index);
 
-	}
+		bool drawAnimation();
 
-	void setCurrentCharIndex(int index)
-	{
-		text.get()->currentCharIndex = index;
-	}
+		TextBox(const TextBox&) = delete;  // Prevent copying
 
-	bool drawAnimation() override {
+		void resizeText() override;
+		void setText(string newText);
+		string getText();
+		void setColour(Color c);
 
-		draw();
-		text.get()->draw();
-		return true;
-	}
+		static void scrollText(tuple<TextBox*, int> param);
 
-	TextBox(const TextBox&) = delete;  // Prevent copying
+	};
+}
+/**
+* @brief TextBox wrapped in a unique pointer to allow for more readable API
+*/
+using TextBoxPtr = std::unique_ptr<class internal::TextBox>;
 
-	void resizeText() override
-	{
-	//	if (text)
-		{
-			text.get()->setPosition(origin);
-			text.get()->setSize(this->size);
-		}
-	}
-	void setText(string newText)
-	{
-		text.get()->setText(newText);
-		notifyRedrawNeeded();
-		notifyTextChanged(1);
-	}
-	string getText()
-	{
-		return text.get()->getText();
-	}
-	void setColour(Color c)
-	{
-		vertices[0].color = c;
-		vertices[1].color = c;
-		vertices[2].color = c;
-		vertices[3].color = c;
-		vertices[4].color = c;
-		vertices[5].color = c;
-	}
-
-};
+/**
+* @brief free function to act as the TextBox's constructor... the real constructor is hidden in the internal namespace
+*/
+TextBoxPtr UI_API TextBox(string initialText);
 
 
 #endif

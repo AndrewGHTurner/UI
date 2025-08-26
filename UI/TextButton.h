@@ -18,7 +18,9 @@ struct UI_API LabelColour {
 	LabelColour(Color colour, Label* label) : colour(colour), label(label) {}
 	LabelColour() = default; // Default constructor for empty initialization
 };
-
+/**
+* @brief This facade is needed as it holds the colour params needed for the change colour callbacks... it can only make one text button
+*/
 class UI_API TextButtonMaker : public Facade
 {	
 public:

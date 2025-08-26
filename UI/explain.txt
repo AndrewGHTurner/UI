@@ -1,6 +1,6 @@
 The facade class is designed to be extended to create facades around the widget and layout treeNode implementations.
 The intention is to keep low level optimisations available to the user of the UI library while still providing a 
-simple API. Using facades it ever so slightly slower at runtime but will allow for much faster development
+simple API. Using facades is ever so slightly slower at runtime but will allow for much faster development
 
 facade API uses the builder pattern for readability and conciseness
 

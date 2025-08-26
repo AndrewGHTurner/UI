@@ -191,6 +191,7 @@
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="PageSwitcher.cpp" />
     <ClCompile Include="Scroll.cpp" />
+    <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="TextButton.h" />
     <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="UI.cpp" />

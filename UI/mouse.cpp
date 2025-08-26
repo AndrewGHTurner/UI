@@ -6,7 +6,7 @@ void UI::leftDownAt(Vector2i pos)
 	Leaf* leaf = getLeafAt(pos, this);
 	if (leaf != nullptr && leaf->hasText)
 	{
-		currentTextBox = static_cast<TextBox*>(leaf);
+		currentTextBox = static_cast<internal::TextBox*>(leaf);
 
 		currentCharIndex = currentTextBox->getText().length();
 		currentTextBox->setCurrentCharIndex(currentCharIndex);

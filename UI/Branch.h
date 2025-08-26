@@ -132,7 +132,7 @@ public:
 	}
 
 	virtual void calcPositions() {};
-	void drawText(int currentCharIndex = -1, TextBox* currentTextBox = nullptr)
+	void drawText(int currentCharIndex = -1, internal::TextBox* currentTextBox = nullptr)
 	{
 		for (const unique_ptr<TreeNode>& child : children)
 		{
@@ -141,9 +141,9 @@ public:
 			{
 				if (child->isLeaf())
 				{
-					if (static_cast<TextBox*>(child.get())->text)
+					if (static_cast<internal::TextBox*>(child.get())->text)
 					{
-						TextBox* textBox = static_cast<TextBox*>(child.get());
+						internal::TextBox* textBox = static_cast<internal::TextBox*>(child.get());
 						if (textBox == currentTextBox)
 						{
 							textBox->setRedrawTextNeededFalse();
@@ -204,7 +204,7 @@ public:
 				if (child->isLeaf())
 				{
 					static_cast<Leaf*>(child.get())->updateVerticesPosition();
-					TextBox* b = static_cast<TextBox*>(child.get());
+					internal::TextBox* b = static_cast<internal::TextBox*>(child.get());
 					if (b->isRedrawTextNeeded())
 					{
 						b->resizeText();

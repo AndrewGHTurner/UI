@@ -108,6 +108,9 @@
     <ClCompile Include="Scroll.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TextBox.cpp">
+      <Filter>Source Files\widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UI.h">

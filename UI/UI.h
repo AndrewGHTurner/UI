@@ -6,7 +6,6 @@
 #include "AnimationManager.h"
 #include "BehaviourManager.h"
 #include <iostream>
-#include "TextBox.h"
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -73,7 +72,7 @@ public:
 	}
 
 
-	TextBox* currentTextBox = nullptr;
+	internal::TextBox* currentTextBox = nullptr;
 	sf::Font font;
 	UI(const UI&) = delete;             // disable copy constructor
 	UI& operator=(const UI&) = delete;  // disable copy assignment
@@ -577,32 +576,6 @@ public:
 	//origin - top right courner of the button
 	//size - length of the button in the x and y dimensions
 
-	static void scrollText(tuple<TextBox*, int> param)
-	{
-		//this is a scroll callback for a TextBox
-		TextBox* textBox = static_cast<TextBox*>(std::get<0>(param));
-		int delta = std::get<1>(param);
-		if (UI::getInstance()->currentTextBox == textBox)
-		{
-			if (delta > 0)
-			{
-				UI::getInstance()->handleArrowEvent(ArrowDirection::UP);
-			}
-			else if (delta < 0)
-			{
-				UI::getInstance()->handleArrowEvent(ArrowDirection::DOWN);
-			}
-
-		}
-	}
-
-	unique_ptr<TextBox> addButton(string initialText)
-	{
-		unique_ptr<TextBox> newButton = make_unique<TextBox>(font, initialText);
-		unique_ptr<CallBack> callback = makeScrollCallBack(scrollText, newButton.get());
-		addMouseWheelCallback(move(callback), newButton->id);
-		return move(newButton);
-	}
 };
 
 
