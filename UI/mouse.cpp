@@ -24,6 +24,7 @@ void UI::leftDownAt(Vector2i pos)
 	leftReleaseCallbacks = retrieveRelevantCallbacks(leftUpCallbacks, pos);
 	//run any left press callbacks associated with the position
 	executeRelevantCallbacks(leftDownCallbacks, pos);
+	executeRelevantLambdas(leftDownLambdas, pos);
 }
 
 void UI::leftUpAt(Vector2i pos)

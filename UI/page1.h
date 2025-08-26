@@ -8,6 +8,7 @@
 #include "Label.h"
 #include "Vertical.h"
 #include "Scroll.h"
+#include <functional>
 
 
 
@@ -48,10 +49,15 @@ public:
            .setColour(Color::Yellow);      
 	   verticalScroll->add(TB);
 
+       string k = "This is a lambda";
+       function<void()> l = [k]() {
+		   cout << "lambda clicked " << k << endl; }; // Example lambda function
+
        TB.createButton("resizer")
            .setColour(Color::Red)
            .setPressedColour(Color::Blue)
-           .onClickLeftUp()
+		   .onClickLeftDown(l);
+        
 	   verticalScroll->add(TB);
 
 
@@ -190,5 +196,7 @@ public:
    static void switchToPage2(Page1* page1) {
        page1->pageSwitcher.showPage(page1->page2ID);
    }
+
+
 
 };  

@@ -547,6 +547,25 @@ public:
 		}
 	}
 
+	void executeRelevantLambdas(const unordered_map<int, vector<function<void()>>>& handlers, Vector2i pos)
+	{
+		//get a list of the boxIDs that are at position
+		vector<int> boxIDs;
+		getBoxesAt(pos, boxIDs, this);
+		//run the callbacks from the handlers map
+		for (int boxID : boxIDs)
+		{
+			auto it = handlers.find(boxID);
+			if (it != handlers.end())//if a vector of handlers exists for this ID
+			{
+				for (const function<void()>& lambda : it->second)
+				{
+					lambda();
+				}
+			}
+		}
+	}
+
 	vector<CallBack*> retrieveRelevantCallbacks(const unordered_map<int, vector<unique_ptr<CallBack>>>& handlers, Vector2i pos)
 	{
 		vector<CallBack*> relevantCallbacks;
@@ -570,7 +589,7 @@ public:
 
 	void addOnClick(unique_ptr<CallBack> callback, int boxID)//wrapper name as more intuitive
 	{
-		addLeftDownCallback(move(callback), boxID);
+		addLeftDown(move(callback), boxID);
 	}
 
 	//origin - top right courner of the button

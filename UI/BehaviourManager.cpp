@@ -6,7 +6,7 @@ uint32_t BehviourManager::newID() {
 	return nextID += 1;
 }
 
-void BehviourManager::addLeftDownCallback(unique_ptr<CallBack> newCallback, int boxID)//returns unique id of new callback
+void BehviourManager::addLeftDown(unique_ptr<CallBack> newCallback, int boxID)//returns unique id of new callback
 {
 	//check if a vector of callbacks already exists
 	auto it = leftDownCallbacks.find(boxID);
@@ -19,6 +19,22 @@ void BehviourManager::addLeftDownCallback(unique_ptr<CallBack> newCallback, int 
 		vector<unique_ptr<CallBack>> vec;
 		vec.push_back(move(newCallback));//pushing a copy ... will not go out of scope
 		leftDownCallbacks[boxID] = move(vec);
+	}
+}
+
+void BehviourManager::addLeftDown(function<void()> lambda, int boxID)
+{
+	auto it = leftDownLambdas.find(boxID);
+	if (it != leftDownLambdas.end())//if a vector of callbacks already exists
+	{
+		it->second.push_back(lambda);//add the new callback to the existing vector
+		return;
+	}
+	else {
+		vector<function<void()>> vec;
+		vec.push_back(lambda);//pushing a copy ... will not go out of scope
+		leftDownLambdas[boxID] = move(vec);
+		return;
 	}
 }
 

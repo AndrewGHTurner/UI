@@ -9,6 +9,7 @@
 #include "UI.h"
 #include "TreeNode.h"
 #include <vector>
+#include <functional>
 #include "UI_DLL_Interface.h"
 using namespace std;
 
@@ -45,7 +46,7 @@ public:
 
 			unique_ptr<CallBack> release = makeCallBack(changeColorLabel, labelColour.get());
 			unique_ptr<CallBack> press = makeCallBack(changeColorLabel, pressedLabelColour.get());
-			UI::getInstance()->addLeftDownCallback(move(press), rootNode->id); // Add the callback for left down click
+			UI::getInstance()->addLeftDown(move(press), rootNode->id); // Add the callback for left down click
 			UI::getInstance()->addLeftUpCallback(move(release), rootNode->id); // Add the callback for left up click
 			labelColours.push_back(move(labelColour)); // Store the released colour and label for later use
 			labelColours.push_back(move(pressedLabelColour)); // Store the pressed colour and label for later use
@@ -61,6 +62,12 @@ public:
 	TextButtonMaker& onClickLeftDown(unique_ptr<CallBack> callback)
 	{
 		UI::getInstance()->addOnClick(move(callback), rootNode->id);
+		return *this;
+	}
+
+	TextButtonMaker& onClickLeftDown(function<void()> lambda)
+	{
+		UI::getInstance()->addLeftDown(lambda, rootNode->id);
 		return *this;
 	}
 
