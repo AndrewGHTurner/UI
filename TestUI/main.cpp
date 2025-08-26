@@ -129,7 +129,8 @@ int main()
 	PageSwitcher pageSwitcher(*ui);//on the stack but may need to be on heap if functions returns
 	int page1ID = pageSwitcher.newPageID(); // Create a new page ID for Page1
 	int page2ID = pageSwitcher.newPageID(); // Create a new page ID for Page2
-	unique_ptr<Page1> page1 = make_unique<Page1>(pageSwitcher, page2ID);
+	int page3ID = pageSwitcher.newPageID(); // Create a new page ID for Page3
+	unique_ptr<Page1> page1 = make_unique<Page1>(pageSwitcher, page2ID, page3ID);
 
 
 

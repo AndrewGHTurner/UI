@@ -15,14 +15,16 @@ class Page1 : public Page {
 private:
    // LabelColour TBpressedColour;
 	//LabelColour TBreleasedColour; // Store the label and its colour for later use
-    TextButtonMaker addButtonButton = TextButtonMaker();
-	TextButtonMaker page3Button = TextButtonMaker();
+    TextButtonMaker TB = TextButtonMaker();
+	
 public:
     int page2ID;
+    int page3ID;
     PageSwitcher& pageSwitcher; // Reference to the PageSwitcher to switch back to Page
 	Page1(Page1&& other) = default; // Move constructor for Page1
-    Page1(PageSwitcher& pageSwitcher, int page2ID) : pageSwitcher(pageSwitcher){
+    Page1(PageSwitcher& pageSwitcher, int page2ID, int page3ID) : pageSwitcher(pageSwitcher){
 		this->page2ID = page2ID; // Store the Page2 ID for switching later  
+        this->page3ID = page3ID; // Store the Page3 ID for switching later
     }
    void createTree() override  
    {   
@@ -40,11 +42,17 @@ public:
 	   unique_ptr<Label> label = make_unique<Label>("first label", Vector2f(0, 0), Vector2f(200, 30));
 	   verticalScroll->add(move(label));
 
-       addButtonButton.createButton("Add Button")
+       TB.createButton("Add Button")
            .onClickLeftDown(move(makeCallBack(addTreeNode, verticalScroll.get())))
 		   .setPressedColour(Color::Green) // Set the pressed colour for the button
            .setColour(Color::Yellow);      
-	   verticalScroll->add(addButtonButton);
+	   verticalScroll->add(TB);
+
+       TB.createButton("resizer")
+           .setColour(Color::Red)
+           .setPressedColour(Color::Blue)
+           .onClickLeftUp()
+	   verticalScroll->add(TB);
 
 
 

@@ -1,8 +1,8 @@
 
 
-namespace tester {
-	enum PageType {
-		Page1,
-		Page2
-	};
-}
+
+enum PageType {
+	Page1,
+	Page2,
+	Page3
+};
