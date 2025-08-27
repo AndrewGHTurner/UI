@@ -179,7 +179,6 @@
   <ItemGroup>
     <ClCompile Include="AnimationManager.h" />
     <ClCompile Include="BehaviourManager.cpp" />
-    <ClCompile Include="CallBack.cpp" />
     <ClCompile Include="CenterAligner.cpp" />
     <ClCompile Include="ColouredButton.cpp" />
     <ClCompile Include="EText.cpp" />
@@ -203,8 +202,6 @@
     <ClInclude Include="BehaviourManager.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Branch.h" />
-    <ClInclude Include="ButtonFactory.h" />
-    <ClInclude Include="CallBack.h" />
     <ClInclude Include="CenterAligner.h" />
     <ClInclude Include="ColouredBox.h" />
     <ClInclude Include="ColouredButton.h" />

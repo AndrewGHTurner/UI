@@ -60,9 +60,6 @@
     <ClCompile Include="HorizontalSpacedBar.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="CallBack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TreeNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -99,9 +96,6 @@
     <ClCompile Include="HorizontalProportionalSpacedBar.cpp">
       <Filter>Source Files\layouts</Filter>
     </ClCompile>
-    <ClCompile Include="PageSwitcher.cpp">
-      <Filter>Source Files\pageManagers</Filter>
-    </ClCompile>
     <ClCompile Include="Vertical.cpp">
       <Filter>Source Files\layouts</Filter>
     </ClCompile>
@@ -114,18 +108,15 @@
     <ClCompile Include="AnimationManager.h">
       <Filter>Header Files\UI</Filter>
     </ClCompile>
+    <ClCompile Include="PageSwitcher.cpp">
+      <Filter>Source Files\pageManagers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EText.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CallBack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ButtonFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CenterAligner.h">

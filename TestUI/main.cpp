@@ -3,7 +3,7 @@
 DESIGN CHOICES
 	- per widget renderring... each Leaf object has its own vertex array... hybrid with dirty flag to allow for animations
 	- UI can be event driven rendered to a rendertexture which is then rendered over other content
-	- hover, click etc functionality will be held in a datastructure (unordered_map<int, vector<Callback>>) external to the ui tree. this is queried using the objectID
+	- hover, click etc functionality will be held in a datastructure (unordered_map<int, vector<function<void()>>) external to the ui tree. this is queried using the objectID
 	- borders done with their own components that are above their contents in the UI tree. The border component will need a branch to hold the UI leaf and the border leaf.
 */
 #include <SFML/Graphics.hpp>
@@ -14,12 +14,10 @@ DESIGN CHOICES
 #include <memory>
 #include "HorizontalSpacedBar.h"
 #include "HorizontalProportionalSpacedBar.h"
-#include "CallBack.h"
 #include <tuple>
 //#include "main.h"
 #include "UI.h"
 #include "ColouredButton.h"
-#include "ButtonFactory.h"
 #include "Page.h"
 #include "PageSwitcher.h"
 #include <Vertical.h>
@@ -32,7 +30,6 @@ DESIGN CHOICES
 
 using namespace std;
 using namespace sf;
-using namespace ButtonBuilders;
 
 void g(void*) {
 	cout << "clicked";
@@ -40,73 +37,6 @@ void g(void*) {
 
 int height = 10;
 int width = 10;
-void incrementSize(void* param) {
-	cout << "clicked 2" << endl;
-	//Button* b = (Button*)param;
-	//height += 10;
-	//width += 10;
-	//b->setSize(Vector2f(width, height));
-}
-
-void changeColor(ColouredBox* b)
-{
-	ColouredBox* box = (ColouredBox*)b;
-	if (box->colour == Color::Blue)
-	{
-		box->setColour(Color::Red);
-	}
-	else {
-		box->setColour(Color::Blue);
-	}
-}
-
-void changeColourBtn(ColouredButton* button)
-{
-	if (button->getColor() == Color::Blue)
-	{
-		button->setColor(Color::Red);
-	}
-	else {
-		button->setColor(Color::Blue);
-	}
-}
-
-void removeTreeNode(tuple<Branch*, int>* tuple)
-{
-	Branch* branch = get<0>(*tuple);
-	int id = get<1>(*tuple);
-	branch->remove(id);
-	delete tuple;//Clean up the dynamically allocated memory
-}
-int t = 0;
-void addTreeNode(class _Vertical* branch)
-{
-	Color f;
-	if (t == 0)
-	{
-		f = Color::Red;
-	}
-	else if (t == 1)
-	{
-		f = Color::Green;
-	}
-	else if (t == 2)
-	{
-		f = Color::Blue;
-	}
-	else if (t == 3)
-	{
-		f = Color::Magenta;
-		t = -1;
-	}
-	t += 1;
-
-	ColouredButton btn(f);
-	tuple<Branch*, int>* btnTuple = new std::tuple<Branch*, int>(branch, btn.getID());
-	btn.onClick(makeCallBack(removeTreeNode, btnTuple));
-	branch->add(btn);
-}
-
 
 
 //RenderTexture* EText::screenTexture = nullptr;

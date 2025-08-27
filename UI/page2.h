@@ -25,7 +25,12 @@ public:
 		verticalScroll->add(move(box2));
 		ColouredButton btn1(Color::Red);
 		void* u = 0;
-		btn1.onClick(makeCallBack(switchToPage1, this));
+
+		function<void()> switchToPage1 = [this]() {
+			this->pageSwitcher.showPage(this->page1ID);
+			};
+
+		btn1.onClick(switchToPage1);
 		verticalScroll->add(btn1);
 		unique_ptr<ColouredBox> box3 = make_unique<ColouredBox>(Color::Black);
 		verticalScroll->add(move(box3));
@@ -33,9 +38,5 @@ public:
 		unique_ptr<ColouredBox> box4 = make_unique<ColouredBox>(Color::Black);
 		horBar->add(move(box4), 10);
 		treeRoot = move(horBar);
-	}
-
-	static void switchToPage1(Page2* page2) {
-		page2->pageSwitcher.showPage(page2->page1ID);
 	}
 };

@@ -2,7 +2,6 @@
 #define COLOURED_BUTTON_H
 
 #include "ColouredBox.h"
-#include "CallBack.h"
 #include "ui.h"
 #include "Facade.h"
 #include <memory>
@@ -26,7 +25,7 @@ public:
 
 	ColouredBox* getRootNodePointer() override;
 
-	ColouredButton& onClick(unique_ptr<CallBack> callback);
+	ColouredButton& onClick(function<void()> lambda);
 
 	ColouredButton& setColor(Color c);
 

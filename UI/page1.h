@@ -1,7 +1,6 @@
 #include "Page.h"  
 #include "ColouredButton.h"  
 #include "TextButton.h"
-#include "CallBack.h"  
 #include "HorizontalProportionalSpacedBar.h"  
 #include <memory>  
 #include "PageSwitcher.h"
@@ -34,13 +33,26 @@ public:
 			};
 	}
 
+	function<void()> makeChangeColourLambda(ColouredBox* button) {
+		return [button]() {
+			if (button->colour == Color::Cyan)
+			{
+				button->setColour(Color::Magenta);
+			}
+			else {
+				button->setColour(Color::Cyan);
+			}
+			};
+	}
+
    void createTree() override  
    {   
 	   UI* ui = UI::getInstance();
        TextBoxPtr j = TextBox("Hello");
        void* d = nullptr;
-       CallBackPtr c = makeCallBack(incrementSize, d);
-       ui->addOnClick(move(c), j->id);//WOUDL NEED TO MAKE A FOX  
+
+	   function<void()> print = []() { cout << "clicked" << endl; };
+       ui->addLeftDown(print, j->id);//WOUDL NEED TO MAKE A FOX  
 
        //create the scroll area  
 	   VerticalPtr verticalScroll = Vertical();
@@ -50,8 +62,41 @@ public:
 	   unique_ptr<Label> label = make_unique<Label>("first label", Vector2f(0, 0), Vector2f(200, 30));
 	   verticalScroll->add(move(label));
 
+       function<void()> addTreeNode = [branch = verticalScroll.get()]() {
+           static int t;
+           Color f;
+           if (t == 0)
+           {
+               f = Color::Red;
+           }
+           else if (t == 1)
+           {
+               f = Color::Green;
+           }
+           else if (t == 2)
+           {
+               f = Color::Blue;
+           }
+           else
+           {
+               f = Color::Magenta;
+               t = -1;
+           }
+           t += 1;
+
+           ColouredButton btn(f);
+
+           function<void()> removeTreeNode = [branch, btnID = btn.getID()]() {
+               branch->remove(btnID);
+               };
+
+           btn.onClick(removeTreeNode);
+           branch->add(btn);
+
+           };
+
        TB.createButton("Add Button")
-           .onClickLeftDown(move(makeCallBack(addTreeNode, verticalScroll.get())))
+           .onClickLeftDown(addTreeNode)
 		   .setPressedColour(Color::Green) // Set the pressed colour for the button
            .setColour(Color::Yellow);      
 	   verticalScroll->add(TB);
@@ -70,8 +115,11 @@ public:
 
 
        ColouredButton btn2 = ColouredButton(Color::Black);
-       CallBackPtr c2 = makeCallBack(removeTreeNode, new std::tuple<Branch*, int>(verticalScroll.get(), btn2.getID()));
-       btn2.onClick(move(c2));
+	   function<void()> removeTreeNode = [verticalScrollPtr = verticalScroll.get(), btnID = btn2.getID()]() {
+		   verticalScrollPtr->remove(btnID);
+		   };
+	   btn2.onClick(removeTreeNode);
+
        verticalScroll->add(btn2);  
 
        ColouredButton btn3 = ColouredButton(Color::Blue);
@@ -82,22 +130,25 @@ public:
        verticalScroll->add(btn3);  //CANNOT MOVE IT TWICE
 
        ColouredButton btn4 = ColouredButton(Color::Magenta);
-       CallBackPtr c4 = makeCallBack(changeColourBtn, btn4.getRootNodePointer());
-       btn4.onClick(move(c4));  
+
+	   
+	   btn4.onClick(makeChangeColourLambda(btn4.getRootNodePointer()));
+
        verticalScroll->add(btn4);  
 
        verticalScroll->add(move(j));  
 
        ColouredButton btn5 = ColouredButton(Color::Cyan);
-       CallBackPtr c5 = makeCallBack(changeColourBtn, btn5.getRootNodePointer());
-       btn5.onClick(move(c5));  
+       btn5.onClick(makeChangeColourLambda(btn5.getRootNodePointer()));  
+
+
+
        verticalScroll->add(btn5);  
 
        unique_ptr<HorizontalProportionalSpacedBar>ggg = make_unique<HorizontalProportionalSpacedBar>(ui->getOrigin(), ui->getSize());  
 
        ColouredButton btna(Color::Blue);  
-       CallBackPtr ca = makeCallBack(changeColourBtn, btna.getRootNodePointer());
-       btna.onClick(move(ca));  
+       btna.onClick(makeChangeColourLambda(btna.getRootNodePointer()));
 
        VerticalPtr vert = Vertical();//make_unique<Vertical>(Vector2f(0, 0), Vector2f(200, 200));
 
@@ -111,16 +162,14 @@ public:
 	   int vert2Height = 0; // Initialize the height of the vertical scroll area
        for (int t = 0; t < 20; t++) {
            ColouredButton btnb(Color::Blue);
-           CallBackPtr cb = makeCallBack(changeColourBtn, btnb.getRootNodePointer());
-           btnb.onClick(move(cb));
+           btnb.onClick(makeChangeColourLambda(btnb.getRootNodePointer()));
            vert2->add(btnb); // Add btnb to the scroll area
 		   vert2Height += 40; // Increment the height for each button added
        }
 	   vert2->setSize(Vector2f(200, vert2Height)); // Set the size of the vertical scroll area based on the number of buttons
 	   scroll->add(move(vert2)); // Add the vertical scroll to the scroll area
        ColouredButton btny(Color::Blue);
-       CallBackPtr cy = makeCallBack(changeColourBtn, btny.getRootNodePointer());
-       btny.onClick(move(cy));
+       btny.onClick(makeChangeColourLambda(btny.getRootNodePointer()));
 
 
 	   //add mouseWheel lambda to scroll area
@@ -140,69 +189,4 @@ public:
 
        treeRoot = move(ggg);  
    }  
-   static void incrementSize(void* param) {  
-       cout << "clicked 2" << endl;  
-       //Button* b = (Button*)param;  
-       //height += 10;  
-       //width += 10;  
-       //b->setSize(Vector2f(width, height));  
-   }  
-
-   static void addTreeNode(class _Vertical* branch)  
-   {  
-	   static int t;
-       Color f;  
-       if (t == 0)  
-       {  
-           f = Color::Red;  
-       }  
-       else if (t == 1)  
-       {  
-           f = Color::Green;  
-       }  
-       else if (t == 2)  
-       {  
-           f = Color::Blue;  
-       }  
-       else  
-       {  
-           f = Color::Magenta;  
-           t = -1;  
-       }  
-       t += 1;  
-
-       ColouredButton btn(f);  
-       btn.onClick(makeCallBack(removeTreeNode, new tuple<Branch*, int>(branch, btn.getID())));
-       branch->add(btn);  
-   }  
-
-
-
-
-
-   static void changeColourBtn(ColouredBox* button)
-   {  
-       if (button->colour == Color::Cyan)
-       {  
-           button->setColour(Color::Magenta);
-       }  
-       else {  
-           button->setColour(Color::Cyan);
-       }  
-   }  
-
-   static void removeTreeNode(tuple<Branch*, int>* tuple)  
-   {  
-       Branch* branch = get<0>(*tuple);  
-       int id = get<1>(*tuple);  
-       branch->remove(id);  
-       delete tuple;//Clean up the dynamically allocated memory  
-   }  
-
-   static void switchToPage2(Page1* page1) {
-       page1->pageSwitcher.showPage(page1->page2ID);
-   }
-
-
-
 };  

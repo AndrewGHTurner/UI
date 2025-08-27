@@ -37,8 +37,7 @@ private:
 	int currentCharIndex = 0;//could make a typeing handeller class?// should probably hold this in the EText class
 	unique_ptr<RenderTexture> screenTexture;//this is the texture that all UI elements will be drawn onto
 
-	//releaseOn callbacks vs releaseOff callbacks???
-	vector<CallBack*> leftReleaseCallbacks;//hold the release callbacks on press do that the correct ones are called on release(even if a button resizes)
+	vector<reference_wrapper<const function<void()>>> leftReleaseLambdas;//hold the release lambdas on press do that the correct ones are called on release(even if a button resizes)
 
 
 	UI(RenderWindow& window) : BehviourManager(), Branch(Vector2f(0, 0), Vector2f(300, 300)) {
@@ -528,31 +527,12 @@ public:
 		}
 	}
 
-	void executeRelevantCallbacks(const unordered_map<int, vector<unique_ptr<CallBack>>>& handlers, Vector2i pos)
-	{
-		//get a list of the boxIDs that are at position
-		vector<int> boxIDs;
-		getBoxesAt(pos, boxIDs, this);
-		//run the callbacks from the handlers map
-		for (int boxID : boxIDs)
-		{
-			auto it = handlers.find(boxID);
-			if (it != handlers.end())//if a vector of handlers exists for this ID
-			{
-				for (const unique_ptr<CallBack>& callback : it->second)
-				{
-					callback->run();
-				}
-			}
-		}
-	}
-
 	void executeRelevantLambdas(const unordered_map<int, vector<function<void()>>>& handlers, Vector2i pos)
 	{
 		//get a list of the boxIDs that are at position
 		vector<int> boxIDs;
 		getBoxesAt(pos, boxIDs, this);
-		//run the callbacks from the handlers map
+		//run the lambdas from the handlers map
 		for (int boxID : boxIDs)
 		{
 			auto it = handlers.find(boxID);
@@ -566,30 +546,25 @@ public:
 		}
 	}
 
-	vector<CallBack*> retrieveRelevantCallbacks(const unordered_map<int, vector<unique_ptr<CallBack>>>& handlers, Vector2i pos)
+	vector<reference_wrapper<const function<void()>>> retrieveRelevantLambdas(const unordered_map<int, vector<function<void()>>>& handlers, Vector2i pos)
 	{
-		vector<CallBack*> relevantCallbacks;
+		vector<reference_wrapper<const function<void()>>> relevantLambdas;
 		//get a list of the boxIDs that are at position
 		vector<int> boxIDs;
 		getBoxesAt(pos, boxIDs, this);
-		//get the callbacks from the handlers map
+		//get the lambdas from the handlers map
 		for (int boxID : boxIDs)
 		{
 			auto it = handlers.find(boxID);
 			if (it != handlers.end())//if a vector of handlers exists for this ID
 			{
-				for (const unique_ptr<CallBack>& callback : it->second)
+				for (const function<void()>& lambda : it->second)
 				{
-					relevantCallbacks.push_back(callback.get());//add the callback to the vector
+					relevantLambdas.push_back(lambda);//add the lambda to the vector
 				}
 			}
 		}
-		return relevantCallbacks;
-	}
-
-	void addOnClick(unique_ptr<CallBack> callback, int boxID)//wrapper name as more intuitive
-	{
-		addLeftDown(move(callback), boxID);
+		return relevantLambdas;
 	}
 
 	//origin - top right courner of the button

@@ -2,7 +2,6 @@
 #define BEHAVIOUR_MANAGER_H
 
 #include <unordered_map>
-#include "CallBack.h"
 #include <cstdint>
 #include "UI_DLL_Interface.h"
 #include <functional>
@@ -11,11 +10,9 @@ using namespace std;
 class UI_API BehviourManager {
 protected:
 	static uint32_t nextID;
-	unordered_map<int, vector<unique_ptr<CallBack>>> leftDownCallbacks;//callbacks for when the left mouse button is pressed down
-	unordered_map<int, vector<unique_ptr<CallBack>>> leftUpCallbacks;
 
 	unordered_map<int, vector<function<void()>>> leftDownLambdas;//SHOULD PROBS TURN THIS INTO A VECTOR OF LAMBDAS TO ALLOW MULTIPLE LAMBDAS TO BE ADDED
-	
+	unordered_map<int, vector<function<void()>>> leftUpLambdas;
 	
 	unordered_map<int, vector<function<void(int)>>> mouseWheelLambdas;
 
@@ -31,10 +28,8 @@ public:
 	BehviourManager() = default;
 	static uint32_t newID();
 
-	void addLeftDown(unique_ptr<CallBack> newCallback, int boxID);
 	void addLeftDown(function<void()> lambda, int boxID);
-
-	void addLeftUpCallback(unique_ptr<CallBack> newCallback, int boxID);
+	void addLeftUp(function<void()> lambda, int boxID);
 
 	void addMouseWheelLambda(function<void(int)> lambda, int boxID);
 	void clearID(int id) {

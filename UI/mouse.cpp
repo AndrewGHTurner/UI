@@ -19,22 +19,21 @@ void UI::leftDownAt(Vector2i pos)
 		removeAnimation(currentTextBox);
 		currentTextBox = nullptr;
 	}
-	//store the callbacks for the release event(needed in case the click causes resize of elements)
+	//store the lambdas for the release event(needed in case the click causes resize of elements)
 
-	leftReleaseCallbacks = retrieveRelevantCallbacks(leftUpCallbacks, pos);
-	//run any left press callbacks associated with the position
-	executeRelevantCallbacks(leftDownCallbacks, pos);
+	leftReleaseLambdas = retrieveRelevantLambdas(leftUpLambdas, pos);
+	//run any left press lambdas associated with the position
 	executeRelevantLambdas(leftDownLambdas, pos);
 }
 
 void UI::leftUpAt(Vector2i pos)
 {
-	//run the release callbacks that were stored on left down event
-	for (CallBack* callback : leftReleaseCallbacks)
+	//run the release lambdas that were stored on left down event
+	for (reference_wrapper<const function<void()>> lambda : leftReleaseLambdas)
 	{
-		callback->run();
+		lambda();
 	}
-	leftReleaseCallbacks.clear();
+	leftReleaseLambdas.clear();
 }
 
 void UI::mouseWheelScrollAt(Vector2i pos, int delta)
