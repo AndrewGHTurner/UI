@@ -49,15 +49,15 @@
     <Filter Include="Header Files\treeClasses">
       <UniqueIdentifier>{c202e4f2-f86b-4fa7-9991-553a46ce2fda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{d4d1e1ec-6349-4d07-8b2d-28bd97527ea7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="HorizontalSpacedBar.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationManager.h">
       <Filter>Header Files</Filter>
     </ClCompile>
     <ClCompile Include="CallBack.cpp">
@@ -111,18 +111,15 @@
     <ClCompile Include="TextBox.cpp">
       <Filter>Source Files\widgets</Filter>
     </ClCompile>
+    <ClCompile Include="AnimationManager.h">
+      <Filter>Header Files\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="UI.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EText.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BehaviourManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CallBack.h">
@@ -193,6 +190,12 @@
     </ClInclude>
     <ClInclude Include="Branch.h">
       <Filter>Header Files\treeClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="BehaviourManager.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Header Files\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

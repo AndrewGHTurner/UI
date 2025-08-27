@@ -54,18 +54,18 @@ void BehviourManager::addLeftUpCallback(unique_ptr<CallBack> newCallback, int bo
 	}
 }
 
-void BehviourManager::addMouseWheelCallback(unique_ptr<CallBack> newCallback, int boxID)
+void BehviourManager::addMouseWheelLambda(function<void(int)> lambda, int boxID)
 {
-	//check if a vector of callbacks already exists
-	auto it = mouseWheelScrollCallbacks.find(boxID);
-	if (it != mouseWheelScrollCallbacks.end())//if a vector of callbacks already exists
+	auto it = mouseWheelLambdas.find(boxID);
+	if (it != mouseWheelLambdas.end())//if a vector of callbacks already exists
 	{
-		it->second.push_back(move(newCallback));//add the new callback to the existing vector
+		it->second.push_back(lambda);//add the new callback to the existing vector
+		return;
 	}
-	else//create the vector and add the callback
-	{
-		vector<unique_ptr<CallBack>> vec;
-		vec.push_back(move(newCallback));//pushing a copy ... will not go out of scope
-		mouseWheelScrollCallbacks[boxID] = move(vec);
+	else {
+		vector<function<void(int)>> vec;
+		vec.push_back(lambda);//pushing a copy ... will not go out of scope
+		mouseWheelLambdas[boxID] = move(vec);
+		return;
 	}
 }

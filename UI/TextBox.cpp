@@ -7,6 +7,7 @@
 #include "CallBack.h"
 #include "UI.h"
 #include "TextBox.h"
+#include <functional>
 using namespace std;
 
 
@@ -21,11 +22,21 @@ internal::TextBox::TextBox(Font& font, Vector2f origin, Vector2f siz, std::strin
 	notifyTextChanged(true);
 
 	updateVerticesPosition();
-	//register a scroll text callback on mouse wheel event
-	unique_ptr<CallBack> callback = makeScrollCallBack(scrollText, this);
-	UI::getInstance()->addMouseWheelCallback(move(callback), id);
-	//	ui->addAnimation(this);
-
+	//register a lambda to scroll the text
+	function<void(int)> scrollText = [this](int delta) {
+		if (UI::getInstance()->currentTextBox == this)
+		{
+			if (delta > 0)
+			{
+				UI::getInstance()->handleArrowEvent(ArrowDirection::UP);
+			}
+			else if (delta < 0)
+			{
+				UI::getInstance()->handleArrowEvent(ArrowDirection::DOWN);
+			}
+		}
+		};
+	UI::getInstance()->addMouseWheelLambda(scrollText, id);
 	}
 
 internal::TextBox::TextBox(string initialText)
@@ -38,10 +49,21 @@ internal::TextBox::TextBox(string initialText)
 	notifyTextChanged(true);
 
 	updateVerticesPosition();
-	//register a scroll text callback on mouse wheel event
-	unique_ptr<CallBack> callback = makeScrollCallBack(scrollText, this);
-	UI::getInstance()->addMouseWheelCallback(move(callback), id);
-	//	ui->addAnimation(this);
+	//register a lambda to scroll the text
+	function<void(int)> scrollText = [this](int delta) {
+		if (UI::getInstance()->currentTextBox == this)
+		{
+			if (delta > 0)
+			{
+				UI::getInstance()->handleArrowEvent(ArrowDirection::UP);
+			}
+			else if (delta < 0)
+			{
+				UI::getInstance()->handleArrowEvent(ArrowDirection::DOWN);
+			}
+		}
+		};
+	UI::getInstance()->addMouseWheelLambda(scrollText, id);
 
 }
 
@@ -83,25 +105,6 @@ void internal::TextBox::setColour(Color c)
 	vertices[3].color = c;
 	vertices[4].color = c;
 	vertices[5].color = c;
-}
-
-void internal::TextBox::scrollText(tuple<TextBox*, int> param)
-{
-	//this is a scroll callback for a TextBox
-	TextBox* textBox = static_cast<TextBox*>(std::get<0>(param));
-	int delta = std::get<1>(param);
-	if (UI::getInstance()->currentTextBox == textBox)
-	{
-		if (delta > 0)
-		{
-			UI::getInstance()->handleArrowEvent(ArrowDirection::UP);
-		}
-		else if (delta < 0)
-		{
-			UI::getInstance()->handleArrowEvent(ArrowDirection::DOWN);
-		}
-
-	}
 }
 
 TextBoxPtr UI_API TextBox(string initialText)

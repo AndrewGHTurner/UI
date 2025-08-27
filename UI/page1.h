@@ -27,6 +27,13 @@ public:
 		this->page2ID = page2ID; // Store the Page2 ID for switching later  
         this->page3ID = page3ID; // Store the Page3 ID for switching later
     }
+
+	function<void()> makeSwitchPageLambda(int pageID) {
+		return [this, pageID]() {
+			this->pageSwitcher.showPage(pageID);
+			};
+	}
+
    void createTree() override  
    {   
 	   UI* ui = UI::getInstance();
@@ -69,8 +76,9 @@ public:
 
        ColouredButton btn3 = ColouredButton(Color::Blue);
 	   void* u = nullptr;
-       CallBackPtr c3 = makeCallBack(switchToPage2, this);
-       btn3.onClick(move(c3));
+
+	   ui->addLeftDown(makeSwitchPageLambda(page2ID), btn3.getID());
+
        verticalScroll->add(btn3);  //CANNOT MOVE IT TWICE
 
        ColouredButton btn4 = ColouredButton(Color::Magenta);
@@ -113,7 +121,13 @@ public:
        ColouredButton btny(Color::Blue);
        CallBackPtr cy = makeCallBack(changeColourBtn, btny.getRootNodePointer());
        btny.onClick(move(cy));
-       ui->addMouseWheelCallback(move(makeScrollCallBack(printText, scroll.get())), scroll->id); // Add mouse wheel callback to the scroll area
+
+
+	   //add mouseWheel lambda to scroll area
+       function<void(int)> scroller = [scrollPtr = scroll.get()](int delta) {
+           scrollPtr->incrementOffset(delta);
+           };
+	   ui->addMouseWheelLambda(scroller, scroll->id);
 
        vert->add(btny); // Add btny to the vertical scroll
 	   vert->add(move(scroll)); // Add the scroll area to the vertical scroll
@@ -133,14 +147,6 @@ public:
        //width += 10;  
        //b->setSize(Vector2f(width, height));  
    }  
-
-   static void printText(tuple<Scroll*, int> param) {
-       
-	   cout << "clicked" << endl;
-	   cout << "delta: " << get<1>(param) << endl;
-	   Scroll* scroll = get<0>(param);
-	   scroll->incrementOffset(get<1>(param)); // Increment the scroll offset by the delta value
-   }
 
    static void addTreeNode(class _Vertical* branch)  
    {  

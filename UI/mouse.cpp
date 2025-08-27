@@ -44,17 +44,12 @@ void UI::mouseWheelScrollAt(Vector2i pos, int delta)
 	//handle the scroll event
 	for (int boxID : boxIDs)
 	{
-		auto it = mouseWheelScrollCallbacks.find(boxID);
-		if (it != mouseWheelScrollCallbacks.end())//if a vector of handlers exists for this ID
+		auto it = mouseWheelLambdas.find(boxID);
+		if (it != mouseWheelLambdas.end())//if a vector of handlers exists for this ID
 		{
-			for (const unique_ptr<CallBack>& callback : it->second)
+			for (const function<void(int delta)>& lambda : it->second)
 			{
-				if (callback->isScrollCallback)//provide the delta to the callback
-				{
-					tuple<void*, int>* param = static_cast<tuple<void*, int>*>(callback->getParam());
-					*param = std::make_tuple(std::get<0>(*param), delta);
-				}
-				callback->run();
+				lambda(delta);
 			}
 		}
 	}
