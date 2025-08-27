@@ -232,6 +232,7 @@
     <Text Include="explain.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\TestUI\README.md" />
     <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
