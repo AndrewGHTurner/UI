@@ -1,5 +1,6 @@
 
 #include "HorizontalSplitter.h"
+#include "UI.h"
 
 internal::HorizontalSplitter::HorizontalSplitter(Vector2f origin, Vector2f siz) : Branch(origin, siz) {
 }
@@ -31,6 +32,7 @@ void internal::HorizontalSplitter::add(Facade& child, int proportion)
 	else
 	{
 		//add a splitter handle before adding the new child
+		addHandle();
 		this->add(child);
 	}
 
@@ -48,6 +50,15 @@ void internal::HorizontalSplitter::calcPositions()
 	int childXCoord = origin.x;
 	for (int c = 0; c < children.size(); c++)
 	{
+		if (c % 2 == 1) // if the index is odd, it's a handle
+		{
+			Vector2f childOrigin(childXCoord, origin.y);
+			Vector2f childSize(handleWidth, size.y);
+			children[c]->setOrigin(childOrigin);
+			children[c]->setSize(childSize);
+			childXCoord += handleWidth;
+			continue; // skip to the next iteration
+		}
 		unique_ptr<TreeNode>& child = children[c];
 		Vector2f childOrigin(childXCoord, origin.y);
 		float childWidthProportion = static_cast<float>(proportions[c]) / static_cast<float>(totalProportion);
@@ -58,6 +69,20 @@ void internal::HorizontalSplitter::calcPositions()
 	}
 	//	setRecalcNeededFalse();
 	//	setRedrawNeededTrue();
+}
+
+void internal::HorizontalSplitter::addHandle()
+{
+	unique_ptr<TreeNode> handle = handleBuilder();
+	//register lambdas to make it draggable
+	UI* ui = UI::getInstance();
+
+	ui->addLeftDown([handlePtr = handle.get()](void) {
+		cout << "handle clicked" << endl;
+		}, handle->id);
+
+	//add the handle to the end of the children vector
+	children.push_back(move(handle));
 }
 
 UI_API HorizontalSplitterPtr HorizontalSplitter() {
