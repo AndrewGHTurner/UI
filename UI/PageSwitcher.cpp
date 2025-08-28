@@ -12,21 +12,9 @@ int PageSwitcher::newPageID() {
 	return id;
 }
 
-int PageSwitcher::addPage(unique_ptr<Page> page) {
-	int id = pages.size();
+void PageSwitcher::addPage(unique_ptr<Page> page, int pageID) {
 	pages.push_back(move(page));
-	return id;
-}
-
-void PageSwitcher::setPage(int pageID, unique_ptr<Page> page) {
-	if (pageID < 0 || pageID >= pages.size()) {
-		throw std::out_of_range("Page ID is out of range");
-	}
-	unique_ptr<Page>& existingPage = pages[pageID];
-	if (existingPage != nullptr) {
-		throw std::runtime_error("Page with this ID already exists");
-	}
-	existingPage = move(page); //set the page at the specified ID
+	idToIndexMap[pageID] = pages.size() - 1;
 }
 
 void PageSwitcher::showPage(int pageID)
@@ -37,11 +25,11 @@ void PageSwitcher::showPage(int pageID)
 	unique_ptr<Branch> previousTree = unique_ptr<Branch>(static_cast<Branch*>(treeRoot.release()));
 	//move ownership of the previous tree, if it exists, back to its page
 	if (previousTree != nullptr && currentPageID != -1) {
-		pages[currentPageID]->treeRoot = move(previousTree);
+		pages[idToIndexMap[currentPageID]]->treeRoot = move(previousTree);
 	}
 	currentPageID = pageID;
 	//add the next page to the holder branch
-	unique_ptr<Page>& page = pages[pageID];
+	unique_ptr<Page>& page = pages[idToIndexMap[pageID]];
 	//check that the page has built its ui tree
 	if (page->treeRoot == nullptr) {
 		page->createTree(); //create the ui tree if it has not been created yet

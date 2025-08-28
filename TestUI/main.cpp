@@ -24,6 +24,7 @@ DESIGN CHOICES
 #include <page1.h>
 #include <page2.h>
 #include <tuple>
+#include "PageTypes.h"
 
 
 //#include "testPage.h"
@@ -69,9 +70,9 @@ int main()
 
 
 
-	pageSwitcher.setPage(page1ID, move(page1)); // Set Page1 in the PageSwitcher
-	pageSwitcher.setPage(page2ID, move(page2)); // Set Page2 in the PageSwitcher
-	pageSwitcher.showPage(page1ID); // Show Page1 initially
+	pageSwitcher.addPage(move(page1), PageTypes::PAGE_1);
+	pageSwitcher.addPage(move(page2), PageTypes::PAGE_2);
+	pageSwitcher.showPage(PageTypes::PAGE_1); // Show Page1 initially
 
 
 

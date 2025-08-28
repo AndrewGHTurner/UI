@@ -24,7 +24,7 @@
     <ClCompile Include="..\UI\page2.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\UI\PageTypes.cpp">
+    <ClCompile Include="..\UI\PageTypes.h">
       <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
