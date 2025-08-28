@@ -7,6 +7,7 @@
 #include "Label.h"
 #include "Vertical.h"
 #include "Scroll.h"
+#include "PageTypes.h"
 #include <functional>
 
 
@@ -18,13 +19,9 @@ private:
     TextButtonMaker TB = TextButtonMaker();
 	
 public:
-    int page2ID;
-    int page3ID;
     PageSwitcher& pageSwitcher; // Reference to the PageSwitcher to switch back to Page
 	Page1(Page1&& other) = default; // Move constructor for Page1
-    Page1(PageSwitcher& pageSwitcher, int page2ID, int page3ID) : pageSwitcher(pageSwitcher){
-		this->page2ID = page2ID; // Store the Page2 ID for switching later  
-        this->page3ID = page3ID; // Store the Page3 ID for switching later
+    Page1(PageSwitcher& pageSwitcher) : pageSwitcher(pageSwitcher){
     }
 
 	function<void()> makeSwitchPageLambda(int pageID) {
@@ -122,12 +119,18 @@ public:
 
        verticalScroll->add(btn2);  
 
-       ColouredButton btn3 = ColouredButton(Color::Blue);
-	   void* u = nullptr;
 
-	   ui->addLeftDown(makeSwitchPageLambda(page2ID), btn3.getID());
+       TB.createButton("Page 2")
+		   .setColour(Color::Cyan)
+		   .setPressedColour(Color::Magenta)
+		   .onClickLeftDown(makeSwitchPageLambda(PageTypes::PAGE_2));
+       verticalScroll->add(TB);  
 
-       verticalScroll->add(btn3);  //CANNOT MOVE IT TWICE
+	   TB.createButton("Page 3")
+		   .setColour(Color::Cyan)
+		   .setPressedColour(Color::Magenta)
+		   .onClickLeftUp(makeSwitchPageLambda(PageTypes::PAGE_3));
+	   verticalScroll->add(TB);  
 
        ColouredButton btn4 = ColouredButton(Color::Magenta);
 

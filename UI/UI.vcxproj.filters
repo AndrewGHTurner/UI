@@ -52,6 +52,12 @@
     <Filter Include="Header Files\UI">
       <UniqueIdentifier>{d4d1e1ec-6349-4d07-8b2d-28bd97527ea7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\layouts\horizontal">
+      <UniqueIdentifier>{bee89718-9a72-4c4b-88d8-324d33a51c05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\layouts\horizontal">
+      <UniqueIdentifier>{d64f4a2d-cb49-4042-9326-6c6bebfec8fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UI.cpp">
@@ -93,9 +99,6 @@
     <ClCompile Include="ColouredButton.cpp">
       <Filter>Source Files\facades</Filter>
     </ClCompile>
-    <ClCompile Include="HorizontalProportionalSpacedBar.cpp">
-      <Filter>Source Files\layouts</Filter>
-    </ClCompile>
     <ClCompile Include="Vertical.cpp">
       <Filter>Source Files\layouts</Filter>
     </ClCompile>
@@ -110,6 +113,18 @@
     </ClCompile>
     <ClCompile Include="PageSwitcher.cpp">
       <Filter>Source Files\pageManagers</Filter>
+    </ClCompile>
+    <ClCompile Include="HorizontalProportionalSpacedBar.cpp">
+      <Filter>Source Files\layouts\horizontal</Filter>
+    </ClCompile>
+    <ClCompile Include="SplitterHandle.cpp">
+      <Filter>Source Files\layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="HorizontalSplitter.cpp">
+      <Filter>Source Files\layouts\horizontal</Filter>
+    </ClCompile>
+    <ClCompile Include="Proportioned.h">
+      <Filter>Header Files\layouts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -164,9 +179,6 @@
     <ClInclude Include="VirtualVertical.h">
       <Filter>Header Files\layoutsVirtual</Filter>
     </ClInclude>
-    <ClInclude Include="HorizontalProportionalSpacedBar.h">
-      <Filter>Header Files\layouts</Filter>
-    </ClInclude>
     <ClInclude Include="UI_DLL_Interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -187,6 +199,15 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="HorizontalProportionalSpacedBar.h">
+      <Filter>Header Files\layouts\horizontal</Filter>
+    </ClInclude>
+    <ClInclude Include="HorizontalSplitter.h">
+      <Filter>Header Files\layouts\horizontal</Filter>
+    </ClInclude>
+    <ClInclude Include="SplitterHandle.h">
+      <Filter>Header Files\layouts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,9 @@ void HorizontalProportionalSpacedBar::add(unique_ptr<TreeNode> child, int propor
 	totalProportion += proportion;
 }
 
+/**
+* @note could factor this algorithm out as horizontal splitter also uses it
+*/
 void HorizontalProportionalSpacedBar::calcPositions()
 {
 	int childXCoord = origin.x;

@@ -21,8 +21,9 @@ DESIGN CHOICES
 #include "Page.h"
 #include "PageSwitcher.h"
 #include <Vertical.h>
-#include <page1.h>
-#include <page2.h>
+#include "page1.h"
+#include "page2.h"
+#include "Page3.h"
 #include <tuple>
 #include "PageTypes.h"
 
@@ -58,20 +59,19 @@ int main()
 	ui->setSize(UISize);
 
 	PageSwitcher pageSwitcher(*ui);//on the stack but may need to be on heap if functions returns
-	int page1ID = pageSwitcher.newPageID(); // Create a new page ID for Page1
-	int page2ID = pageSwitcher.newPageID(); // Create a new page ID for Page2
-	int page3ID = pageSwitcher.newPageID(); // Create a new page ID for Page3
-	unique_ptr<Page1> page1 = make_unique<Page1>(pageSwitcher, page2ID, page3ID);
+
+	PagePtr page1 = make_unique<Page1>(pageSwitcher);
 
 
 
-	unique_ptr<Page2> page2 = make_unique<Page2>(pageSwitcher, page1ID); // Create Page2 with a reference to PageSwitcher and Page1 ID
+	PagePtr page2 = make_unique<Page2>(pageSwitcher); // Create Page2 with a reference to PageSwitcher and Page1 ID
 
-
+	PagePtr page3 = make_unique<Page3>(pageSwitcher); // Create Page3 with a reference to PageSwitcher
 
 
 	pageSwitcher.addPage(move(page1), PageTypes::PAGE_1);
 	pageSwitcher.addPage(move(page2), PageTypes::PAGE_2);
+	pageSwitcher.addPage(move(page3), PageTypes::PAGE_3);
 	pageSwitcher.showPage(PageTypes::PAGE_1); // Show Page1 initially
 
 

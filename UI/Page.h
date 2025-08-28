@@ -17,5 +17,7 @@ private:
 
 };  
 
+using PagePtr = unique_ptr<Page>;
+
 
 #endif // !Page_H

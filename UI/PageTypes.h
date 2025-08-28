@@ -1,3 +1,5 @@
+#ifndef PAGETYPES_H  
+#define PAGETYPES_H
 
 
 
@@ -6,3 +8,5 @@ enum PageTypes {
 	PAGE_2,
 	PAGE_3
 };
+
+#endif

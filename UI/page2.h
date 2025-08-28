@@ -4,6 +4,7 @@
 #include "ColouredBox.h"
 #include "ColouredButton.h"
 #include "Vertical.h"
+#include "PageTypes.h"
 
 class Page2 : public Page {
 private:
@@ -11,8 +12,7 @@ private:
 public:
 	int page1ID;
 	PageSwitcher& pageSwitcher; // Reference to the PageSwitcher to switch back to Page1
-	Page2(PageSwitcher& pageSwitcher, int page1ID) : pageSwitcher(pageSwitcher){
-		this->page1ID = page1ID;
+	Page2(PageSwitcher& pageSwitcher) : pageSwitcher(pageSwitcher){
 	}
 	void createTree() override
 	{
@@ -27,7 +27,7 @@ public:
 		void* u = 0;
 
 		function<void()> switchToPage1 = [this]() {
-			this->pageSwitcher.showPage(this->page1ID);
+			this->pageSwitcher.showPage(PageTypes::PAGE_1);
 			};
 
 		btn1.onClick(switchToPage1);
