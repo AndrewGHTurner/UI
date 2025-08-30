@@ -22,7 +22,7 @@ uint32_t BehaviorManager::addLeftDown(function<void()> lambda, int boxID)
 	return lambdaID;
 }
 
-uint32_t BehaviorManager::addLeftUp(function<void()> lambda, int boxID)
+uint32_t BehaviorManager::addLeftUp(function<void()> lambda, int boxID, bool allowSlideOff)
 {
 	uint32_t lambdaID = newID();
 	auto it = leftUpLambdas.find(boxID);
@@ -34,6 +34,11 @@ uint32_t BehaviorManager::addLeftUp(function<void()> lambda, int boxID)
 		vector<LambdaHolder> vec;
 		vec.push_back(LambdaHolder(lambdaID, lambda));//pushing a copy ... will not go out of scope
 		leftUpLambdas[boxID] = move(vec);
+	}
+	//record if this lambda is conditional
+	if (allowSlideOff)
+	{
+		conditionalReleaseLambdaIDs.insert(lambdaID);
 	}
 	return lambdaID;
 }

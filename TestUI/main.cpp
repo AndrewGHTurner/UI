@@ -44,12 +44,17 @@ int width = 10;
 //RenderTexture* EText::screenTexture = nullptr;
 //RenderWindow* EText::window = nullptr;
 
+#ifdef NO_CONSOLE
+#define MAIN() int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
+#else
+#define MAIN() int main()
+#endif
 
-int main()
+MAIN()
 {
 	Vector2u screenSize(700, 700); // Set the screen size to 700x700 pixels
 	RenderWindow window(VideoMode(screenSize), "Mandelbrot");
-	window.setFramerateLimit(10);
+	window.setFramerateLimit(1);
 
 	UI* ui = UI::initInstance(window);
 

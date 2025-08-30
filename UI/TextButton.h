@@ -71,9 +71,9 @@ public:
 		return *this;
 	}
 
-	TextButtonMaker& onClickLeftUp(function<void()> lambda)
+	TextButtonMaker& onClickLeftUp(function<void()> lambda, bool allowSlideOff = false)
 	{
-		UI::getInstance()->addLeftUp(lambda, rootNode->id);
+		UI::getInstance()->addLeftUp(lambda, rootNode->id, allowSlideOff);
 		return *this;
 	}
 

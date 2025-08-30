@@ -129,7 +129,7 @@ public:
 	   TB.createButton("Page 3")
 		   .setColour(Color::Cyan)
 		   .setPressedColour(Color::Magenta)
-		   .onClickLeftUp(makeSwitchPageLambda(PageTypes::PAGE_3));
+		   .onClickLeftUp(makeSwitchPageLambda(PageTypes::PAGE_3), true);
 	   verticalScroll->add(TB);  
 
        ColouredButton btn4 = ColouredButton(Color::Magenta);

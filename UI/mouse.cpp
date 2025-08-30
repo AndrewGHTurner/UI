@@ -26,19 +26,39 @@ void UI::leftDownAt(Vector2i pos)
 	executeRelevantLambdas(leftDownLambdas, pos);
 }
 
+
+/**
+* @note Eventually logic to check that release lambdas are not in the deleted lambda cache will be needed here
+*/
 void UI::leftUpAt(Vector2i pos)
 {
 	//retrieve relevant lambdas for the position ... do not run all of these
+	vector<reference_wrapper<const LambdaHolder>> relevantLambdas = retrieveRelevantLambdas(leftUpLambdas, pos);
 	//for each one if it is in the leftReleaseLambdas vector then run it
-	//if not then only run it if it's id is not in the conditionalReleaseIDs set
-
-
-
-
-	//run the release lambdas that were stored on left down event
-	for (reference_wrapper<const function<void()>> lambda : leftReleaseLambdas)
+	for (const reference_wrapper<const LambdaHolder> lambdaHolder : relevantLambdas)//this runs all relevant lambdas
 	{
-		lambda();
+		for (auto it = leftReleaseLambdas.begin(); it != leftReleaseLambdas.end(); it++)
+		{
+			if (lambdaHolder.get().lambdaID == it->get().lambdaID)
+			{
+				it->get().lambda();
+				std::swap(*it, leftReleaseLambdas.back());//place the to be removed element at the back of the vector
+				leftReleaseLambdas.pop_back();//remove the back of the vector ... this is faster than erase which has O(n) complexity
+				break;
+			}
+		}
+	}
+	//if not then only run it if it's id is not in the conditionalReleaseIDs set
+	for (auto LambdaHolder : leftReleaseLambdas)
+	{
+		if (conditionalReleaseLambdaIDs.find(LambdaHolder.get().lambdaID) != conditionalReleaseLambdaIDs.end())//if the lambda is conditional
+		{
+			continue;//do not run it ... if it was relevant then it would have been run in the previous loop
+		}
+		else
+		{
+			LambdaHolder.get().lambda();
+		}
 	}
 	leftReleaseLambdas.clear();
 }

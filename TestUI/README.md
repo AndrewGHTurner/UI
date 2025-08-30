@@ -19,6 +19,7 @@ Pros:
 Cons:
 	Can only have 255 callbacks per element although this number is unlikely to be reached
 	Much harder to manage keeping track of open IDs when lambdas are added and removed
+	Lambdas for different elements could have the same ID so collection of relevant lambdas for an event would need to check the element ID as well as the lambda ID
 
 ### 32 bit int IDs
 pros:
@@ -31,3 +32,17 @@ This library uses 32 bit int IDs due to their ease of management. The extra memo
 be noted that if ID wrapping occurs bugs would start to appear as different lambdas would have the same ID. This will only be a problem
 in huge or very long lived and dynamic UIs. To achieve a UI that could create and destroy over 4 billion lambda callbacks the uint8_t 
 system with an intelligent way of tracking unused IDs would be needed. 
+
+# Known issues
+
+## Lambda callback lifetimes
+
+Currently release callbacks are stored in a vector of references to relevant callbacks when the mouse is clicked. This can cause undefined
+behavior if a callback is removed while the mouse is held down. Copying callbacks to the vector would not solve the problem as they may
+act on deleted elements.
+
+### Planned fix
+
+When the user clicks all calls to the UI to remove lambdas should instead store them in a cache to be deleted. When running release
+callbacks any callbacks represented in this cache should not be run(because they have been deleted from the developer's point of view).
+Once the mouse has been release then the callbacks in the cache should actually be deleted.

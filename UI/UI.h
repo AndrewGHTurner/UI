@@ -37,7 +37,7 @@ private:
 	int currentCharIndex = 0;//could make a typeing handeller class?// should probably hold this in the EText class
 	unique_ptr<RenderTexture> screenTexture;//this is the texture that all UI elements will be drawn onto
 
-	vector<reference_wrapper<const function<void()>>> leftReleaseLambdas;//hold the release lambdas on press do that the correct ones are called on release(even if a button resizes)
+	vector<reference_wrapper<const LambdaHolder>> leftReleaseLambdas;//hold the release lambdas on press do that the correct ones are called on release(even if a button resizes)
 
 
 	UI(RenderWindow& window) : BehaviorManager(), Branch(Vector2f(0, 0), Vector2f(300, 300)) {
@@ -84,6 +84,7 @@ public:
 
 	void runUI(RenderWindow& window)
 	{
+		cout << "here" << endl;
 		bool displayNeeded = false;
 		while (std::optional event = window.pollEvent())
 		{
@@ -546,9 +547,9 @@ public:
 		}
 	}
 
-	vector<reference_wrapper<const function<void()>>> retrieveRelevantLambdas(const unordered_map<int, vector<LambdaHolder>>& handlers, Vector2i pos)
+	vector<reference_wrapper<const LambdaHolder>> retrieveRelevantLambdas(const unordered_map<int, vector<LambdaHolder>>& handlers, Vector2i pos)
 	{
-		vector<reference_wrapper<const function<void()>>> relevantLambdas;
+		vector<reference_wrapper<const LambdaHolder>> relevantLambdas;
 		//get a list of the boxIDs that are at position
 		vector<int> boxIDs;
 		getBoxesAt(pos, boxIDs, this);
@@ -560,7 +561,7 @@ public:
 			{
 				for (const LambdaHolder& lambdaHolder : it->second)
 				{
-					relevantLambdas.push_back(lambdaHolder.lambda);//add the lambda to the vector
+					relevantLambdas.push_back(std::cref(lambdaHolder));//add the lambda to the vector
 				}
 			}
 		}

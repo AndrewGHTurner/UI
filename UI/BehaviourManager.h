@@ -23,7 +23,7 @@ struct MouseWheelLambdaHolder {
 
 class UI_API BehaviorManager {
 private:
-	unordered_set<uint32_t> ;
+	
 protected:
 	static uint32_t nextID;
 
@@ -31,6 +31,8 @@ protected:
 	unordered_map<int, vector<LambdaHolder>> leftUpLambdas;
 	
 	unordered_map<int, vector<MouseWheelLambdaHolder>> mouseWheelLambdas;
+
+	unordered_set<uint32_t> conditionalReleaseLambdaIDs;//it is assumed that there will be fewer conditional than unconditional in complex UIs ... will need a right click equivalent at some point
 
 public:
 	// Delete copy operations because unique_ptrs cannot be copied
@@ -43,6 +45,8 @@ public:
 
 	BehaviorManager() = default;
 
+
+
 	/**
 	* @note If ID wrapping (after ~4 billion IDs ... never going to happen) becomes a problem, one solution is to  have multiple ID counters. eg one for element IDs and one for callback IDs
 	*/
@@ -50,12 +54,14 @@ public:
 
 	/**
 	* @return The ID assigned to the lambda
+	* 
 	*/
 	uint32_t addLeftDown(function<void()> lambda, int boxID);
 	/**
 	* @return The ID assigned to the lambda
+	* @param conditional If true then the mouse must be within the box for the lambda to be executed on mouse release. Conditional for user actions such as changing page. conditional = false for graphical callbacks like changing button colour on release
 	*/
-	uint32_t addLeftUp(function<void()> lambda, int boxID);
+	uint32_t addLeftUp(function<void()> lambda, int boxID, bool allowSlideOff = false);
 	/**
 	* @return The ID assigned to the lambda
 	*/
