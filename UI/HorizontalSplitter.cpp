@@ -1,6 +1,7 @@
 
 #include "HorizontalSplitter.h"
 #include "UI.h"
+#include <SFML/Window.hpp>
 
 internal::HorizontalSplitter::HorizontalSplitter(Vector2f origin, Vector2f siz) : Branch(origin, siz) {
 }
@@ -77,8 +78,24 @@ void internal::HorizontalSplitter::calcPositions()
 void internal::HorizontalSplitter::addHandle()
 {
 	unique_ptr<TreeNode> handle = handleBuilder();
-	//register lambdas to make it draggable
 	UI* ui = UI::getInstance();
+	//register hover enter lambda to change the mouse cursor
+	ui->addHoverEnterLambda([](Vector2i mousePos) {
+		cout << "h";
+		const auto cursor = sf::Cursor::createFromSystem(sf::Cursor::Type::SizeHorizontal).value();
+		UI::getInstance()->window.setMouseCursor(cursor);
+		}, handle->id);
+
+	//register hover leave lambda to change the mouse cursor back to default
+	
+	ui->addHoverExitLambda([](Vector2i mousePos) {
+		cout << "K";
+		const auto cursor = sf::Cursor::createFromSystem(sf::Cursor::Type::Arrow).value();
+		UI::getInstance()->window.setMouseCursor(cursor);
+		}, handle->id);
+
+	//register lambdas to make it draggable
+	
 	int handleIndex = children.size();//the handle hasn't yet been added to children so no need to subtract 1
 	ui->addLeftDown([handlePtr = handle.get(), this, handleIndex](void) 
 	{
@@ -86,16 +103,16 @@ void internal::HorizontalSplitter::addHandle()
 		
 		//add the drag lambda ... this is the lambda that will move the splitter handles
 		dragLambdaID = ui->addMouseMovementLambda([handleIndex, this](Vector2i mousePos) {
-			
+			int mouseX = mousePos.x + ( handleWidth / 2);
 			int leftMostX = children[handleIndex - 1].get()->getOrigin().x;
 			int rightMostX = children[handleIndex + 1].get()->getAntiOrigin().x;
 			int totalXRange = rightMostX - leftMostX;
 			float totalProportion = proportions[handleIndex - 1] + proportions[handleIndex + 1];
-			float n = mousePos.x - leftMostX;
+			float n = mouseX - leftMostX;
 			if (n < 0) {
 				n = 0;
 			}
-			if (mousePos.x > rightMostX) {
+			if (mouseX > rightMostX) {
 				n = totalXRange;
 			}
 			float leftProp = n / totalXRange;

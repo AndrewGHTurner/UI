@@ -76,6 +76,38 @@ uint32_t BehaviorManager::addMouseMovementLambda(function<void(Vector2i)> lambda
 	return id;
 }
 
+uint32_t BehaviorManager::addHoverEnterLambda(function<void(Vector2i mousePosition)> lambda, int boxID)
+{
+	uint32_t lambdaID = newID();
+	auto it = hoverEnterLambdas.find(boxID);
+	if (it != hoverEnterLambdas.end())//if a vector of lambdas already exists
+	{
+		it->second.push_back(MouseMovementLambdaHolder(lambdaID, lambda));//add the new lambda to the existing vector
+	}
+	else {
+		vector<MouseMovementLambdaHolder> vec;
+		vec.push_back(MouseMovementLambdaHolder(lambdaID, lambda));//pushing a copy ... will not go out of scope
+		hoverEnterLambdas[boxID] = move(vec);
+	}
+	return lambdaID;
+}
+
+uint32_t BehaviorManager::addHoverExitLambda(function<void(Vector2i mousePosition)> lambda, int boxID)
+{
+	uint32_t lambdaID = newID();
+	auto it = hoverExitLambdas.find(boxID);
+	if (it != hoverExitLambdas.end())//if a vector of lambdas already exists
+	{
+		it->second.push_back(MouseMovementLambdaHolder(lambdaID, lambda));//add the new lambda to the existing vector
+	}
+	else {
+		vector<MouseMovementLambdaHolder> vec;
+		vec.push_back(MouseMovementLambdaHolder(lambdaID, lambda));//pushing a copy ... will not go out of scope
+		hoverExitLambdas[boxID] = move(vec);
+	}
+	return lambdaID;
+}
+
 void BehaviorManager::removeMouseMovementLambda(uint32_t lambdaID) {
 	for (auto it = mouseMovementLambdas.begin(); it != mouseMovementLambdas.end(); it++) {
 		if (it->lambdaID == lambdaID) {

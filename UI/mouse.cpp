@@ -92,4 +92,48 @@ void UI::mouseMovementAt(Vector2i pos)
 	{
 		lambdaHolder.lambda(pos);
 	}
+
+	//record the currently hovered elements
+	vector<int> boxIDs;
+	unordered_set<uint32_t> newlyHoveredElementIDs;
+	getBoxesAt(pos, boxIDs, this);
+	for (int boxID : boxIDs)
+	{
+		newlyHoveredElementIDs.insert(boxID);
+	}
+	//run hover handlers for currently hovered elements
+
+	//TODO
+
+	//run hover enter calbacks for newly hovered elements
+
+	for (int boxID : boxIDs)
+	{
+		if (hoveredElementIDs.find(boxID) == hoveredElementIDs.end())//if this element was not previously hovered
+		{
+			//run hover enter callback for this element
+			vector<MouseMovementLambdaHolder>& elementHoverEnters = hoverEnterLambdas[boxID];
+			for (auto& lambdaHolder : elementHoverEnters)
+			{
+				lambdaHolder.lambda(pos);
+			}
+		}
+	}
+
+	//run hover exit callbacks for elements no longer hovered
+
+	for (uint32_t hoveredElementID : hoveredElementIDs)
+	{
+		if (newlyHoveredElementIDs.find(hoveredElementID) == newlyHoveredElementIDs.end())//if this element is no longer hovered
+		{
+			//run hover exit callback for this element
+			vector<MouseMovementLambdaHolder>& elementHoverExits = hoverExitLambdas[hoveredElementID];
+			for (auto& lambdaHolder : elementHoverExits)
+			{
+				lambdaHolder.lambda(pos);
+			}
+		}
+	}
+	
+	hoveredElementIDs = move(newlyHoveredElementIDs);
 }

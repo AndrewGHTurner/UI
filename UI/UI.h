@@ -42,7 +42,7 @@ private:
 	vector<reference_wrapper<const LambdaHolder>> leftReleaseLambdas;//hold the release lambdas on press do that the correct ones are called on release(even if a button resizes)
 
 
-	UI(RenderWindow& window) : BehaviorManager(), Branch(Vector2f(0, 0), Vector2f(300, 300)) {
+	UI(RenderWindow& window) : BehaviorManager(), Branch(Vector2f(0, 0), Vector2f(300, 300)), window(window) {
 		id = newID();//set the id of the ui element (root branch)
 		if (!font.openFromFile("C:/Users/andre/Desktop/Root/utils/fonts/Terminal.ttf")) {
 			cout << "font could not be loaded" << endl;
@@ -55,6 +55,7 @@ private:
 
 	static UI* instance;
 public:
+	RenderWindow& window;
 	static UI* initInstance(RenderWindow& window)
 	{
 		assert(instance == nullptr && "UI instance is reinitialized which shouldn't happen"); // Ensure instance is only created once
@@ -516,7 +517,6 @@ public:
 	void leftUpAt(Vector2i pos);
 	void mouseWheelScrollAt(Vector2i pos, int delta);//delta is the amount of scroll
 	void mouseMovementAt(Vector2i pos);
-	void hoverAt();
 
 	void getBoxesAt(Vector2i pos, vector<int>& boxIDs, TreeNode* box)//change this to be non recursive to improve performance
 	{
@@ -534,7 +534,7 @@ public:
 		}
 	}
 
-	void executeRelevantLambdas(const unordered_map<int, vector<LambdaHolder>>& handlers, Vector2i pos)
+	void executeRelevantLambdas(const unordered_map<uint32_t, vector<LambdaHolder>>& handlers, Vector2i pos)
 	{
 		//get a list of the boxIDs that are at position
 		vector<int> boxIDs;
@@ -553,7 +553,7 @@ public:
 		}
 	}
 
-	vector<reference_wrapper<const LambdaHolder>> retrieveRelevantLambdas(const unordered_map<int, vector<LambdaHolder>>& handlers, Vector2i pos)
+	vector<reference_wrapper<const LambdaHolder>> retrieveRelevantLambdas(const unordered_map<uint32_t, vector<LambdaHolder>>& handlers, Vector2i pos)
 	{
 		vector<reference_wrapper<const LambdaHolder>> relevantLambdas;
 		//get a list of the boxIDs that are at position

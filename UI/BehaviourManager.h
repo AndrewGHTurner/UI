@@ -29,18 +29,27 @@ struct MouseMovementLambdaHolder {
 	MouseMovementLambdaHolder(uint32_t id, function<void(Vector2i)> func) : lambdaID(id), lambda(func) {}
 };
 
+/**
+* @note the unordered maps may need to be replaced with a vector of vectors + a vector of free indexes ... this may be more scalable than an unordered map
+*/
 class UI_API BehaviorManager {
 private:
 	
 protected:
 	static uint32_t nextID;
 	//These unordered maps contain all lambda callbacks that are localised to particular elements
-	unordered_map<int, vector<LambdaHolder>> leftDownLambdas;
-	unordered_map<int, vector<LambdaHolder>> leftUpLambdas;
-	unordered_map<int, vector<MouseWheelLambdaHolder>> mouseWheelLambdas;
+	unordered_map<uint32_t, vector<LambdaHolder>> leftDownLambdas;
+	unordered_map<uint32_t, vector<LambdaHolder>> leftUpLambdas;
+	unordered_map<uint32_t, vector<MouseWheelLambdaHolder>> mouseWheelLambdas;
+	unordered_map<uint32_t, vector<MouseMovementLambdaHolder>> hoverEnterLambdas;
+	unordered_map<uint32_t, vector<MouseMovementLambdaHolder>> hoverExitLambdas;
 	//These vectors contain all lambda callbacks that are not localised to particular elements
 	vector<MouseMovementLambdaHolder> mouseMovementLambdas;//This will contain mouse movement lambdas to be called on every mouse movement and not locallised to a particular element
 	vector<LambdaHolder> leftUpLambdasUnlocalized;
+
+	unordered_set<uint32_t> hoveredElementIDs;//holds each frames hoveded elements
+	
+	
 
 	unordered_set<uint32_t> conditionalReleaseLambdaIDs;//it is assumed that there will be fewer conditional than unconditional in complex UIs ... will need a right click equivalent at some point
 
@@ -79,6 +88,10 @@ public:
 	uint32_t addMouseWheelLambda(function<void(int)> lambda, int boxID);
 
 	uint32_t addMouseMovementLambda(function<void(Vector2i mousePosition)> lambda);
+
+	uint32_t addHoverEnterLambda(function<void(Vector2i mousePosition)> lambda, int boxID);
+
+	uint32_t addHoverExitLambda(function<void(Vector2i mousePosition)> lambda, int boxID);
 
 	void removeMouseMovementLambda(uint32_t lambdaID);
 
