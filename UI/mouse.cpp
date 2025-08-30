@@ -28,6 +28,13 @@ void UI::leftDownAt(Vector2i pos)
 
 void UI::leftUpAt(Vector2i pos)
 {
+	//retrieve relevant lambdas for the position ... do not run all of these
+	//for each one if it is in the leftReleaseLambdas vector then run it
+	//if not then only run it if it's id is not in the conditionalReleaseIDs set
+
+
+
+
 	//run the release lambdas that were stored on left down event
 	for (reference_wrapper<const function<void()>> lambda : leftReleaseLambdas)
 	{
@@ -46,9 +53,9 @@ void UI::mouseWheelScrollAt(Vector2i pos, int delta)
 		auto it = mouseWheelLambdas.find(boxID);
 		if (it != mouseWheelLambdas.end())//if a vector of handlers exists for this ID
 		{
-			for (const function<void(int delta)>& lambda : it->second)
+			for (const MouseWheelLambdaHolder& lambdaHolder : it->second)
 			{
-				lambda(delta);
+				lambdaHolder.lambda(delta);
 			}
 		}
 	}

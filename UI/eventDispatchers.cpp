@@ -13,4 +13,8 @@ void UI::eventDispatcher(optional<Event>& event, RenderWindow &window) {
 	{
 		mouseWheelScrollAt(Mouse::getPosition(window), event->getIf<Event::MouseWheelScrolled>()->delta);
 	}
+	else if (event->getIf <Event::MouseMoved>())
+	{
+
+	}
 }

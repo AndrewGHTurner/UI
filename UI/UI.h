@@ -32,7 +32,7 @@ class UI;
 //SHOULD PROBABLE MAKE A CONFIGURABLE UI CLASS WHICH WILL BE BUILT IN A BUILDER PATTERN AND ALLOW FOR 
 //ONLY NEEDED FUNCTIONALITY TO BE CREATED VIA COMPOSITION
 
-class UI_API UI : public Branch, public BehviourManager, public AnnimationManager {
+class UI_API UI : public Branch, public BehaviorManager, public AnnimationManager {
 private:
 	int currentCharIndex = 0;//could make a typeing handeller class?// should probably hold this in the EText class
 	unique_ptr<RenderTexture> screenTexture;//this is the texture that all UI elements will be drawn onto
@@ -40,7 +40,7 @@ private:
 	vector<reference_wrapper<const function<void()>>> leftReleaseLambdas;//hold the release lambdas on press do that the correct ones are called on release(even if a button resizes)
 
 
-	UI(RenderWindow& window) : BehviourManager(), Branch(Vector2f(0, 0), Vector2f(300, 300)) {
+	UI(RenderWindow& window) : BehaviorManager(), Branch(Vector2f(0, 0), Vector2f(300, 300)) {
 		id = newID();//set the id of the ui element (root branch)
 		if (!font.openFromFile("C:/Users/andre/Desktop/Root/utils/fonts/Terminal.ttf")) {
 			cout << "font could not be loaded" << endl;
@@ -527,7 +527,7 @@ public:
 		}
 	}
 
-	void executeRelevantLambdas(const unordered_map<int, vector<function<void()>>>& handlers, Vector2i pos)
+	void executeRelevantLambdas(const unordered_map<int, vector<LambdaHolder>>& handlers, Vector2i pos)
 	{
 		//get a list of the boxIDs that are at position
 		vector<int> boxIDs;
@@ -538,15 +538,15 @@ public:
 			auto it = handlers.find(boxID);
 			if (it != handlers.end())//if a vector of handlers exists for this ID
 			{
-				for (const function<void()>& lambda : it->second)
+				for (const LambdaHolder& lambdaHolder : it->second)
 				{
-					lambda();
+					lambdaHolder.lambda();
 				}
 			}
 		}
 	}
 
-	vector<reference_wrapper<const function<void()>>> retrieveRelevantLambdas(const unordered_map<int, vector<function<void()>>>& handlers, Vector2i pos)
+	vector<reference_wrapper<const function<void()>>> retrieveRelevantLambdas(const unordered_map<int, vector<LambdaHolder>>& handlers, Vector2i pos)
 	{
 		vector<reference_wrapper<const function<void()>>> relevantLambdas;
 		//get a list of the boxIDs that are at position
@@ -558,9 +558,9 @@ public:
 			auto it = handlers.find(boxID);
 			if (it != handlers.end())//if a vector of handlers exists for this ID
 			{
-				for (const function<void()>& lambda : it->second)
+				for (const LambdaHolder& lambdaHolder : it->second)
 				{
-					relevantLambdas.push_back(lambda);//add the lambda to the vector
+					relevantLambdas.push_back(lambdaHolder.lambda);//add the lambda to the vector
 				}
 			}
 		}
