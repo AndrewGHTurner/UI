@@ -22,5 +22,7 @@ void UI::eventDispatcher(optional<Event>& event, RenderWindow &window) {
 		Vector2u newSize = event->getIf<Event::Resized>()->size;
 		screenTexture->resize(newSize);
 		setSize(Vector2f(static_cast<float>(newSize.x), static_cast<float>(newSize.y)));
+		
+		
 	}
 }
