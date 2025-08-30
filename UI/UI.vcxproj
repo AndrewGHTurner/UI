@@ -184,7 +184,7 @@
     <ClCompile Include="EText.cpp" />
     <ClCompile Include="eventDispatchers.cpp" />
     <ClCompile Include="HorizontalProportionalSpacedBar.cpp" />
-    <ClCompile Include="HorizontalSpacedBar.h" />
+    <ClCompile Include="HorizontalExpanderBar.h" />
     <ClCompile Include="HorizontalSplitter.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="mouse.cpp" />
@@ -211,6 +211,7 @@
     <ClInclude Include="EText.h" />
     <ClInclude Include="ETextContainer.h" />
     <ClInclude Include="Facade.h" />
+    <ClInclude Include="SizePolicy.h" />
     <ClInclude Include="SplitterHandle.h" />
     <ClInclude Include="HorizontalProportionalSpacedBar.h" />
     <ClInclude Include="HorizontalSplitter.h" />

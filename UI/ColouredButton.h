@@ -29,6 +29,8 @@ public:
 
 	ColouredButton& setColor(Color c);
 
+	ColouredButton& setSize(Vector2f siz);
+
 	Color getColor();
 
 	int getID();

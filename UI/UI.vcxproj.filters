@@ -63,9 +63,6 @@
     <ClCompile Include="UI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HorizontalSpacedBar.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="TreeNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -125,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="Proportioned.h">
       <Filter>Header Files\layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="HorizontalExpanderBar.h">
+      <Filter>Header Files\layouts\horizontal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +207,9 @@
       <Filter>Header Files\layouts\horizontal</Filter>
     </ClInclude>
     <ClInclude Include="SplitterHandle.h">
+      <Filter>Header Files\layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="SizePolicy.h">
       <Filter>Header Files\layouts</Filter>
     </ClInclude>
   </ItemGroup>

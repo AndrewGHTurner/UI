@@ -28,6 +28,12 @@ ColouredButton& ColouredButton::setColor(Color c)
 	return *this;
 }
 
+ColouredButton& ColouredButton::setSize(Vector2f siz)
+{
+	colouredBox()->setSize(siz);
+	return *this;
+}
+
 Color ColouredButton::getColor()
 {
 	return colouredBox()->colour;

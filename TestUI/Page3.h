@@ -9,6 +9,8 @@
 #include "PageSwitcher.h"
 #include "PageTypes.h"
 
+#include "HorizontalExpanderBar.h"
+
 class Page3 : public Page {
 public:
 	Page3(PageSwitcher& pageSwitcher) : pageSwitcher(pageSwitcher) {
@@ -37,13 +39,29 @@ public:
 			this->pageSwitcher.showPage(PageTypes::PAGE_2); // Assuming Page2 has ID 1
 			});
 
-		HorizontalSplitterPtr splitter = HorizontalSplitter(ui->getOrigin(), ui->getSize());
+		HorizontalSplitterPtr splitter = HorizontalSplitter();
 		splitter->add(btn1, 30);
 		splitter->add(btn2, 40);
 		splitter->add(btn3, 30);
 		splitter->add(btn4, 30);
 
-		treeRoot = move(splitter);
+		ColouredButton btn5(Color::Blue);
+		btn5.onClick([]() {
+			cout << "you clicked the menu" << endl;
+			}).setSize(Vector2f(50, 50));
+
+		ColouredButton btn6(Color(155, 0, 255));
+		btn6.onClick([]() {
+			cout << "you clicked the menu on this side!!!" << endl;
+			}).setSize(Vector2f(50, 50));
+
+		unique_ptr<HorizontalExpanderBar> expanderBar = make_unique<HorizontalExpanderBar>(ui->getOrigin(), ui->getSize());
+
+		expanderBar->add(btn5, SizePolicy::FIXED_SIZE);
+		expanderBar->add(move(splitter), SizePolicy::EXPANDER);
+		expanderBar->add(btn6, SizePolicy::FIXED_SIZE);
+
+		treeRoot = move(expanderBar);
 
 	}
 private:

@@ -12,7 +12,6 @@ DESIGN CHOICES
 #include <vector>
 #include <fstream>
 #include <memory>
-#include "HorizontalSpacedBar.h"
 #include "HorizontalProportionalSpacedBar.h"
 #include <tuple>
 //#include "main.h"
