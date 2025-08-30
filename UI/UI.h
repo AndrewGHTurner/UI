@@ -13,6 +13,8 @@
 #include "Page.h"
 #include "UI_DLL_Interface.h"
 #include <cassert>
+#include <chrono>
+#include <thread>
 
 class Page;
 
@@ -85,6 +87,10 @@ public:
 	void runUI(RenderWindow& window)
 	{
 		cout << "here" << endl;
+		//limit the framerate to minimise CPU usage
+		auto nextFrame = std::chrono::steady_clock::now() + std::chrono::milliseconds(50); // ~20 FPS
+		std::this_thread::sleep_until(nextFrame);
+
 		bool displayNeeded = false;
 		while (std::optional event = window.pollEvent())
 		{

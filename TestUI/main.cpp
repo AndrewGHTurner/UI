@@ -54,7 +54,6 @@ MAIN()
 {
 	Vector2u screenSize(700, 700); // Set the screen size to 700x700 pixels
 	RenderWindow window(VideoMode(screenSize), "Mandelbrot");
-	window.setFramerateLimit(1);
 
 	UI* ui = UI::initInstance(window);
 
