@@ -1,6 +1,6 @@
 #include <vector>
 
 struct Proportioned {
-	std::vector<int> proportions;
+	std::vector<float> proportions;
 	int totalProportion = 0;
 };

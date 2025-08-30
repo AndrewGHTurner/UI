@@ -18,6 +18,9 @@ public:
 	Vector2f getOrigin() {
 		return origin;
 	}
+	Vector2f getAntiOrigin() {
+		return antiOrigin;
+	}
 	Vector2f getSize() {
 		return size;
 	}

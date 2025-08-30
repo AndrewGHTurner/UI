@@ -22,7 +22,8 @@ namespace internal {
 		void calcPositions() override;
 	private:
 		int handleWidth = 6;
-
+		uint32_t dragLambdaID = 0;//id of the drag lambda of the active handle(currently being dragged) Only one handle can be dragged at a time so this works
+		uint32_t releaseLambdaID = 0;//id of the release lambda of the active handle
 		/**
 		* @brief Adds a handle to the end of the children vector.
 		* @details This calls the handelBuilder to build the UI tree and registers the labmdas required to make it draggable.

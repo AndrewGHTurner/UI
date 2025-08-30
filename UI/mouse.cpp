@@ -61,6 +61,11 @@ void UI::leftUpAt(Vector2i pos)
 		}
 	}
 	leftReleaseLambdas.clear();
+	//run all unlocalized left up lambdas
+	for (const LambdaHolder& lambdaHolder : leftUpLambdasUnlocalized)
+	{
+		lambdaHolder.lambda();
+	}
 }
 
 void UI::mouseWheelScrollAt(Vector2i pos, int delta)
@@ -78,5 +83,13 @@ void UI::mouseWheelScrollAt(Vector2i pos, int delta)
 				lambdaHolder.lambda(delta);
 			}
 		}
+	}
+}
+
+void UI::mouseMovementAt(Vector2i pos)
+{
+	for (const MouseMovementLambdaHolder& lambdaHolder : mouseMovementLambdas)
+	{
+		lambdaHolder.lambda(pos);
 	}
 }

@@ -27,8 +27,13 @@ public:
 			cout << "you clicked me!" << endl;
 			});
 
-		ColouredButton btn3(Color::Blue);
+		ColouredButton btn3(Color::Magenta);
 		btn3.onClick([this]() {
+			cout << "you clicked me Too!" << endl;
+			});
+
+		ColouredButton btn4(Color::Blue);
+		btn4.onClick([this]() {
 			this->pageSwitcher.showPage(PageTypes::PAGE_2); // Assuming Page2 has ID 1
 			});
 
@@ -36,6 +41,7 @@ public:
 		splitter->add(btn1, 30);
 		splitter->add(btn2, 40);
 		splitter->add(btn3, 30);
+		splitter->add(btn4, 30);
 
 		treeRoot = move(splitter);
 

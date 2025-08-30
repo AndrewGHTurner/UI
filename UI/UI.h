@@ -86,7 +86,6 @@ public:
 
 	void runUI(RenderWindow& window)
 	{
-		cout << "here" << endl;
 		//limit the framerate to minimise CPU usage
 		auto nextFrame = std::chrono::steady_clock::now() + std::chrono::milliseconds(50); // ~20 FPS
 		std::this_thread::sleep_until(nextFrame);
@@ -516,6 +515,7 @@ public:
 	void leftDownAt(Vector2i pos);
 	void leftUpAt(Vector2i pos);
 	void mouseWheelScrollAt(Vector2i pos, int delta);//delta is the amount of scroll
+	void mouseMovementAt(Vector2i pos);
 	void hoverAt();
 
 	void getBoxesAt(Vector2i pos, vector<int>& boxIDs, TreeNode* box)//change this to be non recursive to improve performance

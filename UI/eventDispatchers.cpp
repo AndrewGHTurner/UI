@@ -15,6 +15,6 @@ void UI::eventDispatcher(optional<Event>& event, RenderWindow &window) {
 	}
 	else if (event->getIf <Event::MouseMoved>())
 	{
-
+		mouseMovementAt(Mouse::getPosition(window));
 	}
 }

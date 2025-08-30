@@ -1,4 +1,6 @@
 #include "BehaviourManager.h"
+#include <SFML/System/Vector2.hpp>
+using namespace sf;
 
 uint32_t BehaviorManager::nextID = 0;
 
@@ -43,6 +45,14 @@ uint32_t BehaviorManager::addLeftUp(function<void()> lambda, int boxID, bool all
 	return lambdaID;
 }
 
+uint32_t BehaviorManager::addLeftUp(function<void()> lambda)
+{
+	uint32_t lambdaID = newID();
+	LambdaHolder holder(lambdaID, lambda);
+	leftUpLambdasUnlocalized.push_back(holder);
+	return lambdaID;
+}
+
 uint32_t BehaviorManager::addMouseWheelLambda(function<void(int)> lambda, int boxID)
 {
 	uint32_t lambdaID = newID();
@@ -57,4 +67,29 @@ uint32_t BehaviorManager::addMouseWheelLambda(function<void(int)> lambda, int bo
 		mouseWheelLambdas[boxID] = move(vec);
 	}
 	return lambdaID;
+}
+
+uint32_t BehaviorManager::addMouseMovementLambda(function<void(Vector2i)> lambda)
+{
+	uint32_t id = newID();
+	mouseMovementLambdas.push_back(MouseMovementLambdaHolder(id, lambda));
+	return id;
+}
+
+void BehaviorManager::removeMouseMovementLambda(uint32_t lambdaID) {
+	for (auto it = mouseMovementLambdas.begin(); it != mouseMovementLambdas.end(); it++) {
+		if (it->lambdaID == lambdaID) {
+			mouseMovementLambdas.erase(it);
+			break; // Exit after removing the first matching lambda
+		}
+	}
+}
+
+void BehaviorManager::removeLeftUp(uint32_t lambdaID) {
+	for (auto it = leftUpLambdasUnlocalized.begin(); it != leftUpLambdasUnlocalized.end(); it++) {
+		if (it->lambdaID == lambdaID) {
+			leftUpLambdasUnlocalized.erase(it);
+			break; // Exit after removing the first matching lambda
+		}
+	}
 }
