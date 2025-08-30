@@ -202,6 +202,14 @@ public:
 		//window.display();
 	}
 
+	void calcPositions() override
+	{
+		if (children.size() > 0)
+		{
+			children[0]->setSize(size);
+		}
+	}
+
 	void handleArrowEvent(ArrowDirection direction)
 	{
 		//handle for TextBox

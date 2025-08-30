@@ -152,9 +152,7 @@ public:
 						}
 						//	textBox->setCurrentCharIndex(-1);
 						textBox->text.get()->draw();// -1);
-
 					}
-
 				}
 				else
 				{
