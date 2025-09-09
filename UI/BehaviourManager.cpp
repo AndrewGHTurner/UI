@@ -108,6 +108,20 @@ uint32_t BehaviorManager::addHoverExitLambda(function<void(Vector2i mousePositio
 	return lambdaID;
 }
 
+void BehaviorManager::removeHoverExitLambda(uint32_t boxID, uint32_t lambdaID) {
+	const auto& it = hoverExitLambdas.find(boxID);
+	if (it != hoverExitLambdas.end()) {
+		vector<MouseMovementLambdaHolder>& elementLambdas = it->second;
+		for (auto it2 = elementLambdas.begin(); it2 != elementLambdas.end(); ++it2)
+		{
+			if (it2->lambdaID == lambdaID) {
+				elementLambdas.erase(it2);
+				break; // Exit after removing the first matching lambda
+			}
+		}
+	}
+}
+
 void BehaviorManager::removeMouseMovementLambda(uint32_t lambdaID) {
 	for (auto it = mouseMovementLambdas.begin(); it != mouseMovementLambdas.end(); it++) {
 		if (it->lambdaID == lambdaID) {

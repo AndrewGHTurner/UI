@@ -75,21 +75,21 @@ void internal::HorizontalSplitter::calcPositions()
 	}
 }
 
+
+
 void internal::HorizontalSplitter::addHandle()
 {
 	unique_ptr<TreeNode> handle = handleBuilder();
 	UI* ui = UI::getInstance();
 	//register hover enter lambda to change the mouse cursor
 	ui->addHoverEnterLambda([](Vector2i mousePos) {
-		cout << "h";
 		const auto cursor = sf::Cursor::createFromSystem(sf::Cursor::Type::SizeHorizontal).value();
 		UI::getInstance()->window.setMouseCursor(cursor);
 		}, handle->id);
 
 	//register hover leave lambda to change the mouse cursor back to default
 	
-	ui->addHoverExitLambda([](Vector2i mousePos) {
-		cout << "K";
+	int hoverExitLambdaID = ui->addHoverExitLambda([](Vector2i mousePos) {
 		const auto cursor = sf::Cursor::createFromSystem(sf::Cursor::Type::Arrow).value();
 		UI::getInstance()->window.setMouseCursor(cursor);
 		}, handle->id);
@@ -97,9 +97,11 @@ void internal::HorizontalSplitter::addHandle()
 	//register lambdas to make it draggable
 	
 	int handleIndex = children.size();//the handle hasn't yet been added to children so no need to subtract 1
-	ui->addLeftDown([handlePtr = handle.get(), this, handleIndex](void) 
+	ui->addLeftDown([handlePtr = handle.get(), hoverExitLambdaID, this, handleIndex](void) mutable//mutable allows you to change the copy of hoverExitLambdaID integer
 	{
 		UI* ui = UI::getInstance();
+		//remove the old drag exit lambda so it doesn't change the mouse cursor back to a pointer while dragging
+		ui->removeHoverExitLambda(handlePtr->id ,hoverExitLambdaID);
 		
 		//add the drag lambda ... this is the lambda that will move the splitter handles
 		dragLambdaID = ui->addMouseMovementLambda([handleIndex, this](Vector2i mousePos) {
@@ -130,14 +132,23 @@ void internal::HorizontalSplitter::addHandle()
 			notifyRecalcNeeded();
 			});
 
-		//add the release lambda ... this lambda will remove the drag lambda and itself	
-		releaseLambdaID = ui->addLeftUp([this](void)
+		//add the release lambda ... this lambda will remove the drag lambda and itself	and reinstate the hover exit lambda
+		releaseLambdaID = ui->addLeftUp([this, handlePtr, &hoverExitLambdaID](void)
 			{
 				UI* ui = UI::getInstance();
 				//remove the drag lambda
 				ui->removeMouseMovementLambda(dragLambdaID);
 				//remove this release lambda ... itself
 				ui->removeLeftUp(releaseLambdaID);
+				//change the cursor back to an arrow
+				const auto cursor = sf::Cursor::createFromSystem(sf::Cursor::Type::Arrow).value();
+				UI::getInstance()->window.setMouseCursor(cursor);
+				//reinstate the hover exit lambda
+				hoverExitLambdaID = ui->addHoverExitLambda([](Vector2i mousePos) {
+					const auto cursor = sf::Cursor::createFromSystem(sf::Cursor::Type::Arrow).value();
+					UI::getInstance()->window.setMouseCursor(cursor);
+					}, handlePtr->id);
+
 			});
 	}, handle->id);
 

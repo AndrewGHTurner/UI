@@ -46,3 +46,14 @@ act on deleted elements.
 When the user clicks all calls to the UI to remove lambdas should instead store them in a cache to be deleted. When running release
 callbacks any callbacks represented in this cache should not be run(because they have been deleted from the developer's point of view).
 Once the mouse has been release then the callbacks in the cache should actually be deleted.
+
+## Horizontal splitter mouse cursor
+
+The mouse cursor logic works for an individual handle element. ie it changes correctly to the drag curser when dragging and hovering.
+However, the cursor can be incorrectly changed back to the pointer while dragging if the mouse moves over another handle element, causing
+its lambda to be called. This is a minor issue as the dragging still works correctly.
+
+### Planned fix
+
+A singleton object that controls the mouse cursor state would allow the state to be locked by a single element. Any irrelevant lambda
+calls to the object to change the cursor would be ignored while locked.

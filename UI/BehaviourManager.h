@@ -93,6 +93,8 @@ public:
 
 	uint32_t addHoverExitLambda(function<void(Vector2i mousePosition)> lambda, int boxID);
 
+	void removeHoverExitLambda(uint32_t boxID, uint32_t lambdaID);
+
 	void removeMouseMovementLambda(uint32_t lambdaID);
 
 	void removeLeftUp(uint32_t lambdaID);
