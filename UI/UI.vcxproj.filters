@@ -126,6 +126,9 @@
     <ClCompile Include="HorizontalExpanderBar.h">
       <Filter>Header Files\layouts\horizontal</Filter>
     </ClCompile>
+    <ClCompile Include="ReservedArea.cpp">
+      <Filter>Source Files\layouts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -210,6 +213,9 @@
       <Filter>Header Files\layouts</Filter>
     </ClInclude>
     <ClInclude Include="SizePolicy.h">
+      <Filter>Header Files\layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="ReservedArea.h">
       <Filter>Header Files\layouts</Filter>
     </ClInclude>
   </ItemGroup>

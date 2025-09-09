@@ -16,16 +16,19 @@ protected:
 public:
 	Branch() {
 		setIsLeafFalse();
+		setIsBranchTrue();
 	}
 
 
 	Branch(Vector2f origin, Vector2f siz) : TreeNode(origin, siz)
 	{
 		setIsLeafFalse();
+		setIsBranchTrue();
 	}
 	Branch(TreeNode* container, Vector2f origin, Vector2f siz) : TreeNode(container, origin, siz)
 	{
 		setIsLeafFalse();
+		setIsBranchTrue();
 	}
 
 	void setBackgroundColour(Color colour)
@@ -57,7 +60,7 @@ public:
 				{
 					static_cast<Leaf*>(child.get())->draw();
 				}
-				else
+				else if(child->isBranch())
 				{
 					static_cast<Branch*>(child.get())->draw();
 				}
@@ -154,7 +157,7 @@ public:
 						textBox->text.get()->draw();// -1);
 					}
 				}
-				else
+				else if(child->isBranch())
 				{
 					static_cast<Branch*>(child.get())->drawText(currentCharIndex, currentTextBox);
 				}
@@ -208,7 +211,7 @@ public:
 						b->resizeText();
 					}
 				}
-				else
+				else if(child->isBranch())
 				{
 					static_cast<Branch*>(child.get())->updateChildren();
 				}

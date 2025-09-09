@@ -15,7 +15,8 @@ enum TreeNodeFlagBits {
 	RECALC_NEEDED = 1 << 2,
 	REDRAW_TEXT_NEEDED = 1 << 3,
 	PREE_DRAW_NEEDED = 1 << 4,
-	POST_DRAW_NEEDED = 1 << 5
+	POST_DRAW_NEEDED = 1 << 5,
+	IS_BRANCH = 1 << 6
 
 };
 
@@ -111,9 +112,19 @@ public:
 	inline void setIsLeafTrue() { flags |= IS_LEAF; }
 
 	/**
+	*@brief Sets the flag to show that this treeNode is a branch
+	*/
+	inline void setIsBranchTrue() { flags |= IS_BRANCH; }
+
+	/**
 	*@brief Sets the flag to show that this treeNode is not a leaf
 	*/
 	inline void setIsLeafFalse() { flags &= ~IS_LEAF; }
+
+	/**
+	*@brief Sets the flag to show that this treeNode is not a branch
+	*/
+	inline void setIsBranchFalse() { flags &= ~IS_BRANCH; }
 
 	//REDRAW_NEEDED
 
@@ -150,6 +161,7 @@ public:
 	//helper testers
 
 	inline bool isLeaf() const { return flags & IS_LEAF; }
+	inline bool isBranch() const { return flags & IS_BRANCH; }
 	inline bool isRedrawNeeded() const { return flags & REDRAW_NEEDED; }
 	inline bool isRecalcNeeded() const { return flags & RECALC_NEEDED; }
 	inline bool isRedrawTextNeeded() const { return flags & REDRAW_TEXT_NEEDED; }

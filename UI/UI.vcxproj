@@ -191,6 +191,7 @@
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="PageSwitcher.cpp" />
     <ClCompile Include="Proportioned.h" />
+    <ClCompile Include="ReservedArea.cpp" />
     <ClCompile Include="Scroll.cpp" />
     <ClCompile Include="SplitterHandle.cpp" />
     <ClCompile Include="TextBox.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="EText.h" />
     <ClInclude Include="ETextContainer.h" />
     <ClInclude Include="Facade.h" />
+    <ClInclude Include="ReservedArea.h" />
     <ClInclude Include="SizePolicy.h" />
     <ClInclude Include="SplitterHandle.h" />
     <ClInclude Include="HorizontalProportionalSpacedBar.h" />

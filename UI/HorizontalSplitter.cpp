@@ -18,6 +18,7 @@ void internal::HorizontalSplitter::add(unique_ptr<TreeNode> child, int proportio
 	else
 	{
 		//add a splitter handle before adding the new child
+		addHandle();
 		this->add(move(child));
 	}
 

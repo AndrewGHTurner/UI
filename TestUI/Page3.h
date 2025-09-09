@@ -8,6 +8,7 @@
 #include "ColouredButton.h"
 #include "PageSwitcher.h"
 #include "PageTypes.h"
+#include "ReservedArea.h"
 
 #include "HorizontalExpanderBar.h"
 
@@ -24,10 +25,26 @@ public:
 			this->pageSwitcher.showPage(PageTypes::PAGE_1); // Assuming Page1 has ID 0
 			});
 
-		ColouredButton btn2(Color::Green);
-		btn2.onClick([this]() {
-			cout << "you clicked me!" << endl;
-			});
+		//ColouredButton btn2(Color::Green);
+		//btn2.onClick([this]() {
+		//	cout << "you clicked me!" << endl;
+		//	});
+
+		unique_ptr<ReservedArea> btn2 = make_unique<ReservedArea>();
+
+
+		Vector2f o = btn2->getOrigin();
+
+		sf::CircleShape shape(50.f);
+
+		// set the shape color to green
+		shape.setFillColor(sf::Color(100, 250, 50));
+		shape.setPosition(o);
+
+		ui->window.draw(shape);
+		ui->window.display();
+
+
 
 		ColouredButton btn3(Color::Magenta);
 		btn3.onClick([this]() {
@@ -41,7 +58,7 @@ public:
 
 		HorizontalSplitterPtr splitter = HorizontalSplitter();
 		splitter->add(btn1, 30);
-		splitter->add(btn2, 40);
+		splitter->add(move(btn2), 10);
 		splitter->add(btn3, 30);
 		splitter->add(btn4, 30);
 

@@ -499,7 +499,7 @@ public:
 				return static_cast<Leaf*>(box);
 			}
 
-			if (!box->isLeaf())
+			if (box->isBranch())
 			{
 				// Iterate over children and return the first found leaf
 				for (unique_ptr<TreeNode>& child : static_cast<Branch*>(box)->children)
@@ -531,7 +531,7 @@ public:
 		if (box->isPointWithin(pos))
 		{
 			boxIDs.push_back(box->id);
-			if (!box->isLeaf())
+			if (box->isBranch())
 			{
 				//may wish to add support for clickable branches????
 				for (unique_ptr<TreeNode>& child : static_cast<Branch*>(box)->children) {
