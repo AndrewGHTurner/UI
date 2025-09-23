@@ -11,7 +11,7 @@ using namespace std;
 
 
 namespace internal {
-	class UI_API TextBox : public Leaf, public Animation, public ETextContainer {
+	class UI_API TextBox : public Animation, public ETextContainer {
 
 	public:
 		TextBox(Font& font, Vector2f origin, Vector2f siz, string initialText);

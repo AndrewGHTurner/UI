@@ -7,7 +7,7 @@
 #include "ETextContainer.h"
 #include "UI_DLL_Interface.h"
 
-class UI_API Label : public Leaf, public ETextContainer
+class UI_API Label : public ETextContainer
 {
 
 public:

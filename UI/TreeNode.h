@@ -167,6 +167,8 @@ public:
 	inline bool isRedrawTextNeeded() const { return flags & REDRAW_TEXT_NEEDED; }
 	inline bool isPreDrawNeeded() const { return flags & PREE_DRAW_NEEDED; }
 	inline bool isPostDrawNeeded() const { return flags & POST_DRAW_NEEDED; }
+
+	virtual ~TreeNode() = default;
 };
 
 #endif

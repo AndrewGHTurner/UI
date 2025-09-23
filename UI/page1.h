@@ -83,7 +83,7 @@ public:
 
            ColouredButton btn(f);
 
-           function<void()> removeTreeNode = [branch, btnID = btn.getID()]() {
+           function<void()> removeTreeNode = [branch, btnID = btn.getID()]() {           
                branch->remove(btnID);
                };
 

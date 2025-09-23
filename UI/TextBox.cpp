@@ -10,8 +10,7 @@
 using namespace std;
 
 
-internal::TextBox::TextBox(Font& font, Vector2f origin, Vector2f siz, std::string initialText)
-	: Leaf(nullptr)
+internal::TextBox::TextBox(Font& font, Vector2f origin, Vector2f siz, std::string initialText)	
 {
 	hasText = true;
 	setRedrawTextNeededTrue();
@@ -39,7 +38,7 @@ internal::TextBox::TextBox(Font& font, Vector2f origin, Vector2f siz, std::strin
 	}
 
 internal::TextBox::TextBox(string initialText)
-	: Leaf(nullptr)
+	
 {
 	Font& font = UI::getInstance()->font;
 	hasText = true;

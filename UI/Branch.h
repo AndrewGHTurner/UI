@@ -144,18 +144,16 @@ public:
 			{
 				if (child->isLeaf())
 				{
-					if (static_cast<internal::TextBox*>(child.get())->text)
+					ETextContainer* textBox = static_cast<ETextContainer*>(child.get());
+					if (textBox == currentTextBox)
 					{
-						internal::TextBox* textBox = static_cast<internal::TextBox*>(child.get());
-						if (textBox == currentTextBox)
-						{
-							textBox->setRedrawTextNeededFalse();
+						textBox->setRedrawTextNeededFalse();
 							//		textBox->setCurrentCharIndex(currentCharIndex);
-							textBox->text.get()->draw();// currentCharIndex);
-						}
-						//	textBox->setCurrentCharIndex(-1);
-						textBox->text.get()->draw();// -1);
+						textBox->text.get()->draw();// currentCharIndex);
 					}
+						//	textBox->setCurrentCharIndex(-1);
+					textBox->text.get()->draw();// -1);
+					
 				}
 				else if(child->isBranch())
 				{
@@ -204,8 +202,9 @@ public:
 			{
 				if (child->isLeaf())
 				{
-					static_cast<Leaf*>(child.get())->updateVerticesPosition();
-					internal::TextBox* b = static_cast<internal::TextBox*>(child.get());
+					Leaf* leaf = static_cast<Leaf*>(child.get());
+					leaf->updateVerticesPosition();
+					ETextContainer* b = static_cast<ETextContainer*>(child.get());
 					if (b->isRedrawTextNeeded())
 					{
 						b->resizeText();

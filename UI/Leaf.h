@@ -14,7 +14,7 @@ protected:
 	VertexArray vertices;
 public:
 	
-	void updateVerticesPosition()
+	virtual void updateVerticesPosition()
 	{
 		//first triangle
 		vertices[0].position = origin;
@@ -54,6 +54,7 @@ public:
 		setIsLeafTrue();
 		vertices = VertexArray(sf::PrimitiveType::Triangles, 6);
 	}
+	virtual ~Leaf() = default;
 	//called when content changed each frame
 
 };
