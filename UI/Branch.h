@@ -202,11 +202,11 @@ public:
 			{
 				if (child->isLeaf())
 				{
-					Leaf* leaf = static_cast<Leaf*>(child.get());
-					leaf->updateVerticesPosition();
-					ETextContainer* b = static_cast<ETextContainer*>(child.get());
-					if (b->isRedrawTextNeeded())
+					static_cast<Leaf*>(child.get())->updateVerticesPosition();
+					
+					if (child->isRedrawTextNeeded())
 					{
+						ETextContainer* b = dynamic_cast<ETextContainer*>(child.get());
 						b->resizeText();
 					}
 				}

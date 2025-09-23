@@ -32,6 +32,8 @@ public:
 
 		unique_ptr<ReservedArea> btn2 = make_unique<ReservedArea>();
 
+		//run fractal viewer on setSize
+
 
 		Vector2f o = btn2->getOrigin();
 

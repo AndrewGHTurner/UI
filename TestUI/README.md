@@ -57,3 +57,7 @@ its lambda to be called. This is a minor issue as the dragging still works corre
 
 A singleton object that controls the mouse cursor state would allow the state to be locked by a single element. Any irrelevant lambda
 calls to the object to change the cursor would be ignored while locked.
+
+## Thin textBox
+
+A textBox with a height less than the text size will not render correctly and the text will shake.

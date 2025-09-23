@@ -6,7 +6,11 @@
 #include "UI_DLL_Interface.h"
 //this is a box that draws itself as UI ... 
 
-
+/**
+ * @brief Leaf is a TreeNode that can draw itself ... widgets are can be created by subclassing this
+ * @details Subclasses can change the widget's appearance by controlling the vertices VertexArray
+ *
+ */
 class UI_API Leaf : public TreeNode
 {
 protected:
@@ -52,7 +56,7 @@ public:
 	Leaf() : TreeNode(nullptr)
 	{
 		setIsLeafTrue();
-		vertices = VertexArray(sf::PrimitiveType::Triangles, 6);
+		vertices = VertexArray(sf::PrimitiveType::Triangles, 6);//@todo move to child class
 	}
 	virtual ~Leaf() = default;
 	//called when content changed each frame

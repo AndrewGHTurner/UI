@@ -9,7 +9,7 @@
 #include "Scroll.h"
 #include "PageTypes.h"
 #include <functional>
-
+#include "CheckBox.h"
 
 
 class Page1 : public Page {  
@@ -91,6 +91,23 @@ public:
            branch->add(btn);
 
            };
+
+	   //make check box
+	   CheckBoxPtr checkBox = CheckBox();
+
+       TB.createButton("Is checked?")
+           .onClickLeftDown([checkBoxPtr = checkBox.get()]() {
+           if (checkBoxPtr->checked) {
+               cout << "Checked!" << endl;
+           }
+           else {
+               cout << "Not checked!" << endl;
+           }
+               })
+           .setColour(Color::Cyan)
+           .setPressedColour(Color::Blue);
+       verticalScroll->add(move(checkBox));
+	   verticalScroll->add(TB);
 
        TB.createButton("Add Button")
            .onClickLeftDown(addTreeNode)
