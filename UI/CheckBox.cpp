@@ -17,13 +17,14 @@ internal::CheckBox::CheckBox()
 
 void internal::CheckBox::toggle()
 {
+	const int borderThickness = 2;
 	if (checked)
 	{
 		unCheck();
 	}
 	else
 	{
-		check(origin, antiOrigin);
+		check(Vector2f(origin.x + borderThickness, origin.y + borderThickness), Vector2f(antiOrigin.x - borderThickness, antiOrigin.y - borderThickness));
 	}
 	notifyRedrawNeeded();
 }
@@ -42,6 +43,12 @@ inline void squareDrawnArea(Vector2f& origin, Vector2f& antiOrigin)
 		origin.y = origin.y + ((antiOrigin.y - origin.y) - width) / 2;
 		antiOrigin.y = origin.y + width;
 	}
+}
+
+void internal::CheckBox::onToggle(std::function<void()> g)
+{
+	UI* ui = UI::getInstance();
+	ui->addLeftDown(g, this->id);
 }
 
 void internal::CheckBox::updateVerticesPosition()

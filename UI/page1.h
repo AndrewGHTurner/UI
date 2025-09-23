@@ -95,6 +95,11 @@ public:
 	   //make check box
 	   CheckBoxPtr checkBox = CheckBox();
 
+       function<void()> printToggle = []() {
+           cout << "toggled" << endl;
+           };
+       checkBox->onToggle(printToggle);
+
        TB.createButton("Is checked?")
            .onClickLeftDown([checkBoxPtr = checkBox.get()]() {
            if (checkBoxPtr->checked) {

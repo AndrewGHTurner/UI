@@ -4,6 +4,7 @@
 #include "UI_DLL_Interface.h"
 #include "Leaf.h"
 #include "memory"
+#include <functional>
 using namespace std;
 namespace internal {
 	class UI_API CheckBox : public Leaf
@@ -13,6 +14,7 @@ namespace internal {
 		CheckBox();
 		void toggle();
 		void updateVerticesPosition() override;
+		void onToggle(std::function<void()> g);
 	private:
 		void unCheck();
 		void check(Vector2f origin, Vector2f antiOrigin);
