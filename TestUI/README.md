@@ -61,3 +61,8 @@ calls to the object to change the cursor would be ignored while locked.
 ## Thin textBox
 
 A textBox with a height less than the text size will not render correctly and the text will shake.
+
+## Excessive redraw
+
+If a layout low down in the UI tree needs to recalculate it will notify its parent etc. This works but it leads to all parent layouts
+also recalculating which leads to the whole screen redrawing which is inefficient.

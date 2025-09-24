@@ -59,6 +59,12 @@ public:
 				if (child->isLeaf())
 				{
 					static_cast<Leaf*>(child.get())->draw();
+					if (child->isRedrawTextNeeded())
+					{
+						ETextContainer* textBox = static_cast<ETextContainer*>(child.get());
+						//	textBox->setCurrentCharIndex(-1);
+						textBox->text.get()->draw();// -1);
+					}
 				}
 				else if(child->isBranch())
 				{
@@ -206,7 +212,7 @@ public:
 					
 					if (child->isRedrawTextNeeded())
 					{
-						ETextContainer* b = dynamic_cast<ETextContainer*>(child.get());
+						ETextContainer* b = static_cast<ETextContainer*>(child.get());
 						b->resizeText();
 					}
 				}
@@ -214,6 +220,11 @@ public:
 				{
 					static_cast<Branch*>(child.get())->updateChildren();
 				}
+				child->setRecalcNeededFalse();
+			}
+			else
+			{
+				int t = 0;
 			}
 		}
 		setRecalcNeededFalse();
