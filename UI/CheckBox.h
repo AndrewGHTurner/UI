@@ -12,6 +12,7 @@ namespace internal {
 	public:
 		bool checked = false;
 		CheckBox();
+		void setChecked(bool c);
 		void toggle();
 		void updateVerticesPosition() override;
 		void onToggle(std::function<void()> g);

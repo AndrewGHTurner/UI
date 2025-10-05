@@ -62,6 +62,12 @@ public:
 		return *this;
 	}
 
+	TextButtonMaker& onClickLeftDown(function<void()> lambda, int &lambdaID)
+	{
+		lambdaID = UI::getInstance()->addLeftDown(lambda, rootNode->id);
+		return *this;
+	}
+
 	TextButtonMaker& createButton(string initialText)
 	{
 		unique_ptr<Label> label = make_unique<Label>(initialText);

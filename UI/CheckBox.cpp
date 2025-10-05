@@ -15,6 +15,20 @@ internal::CheckBox::CheckBox()
 	ui->addLeftDown([this]() {this->toggle(); }, this->id);
 }
 
+void internal::CheckBox::setChecked(bool c)
+{
+	const int borderThickness = 2;
+	if (c)
+	{
+		check(Vector2f(origin.x + borderThickness, origin.y + borderThickness), Vector2f(antiOrigin.x - borderThickness, antiOrigin.y - borderThickness));
+	}
+	else
+	{
+		unCheck();
+	}
+	notifyRedrawNeeded();
+}
+
 void internal::CheckBox::toggle()
 {
 	const int borderThickness = 2;
