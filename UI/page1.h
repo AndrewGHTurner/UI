@@ -1,7 +1,7 @@
 #include "Page.h"  
 #include "ColouredButton.h"  
 #include "TextButton.h"
-#include "HorizontalProportionalSpacedBar.h"  
+#include "HorizontalSplitter.h"
 #include <memory>  
 #include "PageSwitcher.h"
 #include "Label.h"
@@ -15,9 +15,6 @@
 
 class Page1 : public Page {  
 private:
-   // LabelColour TBpressedColour;
-	//LabelColour TBreleasedColour; // Store the label and its colour for later use
-    TextButtonMaker TB = TextButtonMaker();
 	
 public:
     PageSwitcher& pageSwitcher; // Reference to the PageSwitcher to switch back to Page
@@ -101,8 +98,9 @@ public:
            };
        checkBox->onToggle(printToggle);
 
-       TB.createButton("Is checked?")
-           .onClickLeftDown([checkBoxPtr = checkBox.get()]() {
+	   TextButtonPtr isCheckedButton = TextButton("Is Checked?");
+
+       isCheckedButton->onClickLeftDown([checkBoxPtr = checkBox.get()]() {
            if (checkBoxPtr->checked) {
                cout << "Checked!" << endl;
            }
@@ -112,8 +110,9 @@ public:
                })
            .setColour(Color::Cyan)
            .setPressedColour(Color::Blue);
+
        verticalScroll->add(move(checkBox));
-	   verticalScroll->add(TB);
+	   verticalScroll->add(move(isCheckedButton));
 
 	   LabelledCheckBoxPtr labelledCheckBox = LabelledCheckBox("Labelled CheckBox");
        labelledCheckBox->checkBox->onToggle([lab = labelledCheckBox.get()]() {
@@ -126,23 +125,23 @@ public:
            });
 	   verticalScroll->add(move(labelledCheckBox));
 
-       TB.createButton("Add Button")
-           .onClickLeftDown(addTreeNode)
-		   .setPressedColour(Color::Green) // Set the pressed colour for the button
-           .setColour(Color::Yellow);      
-	   verticalScroll->add(TB);
+	   TextButtonPtr addButtonButton = TextButton("Add Button");
+       addButtonButton->onClickLeftDown(addTreeNode)
+           .setColour(Color::Yellow)
+           .setPressedColour(Color::Green); // Set the pressed colour for the button    
+	   verticalScroll->add(move(addButtonButton));
 
 
        string k = "This is a lambda";
        function<void()> l = [k]() {
 		   cout << "lambda clicked " << k << endl; }; // Example lambda function
 
-       TB.createButton("resizer")
-           .setColour(Color::Red)
+       TextButtonPtr r = TextButton("resizer");
+           r->setColour(Color::Red)
            .setPressedColour(Color::Blue)
 		   .onClickLeftDown(l);
         
-	   verticalScroll->add(TB);
+	   verticalScroll->add(move(r));
 
 
 
@@ -154,18 +153,17 @@ public:
 
        verticalScroll->add(btn2);  
 
-
-       TB.createButton("Page 2")
-		   .setColour(Color::Cyan)
+       TextButtonPtr page2Button = TextButton("Page 2");
+       page2Button->setColour(Color::Cyan)
 		   .setPressedColour(Color::Magenta)
 		   .onClickLeftDown(makeSwitchPageLambda(PageTypes::PAGE_2));
-       verticalScroll->add(TB);  
+       verticalScroll->add(move(page2Button));
 
-	   TB.createButton("Page 3")
-		   .setColour(Color::Cyan)
+       TextButtonPtr page3Button = TextButton("Page 3");
+       page3Button->setColour(Color::Cyan)
 		   .setPressedColour(Color::Magenta)
 		   .onClickLeftUp(makeSwitchPageLambda(PageTypes::PAGE_3), true);
-	   verticalScroll->add(TB);  
+	   verticalScroll->add(move(page3Button));  
 
        ColouredButton btn4 = ColouredButton(Color::Magenta);
 
@@ -183,7 +181,7 @@ public:
 
        verticalScroll->add(btn5);  
 
-       unique_ptr<HorizontalProportionalSpacedBar>ggg = make_unique<HorizontalProportionalSpacedBar>(ui->getOrigin(), ui->getSize());  
+         
 
        ColouredButton btna(Color::Blue);  
        btna.onClick(makeChangeColourLambda(btna.getRootNodePointer()));
@@ -219,7 +217,7 @@ public:
        vert->add(btny); // Add btny to the vertical scroll
 	   vert->add(move(scroll)); // Add the scroll area to the vertical scroll
 	   
-
+       HorizontalSplitterPtr ggg = HorizontalSplitter(ui->getOrigin(), ui->getSize());
 
        ggg->add(move(vert), 30);  
        ggg->add(move(verticalScroll), 50);  

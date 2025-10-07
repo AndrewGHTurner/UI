@@ -197,7 +197,7 @@
     <ClCompile Include="Scroll.cpp" />
     <ClCompile Include="SplitterHandle.cpp" />
     <ClCompile Include="TextBox.cpp" />
-    <ClCompile Include="TextButton.h" />
+    <ClCompile Include="TextButton.cpp" />
     <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Vertical.cpp" />
@@ -229,6 +229,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scroll.h" />
     <ClInclude Include="TextBox.h" />
+    <ClInclude Include="TextButton.h" />
     <ClInclude Include="TreeHolder.h" />
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="UI.h" />
