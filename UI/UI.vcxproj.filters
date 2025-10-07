@@ -132,6 +132,9 @@
     <ClCompile Include="CheckBox.cpp">
       <Filter>Source Files\widgets</Filter>
     </ClCompile>
+    <ClCompile Include="LabelledCheckBox.cpp">
+      <Filter>Source Files\widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -222,6 +225,9 @@
       <Filter>Header Files\layouts</Filter>
     </ClInclude>
     <ClInclude Include="CheckBox.h">
+      <Filter>Header Files\widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="LabelledCheckBox.h">
       <Filter>Header Files\widgets</Filter>
     </ClInclude>
   </ItemGroup>

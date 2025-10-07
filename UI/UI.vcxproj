@@ -188,6 +188,7 @@
     <ClCompile Include="HorizontalExpanderBar.h" />
     <ClCompile Include="HorizontalSplitter.cpp" />
     <ClCompile Include="Label.cpp" />
+    <ClCompile Include="LabelledCheckBox.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="PageSwitcher.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="EText.h" />
     <ClInclude Include="ETextContainer.h" />
     <ClInclude Include="Facade.h" />
+    <ClInclude Include="LabelledCheckBox.h" />
     <ClInclude Include="ReservedArea.h" />
     <ClInclude Include="SizePolicy.h" />
     <ClInclude Include="SplitterHandle.h" />

@@ -40,6 +40,12 @@ void Label::resizeText()
 	}
 }
 
+void Label::setText(string newText) {
+	text.get()->setText(newText);
+	notifyRedrawNeeded();
+	notifyTextChanged(true);
+}
+
 Color Label::getColour() {
 	return vertices[0].color;
 }

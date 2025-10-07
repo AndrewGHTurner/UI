@@ -66,3 +66,8 @@ A textBox with a height less than the text size will not render correctly and th
 
 If a layout low down in the UI tree needs to recalculate it will notify its parent etc. This works but it leads to all parent layouts
 also recalculating which leads to the whole screen redrawing which is inefficient.
+
+## Text Not Redrawn on navigation to a page
+
+Currentlt setRedrawTextFalse is commented out on ~line 160 of Branch.h so that text is always redrawn... this leads to too many draws but means navigatoin works.
+To solve this a method should be made to navigate the UI tree when a page is navigated to and set redaw text needed to true befor draw.

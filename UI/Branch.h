@@ -148,17 +148,16 @@ public:
 
 			if (child->isRedrawTextNeeded())
 			{
-				if (child->isLeaf())
+				if (child->isLeaf() && child->isRedrawTextNeeded())
 				{
 					ETextContainer* textBox = static_cast<ETextContainer*>(child.get());
 					if (textBox == currentTextBox)
 					{
 						textBox->setRedrawTextNeededFalse();
-							//		textBox->setCurrentCharIndex(currentCharIndex);
-						textBox->text.get()->draw();// currentCharIndex);
+						textBox->text.get()->draw();
 					}
-						//	textBox->setCurrentCharIndex(-1);
-					textBox->text.get()->draw();// -1);
+				//	textBox->setRedrawTextNeededFalse();//Having this here is technically correct but if included then text isnt redrawn when the page is navigated to
+					textBox->text.get()->draw();
 					
 				}
 				else if(child->isBranch())

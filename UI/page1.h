@@ -10,6 +10,7 @@
 #include "PageTypes.h"
 #include <functional>
 #include "CheckBox.h"
+#include "LabelledCheckBox.h"
 
 
 class Page1 : public Page {  
@@ -114,11 +115,23 @@ public:
        verticalScroll->add(move(checkBox));
 	   verticalScroll->add(TB);
 
+	   LabelledCheckBoxPtr labelledCheckBox = LabelledCheckBox("Labelled CheckBox");
+       labelledCheckBox->checkBox->onToggle([lab = labelledCheckBox.get()]() {
+           if (lab->checkBox->checked) {
+               lab->label->setText("Checked");
+           }
+           else {
+               lab->label->setText("Not Checked");
+           }
+           });
+	   verticalScroll->add(move(labelledCheckBox));
+
        TB.createButton("Add Button")
            .onClickLeftDown(addTreeNode)
 		   .setPressedColour(Color::Green) // Set the pressed colour for the button
            .setColour(Color::Yellow);      
 	   verticalScroll->add(TB);
+
 
        string k = "This is a lambda";
        function<void()> l = [k]() {

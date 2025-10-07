@@ -15,6 +15,7 @@ public:
 	Label(string initialText);
 	void setColour(Color c);
 	void resizeText() override;
+	void setText(string newText);
 	Color getColour();
 private:
 	Color colour; // Colour of the label

@@ -87,7 +87,7 @@ void TreeNode::notifyRecalcNeeded()
 }
 void TreeNode::notifyRedrawNeeded()
 {
-	setRedrawNeededTrue();
+	setRedrawNeededTrue();//checking if this is already set and, if so not notifying parent, could be an efficiency
 	if (parentNode)
 	{
 		parentNode->notifyRedrawNeeded();

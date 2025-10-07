@@ -128,7 +128,7 @@ public:
 		//	screenTexture->draw(G);//THIS PROOVES THAT THE PROBLEM WITH THE TEXTBOX IS BECAUSE THE SCREEN ISNT BEING CLEARED PROPERLY
 
 		screenTexture->draw(sprite);//THIS IS BEING HIT FOREVER WHICH SHOULD NOT BE HAPPENING
-		//window.display();
+
 		return false;
 	}
 	/**
@@ -155,6 +155,9 @@ public:
 	{
 		elapsedTime = 0;
 		textSfml.setString(newText);
+		cachedTexture.clear(Color::Transparent);
+		cachedTexture.draw(textSfml);
+		cachedTexture.display();
 
 		//FloatRect bounds = textSfml.getGlobalBounds();//CURSOR HAS TAKEN OVER THIS FUNCTIONALITYS ... WILL NOT WORK IF TEXT IS SET EXTERNALLY TO TYPING 
 		//int textWidth = bounds.size.x;
