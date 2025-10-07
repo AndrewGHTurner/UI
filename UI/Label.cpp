@@ -1,7 +1,7 @@
 #include "Label.h"
 #include "UI.h"
 
-Label::Label(string initialText, Vector2f origin, Vector2f siz) {
+internal::Label::Label(string initialText, Vector2f origin, Vector2f siz) {
 	text = make_unique<EText>(UI::getInstance()->font, initialText);
 	text->setPosition(origin);
 	text->setSize(siz);
@@ -12,7 +12,7 @@ Label::Label(string initialText, Vector2f origin, Vector2f siz) {
 	updateVerticesPosition();
 }
 
-Label::Label(string initialText){
+internal::Label::Label(string initialText){
 	text = make_unique<EText>(UI::getInstance()->font, initialText);
 	//hasText = true;
 	setRedrawTextNeededTrue();
@@ -20,7 +20,7 @@ Label::Label(string initialText){
 	updateVerticesPosition();
 }
 
-void Label::setColour(Color c) {
+void internal::Label::setColour(Color c) {
 	vertices[0].color = c;
 	vertices[1].color = c;
 	vertices[2].color = c;
@@ -31,7 +31,7 @@ void Label::setColour(Color c) {
 	notifyTextChanged(true);
 }
 
-void Label::resizeText()
+void internal::Label::resizeText()
 {
 	//if (text)
 	{
@@ -40,12 +40,16 @@ void Label::resizeText()
 	}
 }
 
-void Label::setText(string newText) {
+void internal::Label::setText(string newText) {
 	text.get()->setText(newText);
 	notifyRedrawNeeded();
 	notifyTextChanged(true);
 }
 
-Color Label::getColour() {
+Color internal::Label::getColour() {
 	return vertices[0].color;
+}
+
+LabelPtr Label(string initialText) {
+	return make_unique<internal::Label>(initialText);
 }

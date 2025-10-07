@@ -13,7 +13,7 @@ namespace internal {
 	public:
 		LabelledCheckBox(string label);
 		internal::CheckBox* checkBox;
-		Label* label;
+		internal::Label* label;
 		void calcPositions() override;
 
 	};

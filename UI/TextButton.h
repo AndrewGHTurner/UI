@@ -12,12 +12,6 @@
 #include "UI_DLL_Interface.h"
 using namespace std;
 
-struct UI_API LabelColour {
-	Color colour = Color::Black;
-	Label* label = nullptr;
-	LabelColour(Color colour, Label* label) : colour(colour), label(label) {}
-	LabelColour() = default; // Default constructor for empty initialization
-};
 /**
 * @brief This facade is used to provide a nice API for creating text buttons
 */
@@ -36,11 +30,11 @@ public:
 		if (pressedColour != Color::Transparent)
 		{
 			function<void()> changeColourRelease = [l = rootNode.get(),colour = releasedColour]() {
-				static_cast<Label*>(l)->setColour(colour);
+				static_cast<internal::Label*>(l)->setColour(colour);
 				};
 
 			function<void()> changeColourPress = [l = rootNode.get(), colour = pressedColour]() {
-				static_cast<Label*>(l)->setColour(colour);
+				static_cast<internal::Label*>(l)->setColour(colour);
 				};
 
 			UI::getInstance()->addLeftDown(changeColourPress, rootNode->id); // Add the lambda for left down click
@@ -51,7 +45,7 @@ public:
 
 
 
-	Label* getRootNodePointer() override
+	internal::Label* getRootNodePointer() override
 	{
 		return label();
 	}
@@ -70,7 +64,7 @@ public:
 
 	TextButtonMaker& createButton(string initialText)
 	{
-		unique_ptr<Label> label = make_unique<Label>(initialText);
+		LabelPtr label = Label(initialText);
 		releasedColour = Color::Transparent;
 		pressedColour = Color::Transparent;
 		rootNode = unique_ptr<TreeNode>(move(label));
@@ -107,9 +101,9 @@ public:
 private:
 	Color pressedColour = Color::Transparent; // Store the pressed colour
 	Color releasedColour = Color::Transparent; // Store the released colour
-	Label* label()
+	internal::Label* label()
 	{
-		return static_cast<Label*>(rootNode.get());
+		return static_cast<internal::Label*>(rootNode.get());
 	}
 
 };

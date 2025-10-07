@@ -57,7 +57,7 @@ public:
 	   verticalScroll->setMargin(4); // Set the margin between elements in the scroll area
        verticalScroll->setBackgroundColour(Color(63, 3, 153)); // Set the background colour of the scroll area
 
-	   unique_ptr<Label> label = make_unique<Label>("first label", Vector2f(0, 0), Vector2f(200, 30));
+	   LabelPtr label = Label("first label");
 	   verticalScroll->add(move(label));
 
        function<void()> addTreeNode = [branch = verticalScroll.get()]() {
