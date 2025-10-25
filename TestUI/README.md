@@ -7,6 +7,17 @@ SFML is used only for rendering triangles and text,
 but handling vertex arrays etc. is done by the UI library itself,
 so it can be ported to OpenGL or Vulkan in the future.
 
+# Futute features to add
+
+### Custom rendering - for games and simulations
+An class similar to Animation.h and a manager class that would allow for the definition of per frame rendering of custom 
+elements before the UI is drawn to the screen. This would allow for simulation visualizations etc.
+
+### UI interpreted language and interpreter
+Creating a language to define UIs that is interpreted would allow for more dynamic UIs that could more easily be altered at runtime. An interpreted
+UI definition language (similar to HTML/CSS) could potentially massively improve development time at the cost of performance... although the
+performance penalty will be negligible for most UIs.
+
 # Design tradeoffs
 
 ## Lambda callback IDs
