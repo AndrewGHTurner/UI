@@ -1,20 +1,20 @@
 #include "HorizontalProportionalSpacedBar.h"
 
-HorizontalProportionalSpacedBar::HorizontalProportionalSpacedBar() : Branch() {
+internal::HorizontalProportionalSpacedBar::HorizontalProportionalSpacedBar() : Branch() {
 }
 
-HorizontalProportionalSpacedBar::HorizontalProportionalSpacedBar(Vector2f origin, Vector2f siz) : Branch(origin, siz) {
+internal::HorizontalProportionalSpacedBar::HorizontalProportionalSpacedBar(Vector2f origin, Vector2f siz) : Branch(origin, siz) {
 }
 
 //proportion is the amount of space the widget needs... will be relative to the proportions given to other widgets
-void HorizontalProportionalSpacedBar::add(Facade& facade, int proportion)
+void internal::HorizontalProportionalSpacedBar::add(Facade& facade, int proportion)
 {
 	this->add(facade);
 	proportions.resize(children.size(), 0);//make sure that the proportions vector length matches the child vector length
 	proportions.back() = proportion;
 	totalProportion += proportion;
 }
-void HorizontalProportionalSpacedBar::add(unique_ptr<TreeNode> child, int proportion)
+void internal::HorizontalProportionalSpacedBar::add(unique_ptr<TreeNode> child, int proportion)
 {
 	this->add(move(child));
 	proportions.resize(children.size(), 0);//make sure that the proportions vector length matches the child vector length
@@ -25,7 +25,7 @@ void HorizontalProportionalSpacedBar::add(unique_ptr<TreeNode> child, int propor
 /**
 * @note could factor this algorithm out as horizontal splitter also uses it
 */
-void HorizontalProportionalSpacedBar::calcPositions()
+void internal::HorizontalProportionalSpacedBar::calcPositions()
 {
 	int childXCoord = origin.x;
 	for (int c = 0; c < children.size(); c++)
@@ -40,4 +40,11 @@ void HorizontalProportionalSpacedBar::calcPositions()
 	}
 	//	setRecalcNeededFalse();
 	//	setRedrawNeededTrue();
+}
+
+HorizontalProportionalSpacedBarPtr HorizontalProportionalSpacedBar() {
+	return make_unique<internal::HorizontalProportionalSpacedBar>();
+}
+HorizontalProportionalSpacedBarPtr HorizontalProportionalSpacedBar(Vector2f origin, Vector2f siz) {
+	return make_unique<internal::HorizontalProportionalSpacedBar>(origin, siz);
 }

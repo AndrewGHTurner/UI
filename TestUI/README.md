@@ -18,6 +18,10 @@ Creating a language to define UIs that is interpreted would allow for more dynam
 UI definition language (similar to HTML/CSS) could potentially massively improve development time at the cost of performance... although the
 performance penalty will be negligible for most UIs.
 
+### smoother resizing
+When the user resizes the window the resize event from SFML is only fired when the mouse is released so there is no smooth resize. A possible solution
+would be to poll window.getSize each frame
+
 # Design tradeoffs
 
 ## Lambda callback IDs

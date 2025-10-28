@@ -17,7 +17,7 @@ public:
 	void createTree() override
 	{
 		UI* ui = UI::getInstance();
-		unique_ptr<HorizontalProportionalSpacedBar>horBar = make_unique<HorizontalProportionalSpacedBar>(ui->getOrigin(), ui->getSize());
+		HorizontalProportionalSpacedBarPtr horBar = HorizontalProportionalSpacedBar(ui->getOrigin(), ui->getSize());
 		unique_ptr<ColouredBox> box1 = make_unique<ColouredBox>(Color::Green);
 		horBar->add(move(box1), 10);
 		VerticalPtr verticalScroll = Vertical();
