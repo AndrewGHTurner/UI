@@ -1,6 +1,6 @@
 #include "Page.h"
 #include "PageSwitcher.h"
-#include "HorizontalProportionalSpacedBar.h"
+#include "ProportionalSpacedList.h"
 #include "ColouredBox.h"
 #include "ColouredButton.h"
 #include "EvenList.h"
@@ -17,7 +17,8 @@ public:
 	void createTree() override
 	{
 		UI* ui = UI::getInstance();
-		HorizontalProportionalSpacedBarPtr horBar = HorizontalProportionalSpacedBar(ui->getOrigin(), ui->getSize());
+		ProportionalSpacedListPtr horBar = ProportionalSpacedList(ui->getOrigin(), ui->getSize());
+		horBar->setHorizontal();
 		unique_ptr<ColouredBox> box1 = make_unique<ColouredBox>(Color::Green);
 		horBar->add(move(box1), 10);
 		EvenListPtr verticalScroll = EvenList();

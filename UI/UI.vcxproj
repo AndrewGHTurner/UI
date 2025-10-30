@@ -190,7 +190,7 @@
     <ClCompile Include="EText.cpp" />
     <ClCompile Include="eventDispatchers.cpp" />
     <ClCompile Include="HorizontalExpanderBar.cpp" />
-    <ClCompile Include="HorizontalProportionalSpacedBar.cpp" />
+    <ClCompile Include="ProportionalSpacedList.cpp" />
     <ClInclude Include="HorizontalExpanderBar.h" />
     <ClCompile Include="HorizontalSplitter.cpp" />
     <ClCompile Include="Label.cpp" />
@@ -234,7 +234,7 @@
     <ClInclude Include="ReservedArea.h" />
     <ClInclude Include="SizePolicy.h" />
     <ClInclude Include="SplitterHandle.h" />
-    <ClInclude Include="HorizontalProportionalSpacedBar.h" />
+    <ClInclude Include="ProportionalSpacedList.h" />
     <ClInclude Include="HorizontalSplitter.h" />
     <ClInclude Include="Label.h" />
     <ClInclude Include="Leaf.h" />

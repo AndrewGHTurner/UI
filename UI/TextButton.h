@@ -9,7 +9,7 @@ namespace internal{
 	{
 	public:
 		TextButton(string text);
-		internal::TextButton& setText(string newText);
+		TextButton& setText(string newText);
 		TextButton& onClickLeftDown(function<void()> lambda);
 
 		TextButton& onClickLeftDown(function<void()> lambda, int& lambdaID);

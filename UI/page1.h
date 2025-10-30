@@ -132,15 +132,10 @@ public:
            .setPressedColour(Color::Green); // Set the pressed colour for the button    
 	   verticalScroll->add(move(addButtonButton));
 
-
-       string k = "This is a lambda";
-       function<void()> l = [k]() {
-		   cout << "lambda clicked " << k << endl; }; // Example lambda function
-
-       TextButtonPtr r = TextButton("resizer");
-           r->setColour(Color::Red)
+       TextButtonPtr r = TextButton("ListLayoutDemo");
+           r->setColour(Color::Blue)
            .setPressedColour(Color::Blue)
-		   .onClickLeftDown(l);
+		   .onClickLeftDown(makeSwitchPageLambda(PageTypes::LIST_LAYOUT_DEMO));
         
 	   verticalScroll->add(move(r));
 

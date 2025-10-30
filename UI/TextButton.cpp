@@ -5,6 +5,12 @@ internal::TextButton::TextButton(string text) : Label(text)
 {
 }
 
+internal::TextButton& internal::TextButton::setText(string newText)
+{
+	internal::Label::setText(newText);
+	return *this;
+}
+
 internal::TextButton& internal::TextButton::onClickLeftDown(function<void()> lambda)
 {
 	UI::getInstance()->addLeftDown(lambda, this->id);

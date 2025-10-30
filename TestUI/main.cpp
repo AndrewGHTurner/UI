@@ -12,7 +12,7 @@ DESIGN CHOICES
 #include <vector>
 #include <fstream>
 #include <memory>
-#include "HorizontalProportionalSpacedBar.h"
+#include "ProportionalSpacedList.h"
 #include <tuple>
 //#include "main.h"
 #include "UI.h"
@@ -25,6 +25,7 @@ DESIGN CHOICES
 #include "Page3.h"
 #include <tuple>
 #include "PageTypes.h"
+#include "ListLayoutDemoPage.h"
 
 
 //#include "testPage.h"
@@ -71,10 +72,13 @@ MAIN()
 
 	PagePtr page3 = make_unique<Page3>(pageSwitcher); // Create Page3 with a reference to PageSwitcher
 
+	PagePtr listLayoutDemoPage = make_unique<ListLayoutDemoPage>(pageSwitcher);
+
 
 	pageSwitcher.addPage(move(page1), PageTypes::PAGE_1);
 	pageSwitcher.addPage(move(page2), PageTypes::PAGE_2);
 	pageSwitcher.addPage(move(page3), PageTypes::PAGE_3);
+	pageSwitcher.addPage(move(listLayoutDemoPage), PageTypes::LIST_LAYOUT_DEMO);
 	pageSwitcher.showPage(PageTypes::PAGE_1); // Show Page1 initially
 
 

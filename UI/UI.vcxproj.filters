@@ -102,9 +102,6 @@
     <ClCompile Include="PageSwitcher.cpp">
       <Filter>Source Files\pageManagers</Filter>
     </ClCompile>
-    <ClCompile Include="HorizontalProportionalSpacedBar.cpp">
-      <Filter>Source Files\layouts\horizontal</Filter>
-    </ClCompile>
     <ClCompile Include="SplitterHandle.cpp">
       <Filter>Source Files\layouts</Filter>
     </ClCompile>
@@ -134,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="HorizontalExpanderBar.cpp">
       <Filter>Source Files\layouts\horizontal</Filter>
+    </ClCompile>
+    <ClCompile Include="ProportionalSpacedList.cpp">
+      <Filter>Source Files\layouts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -209,9 +209,6 @@
     <ClInclude Include="UI.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
-    <ClInclude Include="HorizontalProportionalSpacedBar.h">
-      <Filter>Header Files\layouts\horizontal</Filter>
-    </ClInclude>
     <ClInclude Include="HorizontalSplitter.h">
       <Filter>Header Files\layouts\horizontal</Filter>
     </ClInclude>
@@ -250,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="VirtualBranch.h">
       <Filter>Header Files\layoutsVirtual</Filter>
+    </ClInclude>
+    <ClInclude Include="ProportionalSpacedList.h">
+      <Filter>Header Files\layouts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
