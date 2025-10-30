@@ -1,12 +1,12 @@
 #include "pch.h"
-#include "LinearLayout.h"
+#include "ListLayout.h"
 
-void LinearLayout::setVertical() {
+void ListLayout::setVertical() {
 	vertical = true;
 	notifyRecalcNeeded();
 }
 
-void LinearLayout::setHorizontal() {
+void ListLayout::setHorizontal() {
 	vertical = false;
 	notifyRecalcNeeded();
 }

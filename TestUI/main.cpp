@@ -19,7 +19,7 @@ DESIGN CHOICES
 #include "ColouredButton.h"
 #include "Page.h"
 #include "PageSwitcher.h"
-#include <Vertical.h>
+#include <EvenList.h>
 #include "page1.h"
 #include "page2.h"
 #include "Page3.h"

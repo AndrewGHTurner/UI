@@ -90,7 +90,7 @@
     <ClCompile Include="ColouredButton.cpp">
       <Filter>Source Files\facades</Filter>
     </ClCompile>
-    <ClCompile Include="Vertical.cpp">
+    <ClCompile Include="EvenList.cpp">
       <Filter>Source Files\layouts</Filter>
     </ClCompile>
     <ClCompile Include="Scroll.cpp">
@@ -123,7 +123,7 @@
     <ClCompile Include="TextButton.cpp">
       <Filter>Source Files\widgets</Filter>
     </ClCompile>
-    <ClCompile Include="LinearLayout.cpp">
+    <ClCompile Include="ListLayout.cpp">
       <Filter>Source Files\layouts</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
@@ -179,7 +179,7 @@
     <ClInclude Include="ETextContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vertical.h">
+    <ClInclude Include="EvenList.h">
       <Filter>Header Files\layouts</Filter>
     </ClInclude>
     <ClInclude Include="Scroll.h">
@@ -233,7 +233,7 @@
     <ClInclude Include="TextButton.h">
       <Filter>Header Files\widgets</Filter>
     </ClInclude>
-    <ClInclude Include="LinearLayout.h">
+    <ClInclude Include="ListLayout.h">
       <Filter>Header Files\layouts</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">

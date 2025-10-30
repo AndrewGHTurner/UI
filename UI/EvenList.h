@@ -3,7 +3,7 @@
 
 #define MIN_WIDGET_HEIGHT 40.0
 #include "UI_DLL_Interface.h"
-#include "LinearLayout.h"
+#include "ListLayout.h"
 #include "Facade.h"
 
 //PLAN FOR VERTICAL/HORIZONTAL SCROLLABLE LIST VIEW
@@ -19,24 +19,28 @@ ALTERNATIVELY
 the scroller could maintain a virtual position for each widget and check if the widget is in view when renderring?
 */
 
-using VerticalPtr = std::unique_ptr<class _Vertical>;
 
-class UI_API _Vertical : public LinearLayout {
-private:
-    int elementMargin = 0;
-    vector<TreeNode*> contents;
+namespace internal {
+
+    class UI_API EvenList : public ListLayout {
+    private:
+        int elementMargin = 0;
+        vector<TreeNode*> contents;
 
 
 
-public:
-    _Vertical();
-    _Vertical(Vector2f origin, Vector2f siz);
-    void setMargin(int margin);
-    void calcPositions();
-};
+    public:
+        EvenList();
+        EvenList(Vector2f origin, Vector2f siz);
+        void setMargin(int margin);
+        void calcPositions();
+    };
+}
+
+using EvenListPtr = std::unique_ptr<internal::EvenList>;
 
 // Free function factory
-UI_API VerticalPtr Vertical();
+UI_API EvenListPtr EvenList();
 
 
 #endif

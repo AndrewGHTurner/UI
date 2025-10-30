@@ -5,7 +5,7 @@
 #include <memory>  
 #include "PageSwitcher.h"
 #include "Label.h"
-#include "Vertical.h"
+#include "EvenList.h"
 #include "Scroll.h"
 #include "PageTypes.h"
 #include <functional>
@@ -50,7 +50,7 @@ public:
        ui->addLeftDown(print, j->id);//WOUDL NEED TO MAKE A FOX  
 
        //create the scroll area  
-	   VerticalPtr verticalScroll = Vertical();
+       EvenListPtr verticalScroll = EvenList();
 	   verticalScroll->setMargin(4); // Set the margin between elements in the scroll area       
        verticalScroll->setBackgroundColour(Color(63, 3, 153)); // Set the background colour of the scroll area
        //verticalScroll->setHorizontal();
@@ -187,12 +187,12 @@ public:
        ColouredButton btna(Color::Blue);  
        btna.onClick(makeChangeColourLambda(btna.getRootNodePointer()));
 
-       VerticalPtr vert = Vertical();//make_unique<Vertical>(Vector2f(0, 0), Vector2f(200, 200));
+       EvenListPtr vert = EvenList();//make_unique<Vertical>(Vector2f(0, 0), Vector2f(200, 200));
 
 	   unique_ptr<Scroll> scroll = make_unique<Scroll>();
        scroll->setBackgroundColour(Color::Green);
 
-       VerticalPtr vert2 = Vertical();
+       EvenListPtr vert2 = EvenList();
 	   vert2->setMargin(4); // Set the margin between elements in the vertical scroll area
 
 

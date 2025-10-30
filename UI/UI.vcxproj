@@ -195,7 +195,7 @@
     <ClCompile Include="HorizontalSplitter.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LabelledCheckBox.cpp" />
-    <ClCompile Include="LinearLayout.cpp" />
+    <ClCompile Include="ListLayout.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="PageSwitcher.cpp" />
@@ -207,7 +207,7 @@
     <ClCompile Include="TextButton.cpp" />
     <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="UI.cpp" />
-    <ClCompile Include="Vertical.cpp" />
+    <ClCompile Include="EvenList.cpp" />
     <ClInclude Include="VirtualBranch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -223,7 +223,7 @@
     <ClInclude Include="ETextContainer.h" />
     <ClInclude Include="Facade.h" />
     <ClInclude Include="LabelledCheckBox.h" />
-    <ClInclude Include="LinearLayout.h" />
+    <ClInclude Include="ListLayout.h" />
     <ClCompile Include="pch.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -249,7 +249,7 @@
     <ClInclude Include="TreeNode.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="UI_DLL_Interface.h" />
-    <ClInclude Include="Vertical.h" />
+    <ClInclude Include="EvenList.h" />
     <ClInclude Include="VirtualVertical.h" />
   </ItemGroup>
   <ItemGroup>

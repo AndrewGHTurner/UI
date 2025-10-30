@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Vertical.h"
+#include "EvenList.h"
 
 //PLAN FOR VERTICAL/HORIZONTAL SCROLLABLE LIST VIEW
 /*
@@ -14,20 +14,20 @@ ALTERNATIVELY
 the scroller could maintain a virtual position for each widget and check if the widget is in view when renderring?
 */
 
-_Vertical::_Vertical() :
-	LinearLayout() {
+internal::EvenList::EvenList() :
+	ListLayout() {
 }
-_Vertical::_Vertical(Vector2f origin, Vector2f siz) :
-	LinearLayout(origin, siz) {
+internal::EvenList::EvenList(Vector2f origin, Vector2f siz) :
+	ListLayout(origin, siz) {
 }
 
-void _Vertical::setMargin(int margin)
+void internal::EvenList::setMargin(int margin)
 {
 	elementMargin = margin;
 	notifyRecalcNeeded();
 }
 
-void _Vertical::calcPositions()
+void internal::EvenList::calcPositions()
 {
 	float Y = this->origin.y + elementMargin;
 	float X = this->origin.x + elementMargin;
@@ -70,8 +70,8 @@ void _Vertical::calcPositions()
 	setRecalcNeededFalse();
 }
 
-UI_API VerticalPtr Vertical()
+UI_API EvenListPtr EvenList()
 {
-	return std::make_unique<_Vertical>();
+	return std::make_unique<internal::EvenList>();
 }
 
