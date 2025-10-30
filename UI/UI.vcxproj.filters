@@ -84,9 +84,6 @@
     <ClCompile Include="mouse.cpp">
       <Filter>Source Files\UI\eventHandlers</Filter>
     </ClCompile>
-    <ClCompile Include="VirtualBranch.h">
-      <Filter>Header Files\layoutsVirtual</Filter>
-    </ClCompile>
     <ClCompile Include="EText.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,9 +99,6 @@
     <ClCompile Include="TextBox.cpp">
       <Filter>Source Files\widgets</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationManager.h">
-      <Filter>Header Files\UI</Filter>
-    </ClCompile>
     <ClCompile Include="PageSwitcher.cpp">
       <Filter>Source Files\pageManagers</Filter>
     </ClCompile>
@@ -117,12 +111,6 @@
     <ClCompile Include="HorizontalSplitter.cpp">
       <Filter>Source Files\layouts\horizontal</Filter>
     </ClCompile>
-    <ClCompile Include="Proportioned.h">
-      <Filter>Header Files\layouts</Filter>
-    </ClCompile>
-    <ClCompile Include="HorizontalExpanderBar.h">
-      <Filter>Header Files\layouts\horizontal</Filter>
-    </ClCompile>
     <ClCompile Include="ReservedArea.cpp">
       <Filter>Source Files\layouts</Filter>
     </ClCompile>
@@ -134,6 +122,18 @@
     </ClCompile>
     <ClCompile Include="TextButton.cpp">
       <Filter>Source Files\widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="LinearLayout.cpp">
+      <Filter>Source Files\layouts</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationManager.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="HorizontalExpanderBar.cpp">
+      <Filter>Source Files\layouts\horizontal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +232,24 @@
     </ClInclude>
     <ClInclude Include="TextButton.h">
       <Filter>Header Files\widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearLayout.h">
+      <Filter>Header Files\layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationManager.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="HorizontalExpanderBar.h">
+      <Filter>Header Files\layouts\horizontal</Filter>
+    </ClInclude>
+    <ClInclude Include="Proportioned.h">
+      <Filter>Header Files\layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="VirtualBranch.h">
+      <Filter>Header Files\layoutsVirtual</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

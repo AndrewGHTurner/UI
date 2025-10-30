@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "TextButton.h"
 #include "UI.h"
 internal::TextButton::TextButton(string text) : Label(text)

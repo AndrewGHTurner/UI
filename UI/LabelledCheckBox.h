@@ -1,11 +1,8 @@
 #ifndef LABELLED_CHECKBOX_H
 #define LABELLED_CHECKBOX_H
 
-#include "UI_DLL_Interface.h"
-#include "Branch.h"
 #include "CheckBox.h"
 #include "Label.h"
-#include <memory>
 
 namespace internal {
 	class UI_API LabelledCheckBox : public Branch

@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "HorizontalProportionalSpacedBar.h"
 
 internal::HorizontalProportionalSpacedBar::HorizontalProportionalSpacedBar() : Branch() {

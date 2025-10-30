@@ -2,7 +2,7 @@
 #define BRANCH_H
 #include "TreeNode.h"
 #include "Leaf.h"
-#include <vector>
+
 #include "TextBox.h"
 #include "Facade.h"
 #include "UI_DLL_Interface.h"

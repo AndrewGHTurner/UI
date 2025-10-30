@@ -9,7 +9,7 @@
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 
-#include "UI_DLL_Interface.h"
+
 using namespace sf;
 using namespace std;
 
@@ -118,6 +118,11 @@ public:
 
 		sf::Sprite sprite(cachedTexture.getTexture());
 		sprite.setPosition(windowPosition);
+
+		if (cachedTexture.getSize().x <= 0)
+		{
+			return false;
+		}
 
 		RenderTexture j = RenderTexture(cachedTexture.getSize());
 		j.clear(Color::Cyan);

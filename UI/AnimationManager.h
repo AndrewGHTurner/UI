@@ -2,24 +2,14 @@
 #define ANIMATION_MANAGER_H
 #include "Animation.h"
 #include <vector>
-#include "UI_DLL_Interface.h"
-using namespace std;
 
 class UI_API AnnimationManager {
 private:
-	vector<Animation*> animations = vector<Animation*>();
+	std::vector<Animation*> animations = std::vector<Animation*>();
 public:
-	void addAnimation(Animation* animation) {
-		animations.push_back(animation);
-	}
-	int countAnimations()
-	{
-		return animations.size();
-	}
-	void removeAnimation(Animation* animation)
-	{
-		animations.erase(std::remove(animations.begin(), animations.end(), animation), animations.end());//Don'y you just love readable C++???
-	}
+	void addAnimation(Animation* animation);
+	int countAnimations();
+	void removeAnimation(Animation* animation);
 	//will be called in the render loop to call the animation draw methods
 	inline void runAnimations() {
 		for (Animation* animation : animations)

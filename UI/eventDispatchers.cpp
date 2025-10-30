@@ -1,3 +1,4 @@
+#include "pch.h"
 #include "UI.h"
 
 void UI::eventDispatcher(optional<Event>& event, RenderWindow &window) {

@@ -1,3 +1,4 @@
+#include "pch.h"
 //#include "CenterAligner.h"
 //
 //CenterAligner::CenterAligner(TreeNode* child, float fillPercentage) {

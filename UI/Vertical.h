@@ -3,7 +3,7 @@
 
 #define MIN_WIDGET_HEIGHT 40.0
 #include "UI_DLL_Interface.h"
-#include "Branch.h"
+#include "LinearLayout.h"
 #include "Facade.h"
 
 //PLAN FOR VERTICAL/HORIZONTAL SCROLLABLE LIST VIEW
@@ -21,7 +21,7 @@ the scroller could maintain a virtual position for each widget and check if the 
 
 using VerticalPtr = std::unique_ptr<class _Vertical>;
 
-class UI_API _Vertical : public Branch {
+class UI_API _Vertical : public LinearLayout {
 private:
     int elementMargin = 0;
     vector<TreeNode*> contents;

@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\UI\PageTypes.h" />
+    <ClCompile Include="HorizontalOrVerrtical.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +154,7 @@
     <ClCompile Include="..\UI\page2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HorizontalOrVertical.h" />
     <ClInclude Include="Page3.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -51,8 +51,9 @@ public:
 
        //create the scroll area  
 	   VerticalPtr verticalScroll = Vertical();
-	   verticalScroll->setMargin(4); // Set the margin between elements in the scroll area
+	   verticalScroll->setMargin(4); // Set the margin between elements in the scroll area       
        verticalScroll->setBackgroundColour(Color(63, 3, 153)); // Set the background colour of the scroll area
+       //verticalScroll->setHorizontal();
 
 	   LabelPtr label = Label("first label");
 	   verticalScroll->add(move(label));

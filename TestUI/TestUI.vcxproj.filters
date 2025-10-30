@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\pages">
+      <UniqueIdentifier>{143e24a3-4689-408f-b93f-578f1a38d72f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -27,9 +30,15 @@
     <ClCompile Include="..\UI\PageTypes.h">
       <Filter>Header Files</Filter>
     </ClCompile>
+    <ClCompile Include="HorizontalOrVerrtical.cpp">
+      <Filter>Source Files\pages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Page3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HorizontalOrVertical.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
