@@ -19,8 +19,8 @@ void HorizontalExpanderBar::add(unique_ptr<TreeNode> child, SizePolicy sizePolic
 
 void HorizontalExpanderBar::calcPositions()
 {
-	int totalFixedSize = 0;
-	int numberOfExpandableChildren = 0;
+	float totalFixedSize = 0;
+	float numberOfExpandableChildren = 0;
 	//for each child sum the fixed sizes
 	for (int i = 0; i < children.size(); i++)
 	{
@@ -31,7 +31,7 @@ void HorizontalExpanderBar::calcPositions()
 			numberOfExpandableChildren++;
 		}
 	}
-	int expandChildWidth = (size.x - totalFixedSize) / numberOfExpandableChildren;
+	float expandChildWidth = (size.x - totalFixedSize) / numberOfExpandableChildren;
 
 
 	float buttonHeight = antiOrigin.y - origin.y;

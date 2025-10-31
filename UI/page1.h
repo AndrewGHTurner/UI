@@ -183,6 +183,7 @@ public:
        btna.onClick(makeChangeColourLambda(btna.getRootNodePointer()));
 
        EvenListPtr vert = EvenList();//make_unique<Vertical>(Vector2f(0, 0), Vector2f(200, 200));
+	   vert->setChildSize(-1); // Let the EvenList calculate child size based on its own size
 
 	   unique_ptr<Scroll> scroll = make_unique<Scroll>();
        scroll->setBackgroundColour(Color::Green);
@@ -199,7 +200,7 @@ public:
 		   vert2Height += 40; // Increment the height for each button added
        }
 	   vert2->setSize(Vector2f(200, vert2Height)); // Set the size of the vertical scroll area based on the number of buttons
-	   scroll->add(move(vert2)); // Add the vertical scroll to the scroll area
+	   scroll->setLayout(move(vert2)); // Add the vertical scroll to the scroll area
        ColouredButton btny(Color::Blue);
        btny.onClick(makeChangeColourLambda(btny.getRootNodePointer()));
 

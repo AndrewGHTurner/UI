@@ -9,13 +9,16 @@
 class UI_API Scroll : public Branch {
 private:
 	Vector2f scrollOffset;
-	int stackHeight = 0;//this is the combined heights of all the elements in the scroll
 public:
 	Scroll();
 
 	void preDraw() override;
 
 	void postDraw() override;
+
+	void add(unique_ptr<TreeNode> child) = delete;
+
+	void setLayout(unique_ptr<Branch> layout);
 
 	void calcPositions() override;
 

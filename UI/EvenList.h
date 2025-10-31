@@ -25,6 +25,7 @@ namespace internal {
     class UI_API EvenList : public ListLayout {
     private:
         int elementMargin = 0;
+		int childSize = 50;
         vector<TreeNode*> contents;
 
 
@@ -33,6 +34,7 @@ namespace internal {
         EvenList();
         EvenList(Vector2f origin, Vector2f siz);
         void setMargin(int margin);
+        void setChildSize(int size);
         void calcPositions();
     };
 }

@@ -17,31 +17,48 @@
 		glDisable(GL_SCISSOR_TEST);
 	}
 
+	void Scroll::setLayout(unique_ptr<Branch> layout)
+	{
+		layout->parentNode = this;
+		children.push_back(move(layout));
+		notifyRecalcNeeded();
+	}
+
 	void Scroll::calcPositions() {
-		stackHeight = 0;
-		int heightPerElement = 40; // Example height for each element
-		int X = origin.x;
-		int Y = origin.y + scrollOffset.y;
-		for (const unique_ptr<TreeNode>& child : children)
-		{
-			int elmHeight = 0;
-			if (child->getSize().y != 0)
-			{
-				elmHeight = child->getSize().y;
-			}
-			else
-			{
-				elmHeight = heightPerElement; // Default height if not set
-			}
-
-
-			child->setOrigin(Vector2f(X, Y));
-			child->setSize(Vector2f(size.x, elmHeight));
-			Y += elmHeight; // Increment Y position for the next element
-			stackHeight += elmHeight;//edit this for varied height elements
-
-		}
 		setRecalcNeededFalse();
+		if (children.size() == 0)
+		{
+			return;
+		}
+		//stackHeight = 0;
+		//int heightPerElement = 40; // Example height for each element
+		int X = origin.x + scrollOffset.x;
+		int Y = origin.y + scrollOffset.y;
+
+		Vector2f childSize = children[0]->getSize();
+		childSize.x = size.x;
+
+		children[0]->setSize(childSize);
+		children[0]->setOrigin(Vector2f(X, Y));
+		//for (const unique_ptr<TreeNode>& child : children)
+		//{
+		//	int elmHeight = 0;
+		//	if (child->getSize().y != 0)
+		//	{
+		//		elmHeight = child->getSize().y;
+		//	}
+		//	else
+		//	{
+		//		elmHeight = heightPerElement; // Default height if not set
+		//	}
+
+
+		//	child->setOrigin(Vector2f(X, Y));
+		//	child->setSize(Vector2f(size.x, elmHeight));
+		//	Y += elmHeight; // Increment Y position for the next element
+		//	stackHeight += elmHeight;//edit this for varied height elements
+
+		//}
 	};
 
 	void Scroll::incrementOffset(int delta) {
@@ -52,9 +69,9 @@
 		}
 		const unique_ptr<TreeNode>& lastChild = children.back();
 
-		if (stackHeight - size.y + scrollOffset.y < 0)
+		if (lastChild->getSize().y - size.y + scrollOffset.y < 0)
 		{
-			scrollOffset.y = -(stackHeight - size.y);
+			scrollOffset.y = -(lastChild->getSize().y - size.y);
 		}
 		notifyRecalcNeeded();
 	}

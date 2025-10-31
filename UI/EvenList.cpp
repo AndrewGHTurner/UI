@@ -27,15 +27,25 @@ void internal::EvenList::setMargin(int margin)
 	notifyRecalcNeeded();
 }
 
+void internal::EvenList::setChildSize(int size)
+{
+	childSize = size;
+	notifyRecalcNeeded();
+}
+
 void internal::EvenList::calcPositions()
 {
 	float Y = this->origin.y + elementMargin;
 	float X = this->origin.x + elementMargin;
+	float pixelsPerWidget = this->childSize;
 	if (isVertical())
 	{
-		float heightPerWidget = static_cast<float>(this->size.y) / children.size();
+		if (pixelsPerWidget == -1)//calculate pixels per widget based on layout size
+		{
+			pixelsPerWidget = static_cast<float>(this->size.y) / children.size();
+		}
 
-		Vector2f childSize((int)this->size.x - (2 * elementMargin), heightPerWidget - (elementMargin));
+		Vector2f childSize((int)this->size.x - (2 * elementMargin), pixelsPerWidget - (elementMargin));
 
 		for (unique_ptr<TreeNode>& box : children)
 		{
@@ -44,23 +54,31 @@ void internal::EvenList::calcPositions()
 			box->setOrigin(childOrigin);
 			box->setSize(childSize);
 			//Y += MIN_WIDGET_HEIGHT;
-			Y += heightPerWidget;
+			Y += pixelsPerWidget;
 			if (box->hasText)
 			{
 				box->notifyTextChanged(true);
 			}
 		}
+		if (pixelsPerWidget != -1)//set the size of the layout
+		{
+			this->size.y = (pixelsPerWidget * children.size());
+		}
+
 	}
 	else//if horizontal
 	{
-		float widthPerWidget = static_cast<float>(this->size.x) / children.size();
-		Vector2f childSize(widthPerWidget - (elementMargin), (int)this->size.y - (2 * elementMargin));
+		if (pixelsPerWidget == -1)//calculate pixels per widget based on layout size
+		{
+			pixelsPerWidget = static_cast<float>(this->size.x) / children.size();
+		}
+		Vector2f childSize(pixelsPerWidget - (elementMargin), (int)this->size.y - (2 * elementMargin));
 		for (unique_ptr<TreeNode>& box : children)
 		{
 			Vector2f childOrigin(X, Y);
 			box->setOrigin(childOrigin);
 			box->setSize(childSize);
-			X += widthPerWidget;
+			X += pixelsPerWidget;
 			if (box->hasText)
 			{
 				box->notifyTextChanged(true);

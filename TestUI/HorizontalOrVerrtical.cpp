@@ -10,6 +10,7 @@ void ListLayoutDemoPage::createTree() {
 	ProportionalSpacedListPtr mainContainer = ProportionalSpacedList();
 
 	EvenListPtr topBar = EvenList();
+	topBar->setChildSize(-1);
 
 	TextButtonPtr homeButton = TextButton("Home");
 	homeButton->onClickLeftDown([this]() {
@@ -40,7 +41,9 @@ void ListLayoutDemoPage::createTree() {
 		showList->add(move(btn));
 	}
 
-	mainContainer->add(move(topBar), 10);
+	showList->setChildSize(-1);
+
+	mainContainer->add(move(topBar), 19);
 	mainContainer->add(move(showList), 90);
 	treeRoot = move(mainContainer);
 }
