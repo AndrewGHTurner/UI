@@ -8,6 +8,7 @@ enum PageTypes {
 	PAGE_2,
 	PAGE_3,
 	LIST_LAYOUT_DEMO,
+	EXTERNAL_DLL_PAGE	
 };
 
 #endif

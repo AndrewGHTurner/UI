@@ -17,6 +17,8 @@ private:
 
 };  
 
+//extern "C" UI_API Page* createPage(Page);
+
 using PagePtr = unique_ptr<Page>;
 
 

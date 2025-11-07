@@ -79,6 +79,19 @@ MAIN()
 	pageSwitcher.addPage(move(page2), PageTypes::PAGE_2);
 	pageSwitcher.addPage(move(page3), PageTypes::PAGE_3);
 	pageSwitcher.addPage(move(listLayoutDemoPage), PageTypes::LIST_LAYOUT_DEMO);
+
+
+	using CreatePageFunc = Page * (*)(PageSwitcher*, int);
+
+	HMODULE h = LoadLibraryA("C:\\Users\\andre\\Desktop\\Root\\DLLs\\PrivateHub.dll");
+	auto createPage3 = (CreatePageFunc)GetProcAddress(h, "createPage");
+
+	PagePtr page(createPage3(&pageSwitcher, 0));
+	pageSwitcher.addPage(move(page), PageTypes::EXTERNAL_DLL_PAGE);
+
+
+
+
 	pageSwitcher.showPage(PageTypes::PAGE_1); // Show Page1 initially
 
 
