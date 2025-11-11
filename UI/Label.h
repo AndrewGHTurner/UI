@@ -15,6 +15,8 @@ namespace internal {
 		Label(string initialText, Vector2f origin, Vector2f siz);
 		Label(string initialText);
 		void setColour(Color c);
+		void setTextJustification(TextJustification justification);
+		TextJustification getTextJustification();
 		void resizeText() override;
 		void setText(string newText);
 		Color getColour();

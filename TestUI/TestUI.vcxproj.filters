@@ -41,5 +41,8 @@
     <ClInclude Include="ListLayoutDemoPage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TextJustificationPage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

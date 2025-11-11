@@ -156,6 +156,7 @@
   <ItemGroup>
     <ClInclude Include="ListLayoutDemoPage.h" />
     <ClInclude Include="Page3.h" />
+    <ClInclude Include="TextJustificationPage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

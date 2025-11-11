@@ -139,6 +139,10 @@ public:
         
 	   verticalScroll->add(move(r));
 
+	   TextButtonPtr f = TextButton("Text Justification Demo");
+       f->setColour(Color(33, 33, 33))
+		   .onClickLeftDown(makeSwitchPageLambda(PageTypes::TEXT_JUSTIFICATION_PAGE));
+	   verticalScroll->add(move(f));
 
 
        ColouredButton btn2 = ColouredButton(Color::Black);

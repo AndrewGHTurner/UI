@@ -32,12 +32,22 @@ void internal::Label::setColour(Color c) {
 	notifyTextChanged(true);
 }
 
+void internal::Label::setTextJustification(TextJustification justification) {
+	text.get()->setTextJustification(justification);
+	notifyRedrawNeeded();
+	notifyTextChanged(true);
+}
+
+TextJustification internal::Label::getTextJustification() {
+	return text.get()->getJustification();
+}
+
 void internal::Label::resizeText()
 {
 	//if (text)
 	{
 		text.get()->setPosition(origin);
-		text.get()->setSize(this->size);
+		text.get()->setSize(size);
 	}
 }
 

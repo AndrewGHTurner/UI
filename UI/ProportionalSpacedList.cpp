@@ -31,29 +31,35 @@ void internal::ProportionalSpacedList::calcPositions()
 	if (isVertical())
 	{
 		int childYCoord = origin.y;
-		for (int c = 0; c < children.size(); c++)
+		float accumulated = 0.0f;
+
+		for (int c = 0; c < children.size(); ++c)
 		{
-			unique_ptr<TreeNode>& child = children[c];
-			Vector2f childOrigin(origin.x, childYCoord);
-			float childHeightProportion = static_cast<float>(proportions[c]) / static_cast<float>(totalProportion);
-			Vector2f childSize(size.x, childHeightProportion * size.y);
-			child->setOrigin(childOrigin);
-			child->setSize(childSize);
-			childYCoord += childSize.y;
+			float proportion = static_cast<float>(proportions[c]) / totalProportion;
+			accumulated += proportion * size.y;
+
+			int nextY = origin.y + static_cast<int>(std::round(accumulated));//doing this distributes the floating point errors
+			int childHeight = nextY - childYCoord;
+
+			children[c]->setOrigin(Vector2f(origin.x, childYCoord));
+			children[c]->setSize(Vector2f(size.x, static_cast<float>(childHeight)));
+
+			childYCoord = nextY;
 		}
 	}
 	else
 	{
 		int childXCoord = origin.x;
-		for (int c = 0; c < children.size(); c++)
+		float accumulated = 0.0f;
+		for (int c = 0; c < children.size(); ++c)
 		{
-			unique_ptr<TreeNode>& child = children[c];
-			Vector2f childOrigin(childXCoord, origin.y);
-			float childWidthProportion = static_cast<float>(proportions[c]) / static_cast<float>(totalProportion);
-			Vector2f childSize(childWidthProportion * size.x, size.y);
-			child->setOrigin(childOrigin);
-			child->setSize(childSize);
-			childXCoord += childSize.x;
+			float proportion = static_cast<float>(proportions[c]) / totalProportion;
+			accumulated += proportion * size.x;
+			int nextX = origin.x + static_cast<int>(std::round(accumulated));//doing this distributes the floating point errors
+			int childWidth = nextX - childXCoord;
+			children[c]->setOrigin(Vector2f(childXCoord, origin.y));
+			children[c]->setSize(Vector2f(static_cast<float>(childWidth), size.y));
+			childXCoord = nextX;
 		}
 	}
 	//	setRecalcNeededFalse();

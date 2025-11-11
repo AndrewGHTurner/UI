@@ -20,7 +20,7 @@ class Page;
 
 using namespace std;
 
-enum ArrowDirection {
+enum class ArrowDirection {
 	RIGHT,
 	UP,
 	LEFT,
@@ -217,13 +217,13 @@ public:
 		{
 			switch (direction)
 			{
-			case RIGHT:
+			case ArrowDirection::RIGHT:
 				if (currentCharIndex < currentTextBox->getText().length())
 				{
 					currentCharIndex += 1;
 				}
 				break;
-			case UP:
+			case ArrowDirection::UP:
 			{
 				if (currentCharIndex == 0)
 				{
@@ -289,13 +289,13 @@ public:
 				}
 				break;
 			}
-			case LEFT:
+			case ArrowDirection::LEFT:
 				if (currentCharIndex > 0)
 				{
 					currentCharIndex -= 1;
 				}
 				break;
-			case DOWN:
+			case ArrowDirection::DOWN:
 			{
 				string text = currentTextBox->getText();
 				if (currentCharIndex == 0 && text[currentCharIndex] == '\n')
