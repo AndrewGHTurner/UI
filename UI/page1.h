@@ -129,7 +129,8 @@ public:
 	   TextButtonPtr addButtonButton = TextButton("Add Button");
        addButtonButton->onClickLeftDown(addTreeNode)
            .setColour(Color::Yellow)
-           .setPressedColour(Color::Green); // Set the pressed colour for the button    
+           .setPressedColour(Color::Green) // Set the pressed colour for the button   
+		   .setTextJustification(TextJustification::CENTER);
 	   verticalScroll->add(move(addButtonButton));
 
        TextButtonPtr r = TextButton("ListLayoutDemo");
