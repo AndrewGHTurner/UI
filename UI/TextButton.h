@@ -1,20 +1,18 @@
 #ifndef TEXT_BUTTON_H
 #define TEXT_BUTTON_H
 
-#include "Label.h"
+#include "LabelFluent.h"
+#include "InteractiveFluent.h"
 #include <functional>
 
 namespace internal{
-	class UI_API TextButton : public internal::Label
+	class UI_API TextButton : public InteractiveFluent<TextButton, LabelFluent<TextButton>>
 	{
 	public:
-		TextButton(string text);
+
+		using InteractiveFluent<TextButton, LabelFluent<TextButton>>::InteractiveFluent;//inherit constructors
+	//	TextButton(string text);
 		TextButton& setText(string newText);
-		TextButton& onClickLeftDown(function<void()> lambda);
-
-		TextButton& onClickLeftDown(function<void()> lambda, int& lambdaID);
-
-		TextButton& onClickLeftUp(function<void()> lambda, bool allowSlideOff = false);
 
 		TextButton& setColour(Color c);
 

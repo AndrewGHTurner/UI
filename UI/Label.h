@@ -6,20 +6,25 @@
 #include "Leaf.h"
 #include "ETextContainer.h"
 #include "UI_DLL_Interface.h"
+#include "InteractiveFluent.h"
 
 namespace internal {
-	class UI_API Label : public ETextContainer
+	class UI_API Label : public InteractiveFluent<Label, ETextContainer>
 	{
 
 	public:
 		Label(string initialText, Vector2f origin, Vector2f siz);
 		Label(string initialText);
-		void setColour(Color c);
-		void setTextJustification(TextJustification justification);
+		//overrides
+		virtual void resizeText() override;
+		//getters
 		TextJustification getTextJustification();
-		void resizeText() override;
-		void setText(string newText);
 		Color getColour();
+		//fluent API
+		Label& setColour(Color c);
+		Label& setTextJustification(TextJustification justification);
+		Label& setText(string newText);
+		
 	private:
 		Color colour; // Colour of the label
 	};

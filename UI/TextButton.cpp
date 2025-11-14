@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "TextButton.h"
 #include "UI.h"
-internal::TextButton::TextButton(string text) : Label(text)
-{
-}
+//internal::TextButton::TextButton(string text) : Label(text)
+//{
+//}
 
 internal::TextButton& internal::TextButton::setText(string newText)
 {
@@ -11,28 +11,10 @@ internal::TextButton& internal::TextButton::setText(string newText)
 	return *this;
 }
 
-internal::TextButton& internal::TextButton::onClickLeftDown(function<void()> lambda)
-{
-	UI::getInstance()->addLeftDown(lambda, this->id);
-	return *this;
-}
-
-internal::TextButton& internal::TextButton::onClickLeftDown(function<void()> lambda, int& lambdaID)
-{
-	lambdaID = UI::getInstance()->addLeftDown(lambda, this->id);
-	return *this;
-}
-
-internal::TextButton& internal::TextButton::onClickLeftUp(function<void()> lambda, bool allowSlideOff)
-{
-	UI::getInstance()->addLeftUp(lambda, this->id, allowSlideOff);
-	return *this;
-}
-
 internal::TextButton& internal::TextButton::setColour(Color c)
 {
 	releasedColour = c; // Store the released colour
-	Label::setColour(c); // Set the initial colour
+	this->Label::setColour(c); // Set the initial colour
 	return *this;
 }
 /**

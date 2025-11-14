@@ -191,6 +191,8 @@
     <ClCompile Include="eventDispatchers.cpp" />
     <ClCompile Include="HorizontalExpanderBar.cpp" />
     <ClCompile Include="ProportionalSpacedList.cpp" />
+    <ClInclude Include="InteractiveFluent.h" />
+    <ClInclude Include="LabelFluent.h" />
     <ClInclude Include="HorizontalExpanderBar.h" />
     <ClCompile Include="HorizontalSplitter.cpp" />
     <ClCompile Include="Label.cpp" />

@@ -21,7 +21,7 @@ internal::Label::Label(string initialText){
 	updateVerticesPosition();
 }
 
-void internal::Label::setColour(Color c) {
+internal::Label& internal::Label::setColour(Color c) {
 	vertices[0].color = c;
 	vertices[1].color = c;
 	vertices[2].color = c;
@@ -30,12 +30,14 @@ void internal::Label::setColour(Color c) {
 	vertices[5].color = c;
 	notifyRedrawNeeded();
 	notifyTextChanged(true);
+	return *this;
 }
 
-void internal::Label::setTextJustification(TextJustification justification) {
+internal::Label& internal::Label::setTextJustification(TextJustification justification) {
 	text.get()->setTextJustification(justification);
 	notifyRedrawNeeded();
 	notifyTextChanged(true);
+	return *this;
 }
 
 TextJustification internal::Label::getTextJustification() {
@@ -51,10 +53,11 @@ void internal::Label::resizeText()
 	}
 }
 
-void internal::Label::setText(string newText) {
+internal::Label& internal::Label::setText(string newText) {
 	text.get()->setText(newText);
 	notifyRedrawNeeded();
 	notifyTextChanged(true);
+	return *this;
 }
 
 Color internal::Label::getColour() {

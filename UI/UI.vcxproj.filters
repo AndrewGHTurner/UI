@@ -58,6 +58,9 @@
     <Filter Include="Source Files\layouts\horizontal">
       <UniqueIdentifier>{d64f4a2d-cb49-4042-9326-6c6bebfec8fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\widgets\templates">
+      <UniqueIdentifier>{653f7e2f-3c44-4345-9757-67dd4f3a2273}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UI.cpp">
@@ -250,6 +253,12 @@
     </ClInclude>
     <ClInclude Include="ProportionalSpacedList.h">
       <Filter>Header Files\layouts</Filter>
+    </ClInclude>
+    <ClInclude Include="LabelFluent.h">
+      <Filter>Header Files\widgets\templates</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractiveFluent.h">
+      <Filter>Header Files\widgets\templates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
