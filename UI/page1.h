@@ -56,6 +56,7 @@ public:
        //verticalScroll->setHorizontal();
 
 	   LabelPtr label = Label("first label");
+  
 	   verticalScroll->add(move(label));
 
        function<void()> addTreeNode = [branch = verticalScroll.get()]() {
@@ -110,7 +111,8 @@ public:
            }
                })
            .setColour(Color::Cyan)
-           .setPressedColour(Color::Blue);
+           .setPressedColour(Color::Blue)
+           ;
 
        verticalScroll->add(move(checkBox));
 	   verticalScroll->add(move(isCheckedButton));

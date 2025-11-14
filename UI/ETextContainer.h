@@ -12,7 +12,18 @@ public:
 	virtual void resizeText() = 0;
 	unique_ptr<EText> text;
 	virtual ~ETextContainer() = default;
+	Vector2f getMinTextSize()
+	{
+		if (text)
+		{
+			return text->getMinTextSize();
 
+		}
+		else
+		{
+			return Vector2f(0, 0);
+		}
+	}
 };
 
 #endif

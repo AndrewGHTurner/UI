@@ -245,6 +245,12 @@ public:
 	{
 		return text;
 	}
+
+	Vector2f getMinTextSize()
+	{
+		sf::FloatRect bounds = textSfml.getLocalBounds();
+		return bounds.size;
+	}
 };
 
 
