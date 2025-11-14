@@ -15,6 +15,7 @@ internal::Label::Label(string initialText, Vector2f origin, Vector2f siz) {
 
 internal::Label::Label(string initialText){
 	text = make_unique<EText>(UI::getInstance()->font, initialText);
+	setSize(text.get()->getMinTextSize());
 	//hasText = true;
 	setRedrawTextNeededTrue();
 	notifyTextChanged(true);

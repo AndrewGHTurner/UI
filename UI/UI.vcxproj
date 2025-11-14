@@ -205,11 +205,13 @@
     <ClCompile Include="ReservedArea.cpp" />
     <ClCompile Include="Scroll.cpp" />
     <ClCompile Include="SplitterHandle.cpp" />
+    <ClCompile Include="StaticList.cpp" />
     <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="TextButton.cpp" />
     <ClCompile Include="TreeNode.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="EvenList.cpp" />
+    <ClInclude Include="StaticList.h" />
     <ClInclude Include="VirtualBranch.h" />
   </ItemGroup>
   <ItemGroup>

@@ -26,7 +26,6 @@ namespace internal {
     private:
         int elementMargin = 0;
 		int childSize = 50;
-        vector<TreeNode*> contents;
 
 
 

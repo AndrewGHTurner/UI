@@ -11,6 +11,7 @@
 #include <functional>
 #include "CheckBox.h"
 #include "LabelledCheckBox.h"
+#include <StaticList.h>
 
 
 class Page1 : public Page {  
@@ -208,8 +209,30 @@ public:
        }
 	   vert2->setSize(Vector2f(200, vert2Height)); // Set the size of the vertical scroll area based on the number of buttons
 	   scroll->setLayout(move(vert2)); // Add the vertical scroll to the scroll area
+
+
+
+	   StaticListPtr s = StaticList();
+       s->setHorizontal();
        ColouredButton btny(Color::Blue);
        btny.onClick(makeChangeColourLambda(btny.getRootNodePointer()));
+       btny.setSize(Vector2f(30, 20));
+	   s->add(btny);
+
+       ColouredButton btny1(Color::Blue);
+       btny1.onClick(makeChangeColourLambda(btny1.getRootNodePointer()));
+       btny1.setSize(Vector2f(40, 30));
+       s->add(btny1);
+
+       ColouredButton btny2(Color::Blue);
+       btny2.onClick(makeChangeColourLambda(btny2.getRootNodePointer()));
+       btny2.setSize(Vector2f(20, 40));
+       s->add(btny2);
+
+       ColouredButton btny3(Color::Blue);
+       btny3.onClick(makeChangeColourLambda(btny3.getRootNodePointer()));
+       btny3.setSize(Vector2f(60, 50));
+       s->add(btny3);
 
 
 	   //add mouseWheel lambda to scroll area
@@ -218,7 +241,7 @@ public:
            };
 	   ui->addMouseWheelLambda(scroller, scroll->id);
 
-       vert->add(btny); // Add btny to the vertical scroll
+       vert->add(move(s)); // Add btny to the vertical scroll
 	   vert->add(move(scroll)); // Add the scroll area to the vertical scroll
 	   
        HorizontalSplitterPtr ggg = HorizontalSplitter(ui->getOrigin(), ui->getSize());

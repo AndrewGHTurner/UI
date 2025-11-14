@@ -138,6 +138,9 @@
     <ClCompile Include="ProportionalSpacedList.cpp">
       <Filter>Source Files\layouts</Filter>
     </ClCompile>
+    <ClCompile Include="StaticList.cpp">
+      <Filter>Source Files\layouts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -259,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="InteractiveFluent.h">
       <Filter>Header Files\widgets\templates</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticList.h">
+      <Filter>Header Files\layouts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
