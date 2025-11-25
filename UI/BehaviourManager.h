@@ -43,6 +43,7 @@ protected:
 	unordered_map<uint32_t, vector<MouseWheelLambdaHolder>> mouseWheelLambdas;
 	unordered_map<uint32_t, vector<MouseMovementLambdaHolder>> hoverEnterLambdas;
 	unordered_map<uint32_t, vector<MouseMovementLambdaHolder>> hoverExitLambdas;
+	unordered_map<uint32_t, vector<LambdaHolder>> hoverLambdas;//holds lambdas for when the mouse moves within an element
 	//These vectors contain all lambda callbacks that are not localised to particular elements
 	vector<MouseMovementLambdaHolder> mouseMovementLambdas;//This will contain mouse movement lambdas to be called on every mouse movement and not locallised to a particular element
 	vector<LambdaHolder> leftUpLambdasUnlocalized;
@@ -98,6 +99,8 @@ public:
 	void removeMouseMovementLambda(uint32_t lambdaID);
 
 	void removeLeftUp(uint32_t lambdaID);
+
+	void removeAllLambdasForElement(int boxID);
 
 	void clearID(int id) {
 		//clickHandelers.erase(id);

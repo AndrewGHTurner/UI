@@ -88,7 +88,7 @@ public:
 	void runUI(RenderWindow& window)
 	{
 		//limit the framerate to minimise CPU usage
-		auto nextFrame = std::chrono::steady_clock::now() + std::chrono::milliseconds(50); // ~20 FPS
+		auto nextFrame = std::chrono::steady_clock::now() + std::chrono::milliseconds(20);
 		std::this_thread::sleep_until(nextFrame);
 
 		bool displayNeeded = false;

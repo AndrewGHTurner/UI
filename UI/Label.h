@@ -22,6 +22,7 @@ namespace internal {
 		Color getColour();
 		//fluent API
 		Label& setColour(Color c);
+		Label& setHoverColour(Color c);
 		Label& setTextJustification(TextJustification justification);
 		Label& setText(string newText);
 		

@@ -249,6 +249,8 @@ public:
 	Vector2f getMinTextSize()
 	{
 		sf::FloatRect bounds = textSfml.getLocalBounds();
+		bounds.size.x += 20;
+		bounds.size.y += 10;
 		return bounds.size;
 	}
 };

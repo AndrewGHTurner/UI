@@ -22,6 +22,11 @@ public:
 		this->internal::Label::setTextJustification(justification);
 		return static_cast<Derived&>(*this);
 	}
+	Derived& setHoverColour(Color c)
+	{
+		this->internal::Label::setHoverColour(c);
+		return static_cast<Derived&>(*this);
+	}
 };
 
 #endif

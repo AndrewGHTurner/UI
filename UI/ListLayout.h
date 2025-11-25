@@ -12,6 +12,7 @@ public:
 	bool isVertical() const noexcept { return vertical; }
 	void setVertical();
 	void setHorizontal();
+	void removeAllItems();
 };
 
 #endif

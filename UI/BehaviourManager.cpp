@@ -140,3 +140,11 @@ void BehaviorManager::removeLeftUp(uint32_t lambdaID) {
 		}
 	}
 }
+
+void BehaviorManager::removeAllLambdasForElement(int boxID) {
+	leftDownLambdas.erase(boxID);
+	leftUpLambdas.erase(boxID);
+	mouseWheelLambdas.erase(boxID);
+	hoverEnterLambdas.erase(boxID);
+	hoverExitLambdas.erase(boxID);
+}

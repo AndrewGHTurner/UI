@@ -28,5 +28,24 @@ public:
 		ui->addLeftUp(lambda, static_cast<Derived*>(this)->id, allowSlideOff);
 		return static_cast<Derived&>(*this);
 	}
+
+	Derived& onHoverEnter(function<void(Vector2i)> lambda)
+	{
+		UI* ui = UI::getInstance();
+		ui->addHoverEnterLambda(lambda, static_cast<Derived*>(this)->id);
+		return static_cast<Derived&>(*this);
+	}
+
+	Derived& onHoverExit(function<void(Vector2i)> lambda)
+	{
+		UI* ui = UI::getInstance();
+		ui->addHoverExitLambda(lambda, static_cast<Derived*>(this)->id);
+		return static_cast<Derived&>(*this);
+	}
+	~InteractiveFluent()
+	{
+		UI* ui = UI::getInstance();
+		ui->removeAllLambdasForElement(static_cast<Derived*>(this)->id);
+	}
 };
 #endif

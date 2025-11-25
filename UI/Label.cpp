@@ -34,6 +34,17 @@ internal::Label& internal::Label::setColour(Color c) {
 	return *this;
 }
 
+internal::Label& internal::Label::setHoverColour(Color c) {
+	Color originalColour = this->getColour();
+	this->onHoverEnter([this, c](Vector2i pos) {
+		this->setColour(c);
+		});
+	this->onHoverExit([this, originalColour](Vector2i pos) {
+		this->setColour(originalColour);
+	});
+	return *this;
+}
+
 internal::Label& internal::Label::setTextJustification(TextJustification justification) {
 	text.get()->setTextJustification(justification);
 	notifyRedrawNeeded();
