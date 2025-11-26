@@ -235,13 +235,6 @@ public:
        btny3.setSize(Vector2f(60, 50));
        s->add(btny3);
 
-
-	   //add mouseWheel lambda to scroll area
-       function<void(int)> scroller = [scrollPtr = scroll.get()](int delta) {
-           scrollPtr->incrementOffset(delta);
-           };
-	   ui->addMouseWheelLambda(scroller, scroll->id);
-
        vert->add(move(s)); // Add btny to the vertical scroll
 	   vert->add(move(scroll)); // Add the scroll area to the vertical scroll
 	   

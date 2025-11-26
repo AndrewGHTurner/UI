@@ -5,6 +5,13 @@
 internal::Scroll::Scroll() : Branch() {
 	setPreDrawNeededTrue();
 	setPostDrawNeededTrue();
+
+	UI* ui = UI::getInstance();
+	//add mouseWheel lambda to scroll area
+	function<void(int)> scroller = [scrollPtr = this](int delta) {
+		scrollPtr->incrementOffset(delta);
+		};
+	ui->addMouseWheelLambda(scroller, this->id);
 }
 
 void internal::Scroll::preDraw() {
