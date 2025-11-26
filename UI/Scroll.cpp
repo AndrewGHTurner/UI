@@ -2,76 +2,80 @@
 #include "Scroll.h"
 
 
-	Scroll::Scroll() : Branch() {
-		setPreDrawNeededTrue();
-		setPostDrawNeededTrue();
-	}
+internal::Scroll::Scroll() : Branch() {
+	setPreDrawNeededTrue();
+	setPostDrawNeededTrue();
+}
 
-	void Scroll::preDraw() {
-		glEnable(GL_SCISSOR_TEST);
-		int flippedY = UI::getInstance()->getSize().y - (origin.y + size.y);
-		glScissor(origin.x, flippedY, size.x, size.y);
-	}
+void internal::Scroll::preDraw() {
+	glEnable(GL_SCISSOR_TEST);
+	int flippedY = UI::getInstance()->getSize().y - (origin.y + size.y);
+	glScissor(origin.x, flippedY, size.x, size.y);
+}
 
-	void Scroll::postDraw() {
-		glDisable(GL_SCISSOR_TEST);
-	}
+void internal::Scroll::postDraw() {
+	glDisable(GL_SCISSOR_TEST);
+}
 
-	void Scroll::setLayout(unique_ptr<Branch> layout)
+void internal::Scroll::setLayout(unique_ptr<Branch> layout)
+{
+	layout->parentNode = this;
+	children.push_back(move(layout));
+	notifyRecalcNeeded();
+}
+
+void internal::Scroll::calcPositions() {
+	setRecalcNeededFalse();
+	if (children.size() == 0)
 	{
-		layout->parentNode = this;
-		children.push_back(move(layout));
-		notifyRecalcNeeded();
+		return;
 	}
+	//stackHeight = 0;
+	//int heightPerElement = 40; // Example height for each element
+	int X = origin.x + scrollOffset.x;
+	int Y = origin.y + scrollOffset.y;
 
-	void Scroll::calcPositions() {
-		setRecalcNeededFalse();
-		if (children.size() == 0)
-		{
-			return;
-		}
-		//stackHeight = 0;
-		//int heightPerElement = 40; // Example height for each element
-		int X = origin.x + scrollOffset.x;
-		int Y = origin.y + scrollOffset.y;
+	Vector2f childSize = children[0]->getSize();
+	childSize.x = size.x;
 
-		Vector2f childSize = children[0]->getSize();
-		childSize.x = size.x;
-
-		children[0]->setSize(childSize);
-		children[0]->setOrigin(Vector2f(X, Y));
-		//for (const unique_ptr<TreeNode>& child : children)
-		//{
-		//	int elmHeight = 0;
-		//	if (child->getSize().y != 0)
-		//	{
-		//		elmHeight = child->getSize().y;
-		//	}
-		//	else
-		//	{
-		//		elmHeight = heightPerElement; // Default height if not set
-		//	}
+	children[0]->setSize(childSize);
+	children[0]->setOrigin(Vector2f(X, Y));
+	//for (const unique_ptr<TreeNode>& child : children)
+	//{
+	//	int elmHeight = 0;
+	//	if (child->getSize().y != 0)
+	//	{
+	//		elmHeight = child->getSize().y;
+	//	}
+	//	else
+	//	{
+	//		elmHeight = heightPerElement; // Default height if not set
+	//	}
 
 
-		//	child->setOrigin(Vector2f(X, Y));
-		//	child->setSize(Vector2f(size.x, elmHeight));
-		//	Y += elmHeight; // Increment Y position for the next element
-		//	stackHeight += elmHeight;//edit this for varied height elements
+	//	child->setOrigin(Vector2f(X, Y));
+	//	child->setSize(Vector2f(size.x, elmHeight));
+	//	Y += elmHeight; // Increment Y position for the next element
+	//	stackHeight += elmHeight;//edit this for varied height elements
 
-		//}
-	};
+	//}
+};
 
-	void Scroll::incrementOffset(int delta) {
-		scrollOffset.y += (delta * 15);
-		if (scrollOffset.y > 0)
-		{
-			scrollOffset.y = 0; // Prevent scrolling above the top
-		}
-		const unique_ptr<TreeNode>& lastChild = children.back();
-
-		if (lastChild->getSize().y - size.y + scrollOffset.y < 0)
-		{
-			scrollOffset.y = -(lastChild->getSize().y - size.y);
-		}
-		notifyRecalcNeeded();
+void internal::Scroll::incrementOffset(int delta) {
+	scrollOffset.y += (delta * 15);
+	if (scrollOffset.y > 0)
+	{
+		scrollOffset.y = 0; // Prevent scrolling above the top
 	}
+	const unique_ptr<TreeNode>& lastChild = children.back();
+
+	if (lastChild->getSize().y - size.y + scrollOffset.y < 0)
+	{
+		scrollOffset.y = -(lastChild->getSize().y - size.y);
+	}
+	notifyRecalcNeeded();
+}
+
+ScrollPtr Scroll() {
+	return make_unique<internal::Scroll>();
+}

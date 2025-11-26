@@ -194,7 +194,7 @@ public:
        EvenListPtr vert = EvenList();//make_unique<Vertical>(Vector2f(0, 0), Vector2f(200, 200));
 	   vert->setChildSize(-1); // Let the EvenList calculate child size based on its own size
 
-	   unique_ptr<Scroll> scroll = make_unique<Scroll>();
+	   ScrollPtr scroll = Scroll();
        scroll->setBackgroundColour(Color::Green);
 
        EvenListPtr vert2 = EvenList();
