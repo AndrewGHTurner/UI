@@ -149,9 +149,6 @@
     <ClInclude Include="EText.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CenterAligner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Properties.h">
       <Filter>Header Files</Filter>
     </ClInclude>

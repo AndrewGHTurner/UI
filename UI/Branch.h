@@ -158,7 +158,6 @@ public:
 					}
 				//	textBox->setRedrawTextNeededFalse();//Having this here is technically correct but if included then text isnt redrawn when the page is navigated to
 					textBox->text.get()->draw();
-					
 				}
 				else if(child->isBranch())
 				{

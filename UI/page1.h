@@ -200,6 +200,11 @@ public:
        EvenListPtr vert2 = EvenList();
 	   vert2->setMargin(4); // Set the margin between elements in the vertical scroll area
 
+	   LabelPtr label2 = Label("label in scroll area");
+	   vert2->add(move(label2));
+
+	//   TextBoxPtr textBoxInScroll = TextBox("TextBox in Scroll Area");
+	 //  vert2->add(move(textBoxInScroll));
 
 	   int vert2Height = 0; // Initialize the height of the vertical scroll area
        for (int t = 0; t < 20; t++) {

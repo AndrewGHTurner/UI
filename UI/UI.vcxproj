@@ -219,7 +219,6 @@
     <ClInclude Include="BehaviourManager.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Branch.h" />
-    <ClInclude Include="CenterAligner.h" />
     <ClInclude Include="CheckBox.h" />
     <ClInclude Include="ColouredBox.h" />
     <ClInclude Include="ColouredButton.h" />

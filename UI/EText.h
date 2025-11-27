@@ -15,7 +15,7 @@
 
 using namespace sf;
 using namespace std;
-
+class Branch;
 enum class TextJustification {
 	LEFT,
 	CENTER,
@@ -55,103 +55,7 @@ public:
 
 	}
 
-	bool draw()
-	{
-		if (currentCharIndex != oldCharIndex && currentCharIndex != -1)//if the user has used the arrow keys to move in the string
-		{
-			elapsedTime = 0;//make sure that the cursor is drawn
-			oldCharIndex = currentCharIndex;
-			cachedTexture.clear(Color::Transparent);
-			cachedTexture.draw(textSfml);
-			cachedTexture.display();
-		}
-
-
-		if (currentCharIndex != -1)
-		{
-			elapsedTime += clock.restart().asSeconds();
-			if (elapsedTime < 0.25) {
-				Vector2f cursorPosition = textSfml.findCharacterPos(currentCharIndex);
-				RectangleShape cursor;//rect is the cursor
-				//redraw text so that the old curser line is removed
-				cachedTexture.clear(Color::Transparent);
-				cachedTexture.draw(textSfml);
-
-				cursorPosition.y += 1;//get it pixel perfect
-
-				cursor.setPosition(cursorPosition);
-
-				//handle moving the SFML Text object position to keep the cursor within the bounds of the cached texture
-				Vector2f textPosition = textSfml.getPosition();
-				int cursorHeight = textSfml.getFont().getLineSpacing(textSfml.getCharacterSize());
-				if (cursorPosition.x < 0)//if the cursor is to the left of the cachedTexture
-				{
-					
-					textPosition.x -= (cursorPosition.x - 10);
-					cursorPosition.x = 10;
-				}
-				else if (cursorPosition.x > cachedTexture.getSize().x)//if the cursor is to the right of the cachedTexture
-				{
-					textPosition.x -= (cursorPosition.x - cachedTexture.getSize().x) + cursorWidth;
-					cursorPosition.x = cachedTexture.getSize().x - cursorWidth;
-				}
-				if (cursorPosition.y < 0)//if the cursor is above the cachedTexture
-				{
-					textPosition.y -= cursorPosition.y;
-					cursorPosition.y = 0;
-				}
-				else if (cursorPosition.y + cursorHeight > cachedTexture.getSize().y)//if the cursor is below the cachedTexture
-				{
-					textPosition.y -= (cursorPosition.y - cachedTexture.getSize().y) + cursorHeight + 10;
-					cursorPosition.y = cachedTexture.getSize().y + cursorHeight + 10;
-				}
-				if (textPosition != textSfml.getPosition())//if the text position has changed, redraw the text
-				{
-					textSfml.setPosition(textPosition);
-				}
-
-				unsigned int k = textSfml.getCharacterSize();
-				cursor.setSize(Vector2f(cursorWidth, textSfml.getFont().getLineSpacing(k)));
-				cursor.setFillColor(Color::Magenta);
-				cachedTexture.draw(cursor);
-
-
-				cachedTexture.display();
-			}
-			else if (elapsedTime < 0.5)
-			{
-				cachedTexture.clear(Color::Transparent);
-				cachedTexture.draw(textSfml);
-				cachedTexture.display();
-
-			}
-			else {
-				elapsedTime = 0;
-			}
-
-		}
-
-
-		sf::Sprite sprite(cachedTexture.getTexture());
-		sprite.setPosition(windowPosition);
-
-		if (cachedTexture.getSize().x <= 0)
-		{
-			return false;
-		}
-
-		RenderTexture j = RenderTexture(cachedTexture.getSize());
-		j.clear(Color::Cyan);
-
-		Sprite G = Sprite(j.getTexture());
-		G.setPosition(windowPosition);
-
-		//	screenTexture->draw(G);//THIS PROOVES THAT THE PROBLEM WITH THE TEXTBOX IS BECAUSE THE SCREEN ISNT BEING CLEARED PROPERLY
-
-		screenTexture->draw(sprite);//THIS IS BEING HIT FOREVER WHICH SHOULD NOT BE HAPPENING
-
-		return false;
-	}
+	bool draw();
 	/**
 	* 
 	*/
