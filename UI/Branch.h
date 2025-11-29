@@ -143,6 +143,10 @@ public:
 	virtual void calcPositions() {};
 	void drawText(int currentCharIndex = -1, internal::TextBox* currentTextBox = nullptr)
 	{
+		if (isPreDrawNeeded())
+		{
+			preDraw();
+		}
 		for (const unique_ptr<TreeNode>& child : children)
 		{
 
@@ -164,6 +168,10 @@ public:
 					static_cast<Branch*>(child.get())->drawText(currentCharIndex, currentTextBox);
 				}
 			}
+		}
+		if (isPostDrawNeeded())
+		{
+			postDraw();
 		}
 		setRedrawTextNeededFalse();
 	}

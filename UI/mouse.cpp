@@ -11,7 +11,7 @@ void UI::leftDownAt(Vector2i pos)
 
 		currentCharIndex = currentTextBox->getText().length();
 		currentTextBox->setCurrentCharIndex(currentCharIndex);
-		addAnimation(currentTextBox);
+		addAnimation(currentTextBox, leaf);
 
 		currentCharIndex = currentTextBox->getText().length();
 	}

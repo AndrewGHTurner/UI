@@ -37,7 +37,7 @@ class UI;
 class UI_API UI : public Branch, public BehaviorManager, public AnnimationManager {
 private:
 	int currentCharIndex = 0;//could make a typeing handeller class?// should probably hold this in the EText class
-	unique_ptr<RenderTexture> screenTexture;//this is the texture that all UI elements will be drawn onto
+	
 
 	vector<reference_wrapper<const LambdaHolder>> leftReleaseLambdas;//hold the release lambdas on press do that the correct ones are called on release(even if a button resizes)
 
@@ -55,6 +55,7 @@ private:
 
 	static UI* instance;
 public:
+	unique_ptr<RenderTexture> screenTexture;//this is the texture that all UI elements will be drawn onto
 	RenderWindow& window;
 	static UI* initInstance(RenderWindow& window)
 	{

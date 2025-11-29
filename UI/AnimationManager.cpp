@@ -8,8 +8,26 @@ using namespace std;
 //nodes will be called in order from the root ... found by branch.parent.parent etc to the animation's parent branch
 
 
-void AnnimationManager::addAnimation(Animation* animation) {
-	animations.push_back(animation);
+void AnnimationManager::runPreDraws(Branch* branch) {
+	if (branch->parentNode != nullptr) {
+		runPreDraws(static_cast<Branch*>(branch->parentNode));
+	}
+	if (branch->isPreDrawNeeded()) {
+		branch->preDraw();
+	}
+}
+
+void AnnimationManager::runPostDraws(Branch* branch) {
+	if (branch->isPostDrawNeeded()) {
+		branch->postDraw();
+	}
+	if (branch->parentNode != nullptr) {
+		runPostDraws(static_cast<Branch*>(branch->parentNode));
+	}
+}
+
+void AnnimationManager::addAnimation(Animation* animation, Leaf* leaf) {
+	animations.push_back(make_tuple(animation, leaf));
 }
 int AnnimationManager::countAnimations()
 {
@@ -17,6 +35,12 @@ int AnnimationManager::countAnimations()
 }
 void AnnimationManager::removeAnimation(Animation* animation)
 {
-	animations.erase(std::remove(animations.begin(), animations.end(), animation), animations.end());//Don'y you just love readable C++???
+	animations.erase(
+		std::remove_if(
+			animations.begin(), animations.end(),
+			[&](auto& entry) { return std::get<0>(entry) == animation; }
+		),
+		animations.end()
+	);
 }
 

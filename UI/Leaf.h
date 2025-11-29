@@ -4,6 +4,7 @@
 #include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Graphics/RenderTexture.hpp>
 #include "UI_DLL_Interface.h"
+#include <SFML/OpenGL.hpp>
 //this is a box that draws itself as UI ... 
 
 /**
@@ -38,7 +39,6 @@ public:
 	{
 		screenTexture->draw(vertices);
 		setRedrawNeededFalse();
-		//	window->display();
 	}
 
 	static void setTexture(RenderTexture* newWindow)

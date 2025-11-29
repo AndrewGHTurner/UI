@@ -71,9 +71,24 @@ void internal::TextBox::setCurrentCharIndex(int index)
 }
 
 bool internal::TextBox::drawAnimation() {
+	//screenTexture->setActive(true);
+	// Save GL scissor state
+	GLboolean scissorEnabled;
+	GLint scissorBox[4];
+	glGetBooleanv(GL_SCISSOR_TEST, &scissorEnabled);
+	glGetIntegerv(GL_SCISSOR_BOX, scissorBox);
+
+	if (scissorEnabled)
+	{
+		screenTexture->resetGLStates();
+		glEnable(GL_SCISSOR_TEST);
+		glScissor(scissorBox[0], scissorBox[1], scissorBox[2], scissorBox[3]);//I DON'T REALLY UNDERSTAND WHY THIS IS NEEDED BUT IT IS TO MAINTAIN CLIPPING
+	}
 
 	draw();
+
 	text.get()->draw();
+
 	return true;
 }
 

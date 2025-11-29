@@ -113,6 +113,9 @@ bool EText::draw()
 		
 		//reinstate scissor states in case the draw calls above reset them
 		screenTexture->setActive(true);
+		// Apply scissor + correct viewport!
+		glViewport(0, 0, screenTexture->getSize().x, screenTexture->getSize().y);
+		screenTexture->resetGLStates();
 		if (scissorEnabled) {
 			glEnable(GL_SCISSOR_TEST);
 			glScissor(scissorBox[0], scissorBox[1], scissorBox[2], scissorBox[3]);
