@@ -118,12 +118,19 @@ public:
 	}
 	void setText(string newText)
 	{
+		//screenTexture->setActive(true);
+// Save GL scissor state
+
+
+
 		elapsedTime = 0;
 		textSfml.setString(newText);
 		Justify();
 		cachedTexture.clear(Color::Transparent);
 		cachedTexture.draw(textSfml);
 		cachedTexture.display();
+
+
 
 		//FloatRect bounds = textSfml.getGlobalBounds();//CURSOR HAS TAKEN OVER THIS FUNCTIONALITYS ... WILL NOT WORK IF TEXT IS SET EXTERNALLY TO TYPING 
 		//int textWidth = bounds.size.x;

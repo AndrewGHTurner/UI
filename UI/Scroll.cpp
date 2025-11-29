@@ -15,6 +15,7 @@ internal::Scroll::Scroll() : Branch() {
 }
 
 void internal::Scroll::preDraw() {
+	screenTexture->resetGLStates();
 	glEnable(GL_SCISSOR_TEST);
 	int flippedY = UI::getInstance()->getSize().y - (origin.y + size.y);
 	glScissor(origin.x, flippedY, size.x, size.y);
