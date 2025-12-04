@@ -35,6 +35,7 @@ int AnnimationManager::countAnimations()
 }
 void AnnimationManager::removeAnimation(Animation* animation)
 {
+	animation->removeAnimation();
 	animations.erase(
 		std::remove_if(
 			animations.begin(), animations.end(),

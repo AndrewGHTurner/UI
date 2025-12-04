@@ -88,6 +88,15 @@ bool EText::draw()
 
 		}
 
+		if (currentCharIndex == -2)//magic number to indicate that the text needs to be redrawn without cursor
+		{
+			elapsedTime = 0;
+			currentCharIndex = -1;
+			cachedTexture.clear(Color::Transparent);
+			cachedTexture.draw(textSfml);
+			cachedTexture.display();
+		}
+
 		Vector2u textureSize = cachedTexture.getSize();
 		if (textureSize.x <= 0)
 		{

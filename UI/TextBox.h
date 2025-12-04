@@ -22,6 +22,8 @@ namespace internal {
 
 		bool drawAnimation();
 
+		bool removeAnimation();
+
 		TextBox(const TextBox&) = delete;  // Prevent copying
 
 		void resizeText() override;

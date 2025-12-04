@@ -76,6 +76,13 @@ bool internal::TextBox::drawAnimation() {
 	return true;
 }
 
+bool internal::TextBox::removeAnimation() {
+	setCurrentCharIndex(-2);//-2 = magic number for telling etext to redraw just the text
+	draw();
+	text.get()->draw();
+	return true;
+}
+
 void internal::TextBox::resizeText()
 {
 	//	if (text)

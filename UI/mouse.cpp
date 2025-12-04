@@ -3,10 +3,18 @@
 
 void UI::leftDownAt(Vector2i pos)
 {
+	//remove old text box animation if it exists
+	if (currentTextBox != nullptr)
+	{
+		removeAnimation(currentTextBox);
+		currentTextBox = nullptr;
+		currentCharIndex = -2;
+	}
 	//detect if clicked on any textBoxes
 	Leaf* leaf = getLeafAt(pos, this);
 	if (leaf != nullptr && leaf->hasText)
 	{
+
 		currentTextBox = static_cast<internal::TextBox*>(leaf);
 
 		currentCharIndex = currentTextBox->getText().length();
@@ -14,11 +22,6 @@ void UI::leftDownAt(Vector2i pos)
 		addAnimation(currentTextBox, leaf);
 
 		currentCharIndex = currentTextBox->getText().length();
-	}
-	else
-	{
-		removeAnimation(currentTextBox);
-		currentTextBox = nullptr;
 	}
 	//store the lambdas for the release event(needed in case the click causes resize of elements)
 
