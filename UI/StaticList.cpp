@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "StaticList.h"
 
-internal::StaticList::StaticList() : ListLayout()
+internal::StaticList::StaticList() : LinearListFluent()
 {
 }
 

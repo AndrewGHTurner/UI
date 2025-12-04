@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "ProportionalSpacedList.h"
 
-internal::ProportionalSpacedList::ProportionalSpacedList() : ListLayout() {
+internal::ProportionalSpacedList::ProportionalSpacedList() : LinearListFluent() {
 }
 
-internal::ProportionalSpacedList::ProportionalSpacedList(Vector2f origin, Vector2f siz) : ListLayout(origin, siz) {
+internal::ProportionalSpacedList::ProportionalSpacedList(Vector2f origin, Vector2f siz) : LinearListFluent(origin, siz) {
 }
 
 //proportion is the amount of space the widget needs... will be relative to the proportions given to other widgets

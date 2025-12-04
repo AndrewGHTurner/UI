@@ -5,17 +5,17 @@
 #include "Facade.h"
 #include "UI_DLL_Interface.h"
 #include "Branch.h"
-#include "ListLayout.h"
+#include "LinearListFluent.h"
 
 namespace internal {
-	class UI_API ProportionalSpacedList : public ListLayout {
+	class UI_API ProportionalSpacedList : public LinearListFluent<ProportionalSpacedList> {
 	private:
 		vector<int> proportions;
 		int totalProportion = 0;
 	public:
 		ProportionalSpacedList();
 		ProportionalSpacedList(Vector2f origin, Vector2f siz);
-		using ListLayout::add;
+		using LinearListFluent::add;
 		//proportion is the amount of space the widget needs... will be relative to the proportions given to other widgets
 		void add(Facade& facade, int proportion);
 		void add(unique_ptr<TreeNode> child, int proportion);

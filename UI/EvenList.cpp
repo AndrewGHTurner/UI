@@ -15,10 +15,10 @@ the scroller could maintain a virtual position for each widget and check if the 
 */
 
 internal::EvenList::EvenList() :
-	ListLayout() {
+	LinearListFluent() {
 }
 internal::EvenList::EvenList(Vector2f origin, Vector2f siz) :
-	ListLayout(origin, siz) {
+	LinearListFluent(origin, siz) {
 }
 
 void internal::EvenList::setMargin(int margin)

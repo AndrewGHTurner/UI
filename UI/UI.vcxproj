@@ -197,7 +197,6 @@
     <ClCompile Include="HorizontalSplitter.cpp" />
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="LabelledCheckBox.cpp" />
-    <ClCompile Include="ListLayout.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="PageSwitcher.cpp" />
@@ -227,7 +226,6 @@
     <ClInclude Include="ETextContainer.h" />
     <ClInclude Include="Facade.h" />
     <ClInclude Include="LabelledCheckBox.h" />
-    <ClInclude Include="ListLayout.h" />
     <ClCompile Include="pch.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>

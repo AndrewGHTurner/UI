@@ -126,9 +126,6 @@
     <ClCompile Include="TextButton.cpp">
       <Filter>Source Files\widgets</Filter>
     </ClCompile>
-    <ClCompile Include="ListLayout.cpp">
-      <Filter>Source Files\layouts</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -235,9 +232,6 @@
     </ClInclude>
     <ClInclude Include="TextButton.h">
       <Filter>Header Files\widgets</Filter>
-    </ClInclude>
-    <ClInclude Include="ListLayout.h">
-      <Filter>Header Files\layouts</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>

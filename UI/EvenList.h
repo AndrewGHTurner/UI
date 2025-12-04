@@ -3,8 +3,8 @@
 
 #define MIN_WIDGET_HEIGHT 40.0
 #include "UI_DLL_Interface.h"
-#include "ListLayout.h"
 #include "Facade.h"
+#include "LinearListFluent.h"
 
 //PLAN FOR VERTICAL/HORIZONTAL SCROLLABLE LIST VIEW
 /*
@@ -22,7 +22,7 @@ the scroller could maintain a virtual position for each widget and check if the 
 
 namespace internal {
 
-    class UI_API EvenList : public ListLayout {
+    class UI_API EvenList : public LinearListFluent<EvenList> {
     private:
         int elementMargin = 0;
 		int childSize = 50;

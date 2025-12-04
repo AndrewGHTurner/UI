@@ -2,11 +2,11 @@
 #define STATIC_LIST_H
 
 #include "UI_DLL_Interface.h"
-#include "ListLayout.h"
+#include "LinearListFluent.h"
 #include <memory>
 
 namespace internal {
-	class UI_API StaticList : public ListLayout {
+	class UI_API StaticList : public LinearListFluent<StaticList> {
 	public:
 		StaticList();
 		void calcPositions() override;

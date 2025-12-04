@@ -25,6 +25,12 @@ public:
 		notifyRecalcNeeded();
 		return static_cast<Derived&>(*this);
 	}
+
+	Derived& removeAllItems() {//NEED TO WORK ON CLEARING MEMORY AND UI LAMBDA CALLBACKS PROPERLY!!!
+		children.clear();
+		notifyRecalcNeeded();
+		return static_cast<Derived&>(*this);
+	}
 };
 
 #endif
