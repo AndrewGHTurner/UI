@@ -39,3 +39,7 @@ void PageSwitcher::showPage(int pageID)
 	holder->add(move(page->treeRoot));
 }
 
+Page& PageSwitcher::getPage(int pageID)
+{
+	return *pages[idToIndexMap[pageID]];
+}

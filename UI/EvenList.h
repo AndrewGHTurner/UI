@@ -33,7 +33,7 @@ namespace internal {
         EvenList();
         EvenList(Vector2f origin, Vector2f siz);
         void setMargin(int margin);
-        void setChildSize(int size);
+        internal::EvenList& setChildSize(int size);
         void calcPositions();
     };
 }

@@ -27,10 +27,11 @@ void internal::EvenList::setMargin(int margin)
 	notifyRecalcNeeded();
 }
 
-void internal::EvenList::setChildSize(int size)
+internal::EvenList& internal::EvenList::setChildSize(int size)
 {
 	childSize = size;
 	notifyRecalcNeeded();
+	return *this;
 }
 
 void internal::EvenList::calcPositions()

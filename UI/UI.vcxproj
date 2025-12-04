@@ -201,6 +201,7 @@
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="PageSwitcher.cpp" />
+    <ClInclude Include="LinearListFluent.h" />
     <ClInclude Include="Proportioned.h" />
     <ClCompile Include="ReservedArea.cpp" />
     <ClCompile Include="Scroll.cpp" />

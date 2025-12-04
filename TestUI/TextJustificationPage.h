@@ -25,8 +25,8 @@ public:
 		//three EvenLists with buttons to change the text justification of a label
 		//top
 		EvenListPtr topLabelList = EvenList();
-		topLabelList->setChildSize(-1);
-		topLabelList->setHorizontal();
+		topLabelList->setChildSize(-1)
+			.setHorizontal();
 		LabelPtr topLabel = Label("LEFT");
 		topLabel->setColour(Color(50, 150, 50));
 		topLabel->setTextJustification(TextJustification::LEFT);
@@ -52,8 +52,8 @@ public:
 		topLabelList->add(move(topButton));
 		//middle
 		EvenListPtr middleLabelList = EvenList();
-		middleLabelList->setChildSize(-1);
-		middleLabelList->setHorizontal();
+		middleLabelList->setChildSize(-1)
+			.setHorizontal();
 		LabelPtr middleLabel = Label("CENTER");
 		middleLabel->setColour(Color(50, 150, 50));
 		middleLabel->setTextJustification(TextJustification::CENTER);
@@ -79,8 +79,8 @@ public:
 		middleLabelList->add(move(middleButton));
 		//bottom
 		EvenListPtr bottomLabelList = EvenList();
-		bottomLabelList->setChildSize(-1);
-		bottomLabelList->setHorizontal();
+		bottomLabelList->setChildSize(-1)
+			.setHorizontal();
 		LabelPtr bottomLabel = Label("RIGHT");
 		bottomLabel->setColour(Color(50, 150, 50));
 		bottomLabel->setTextJustification(TextJustification::RIGHT);

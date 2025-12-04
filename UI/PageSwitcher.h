@@ -35,6 +35,8 @@ public:
 
 	void showPage(int pageID);
 
+	Page& getPage(int pageID);
+
 		
 private:
 	vector<unique_ptr<Page>> pages;//vector to hold pages
