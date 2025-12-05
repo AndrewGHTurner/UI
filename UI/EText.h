@@ -16,6 +16,7 @@
 using namespace sf;
 using namespace std;
 class Branch;
+
 enum class TextJustification {
 	LEFT,
 	CENTER,
@@ -49,7 +50,7 @@ public:
 
 	EText(Font& font, string initialText) : textSfml(font, initialText) {
 		text = initialText;
-		textSfml.setFillColor(sf::Color::Red);
+		textSfml.setFillColor(sf::Color::Magenta);
 		textSfml.setPosition(Vector2f(0, 0));
 		textSfml.setCharacterSize(20);
 
@@ -116,6 +117,15 @@ public:
 		cachedTexture.draw(textSfml);
 		cachedTexture.display();
 	}
+
+	void setTextColour(Color c)
+	{
+		textSfml.setFillColor(c);
+		cachedTexture.clear(sf::Color::Transparent);
+		cachedTexture.draw(textSfml);
+		cachedTexture.display();
+	}
+
 	void setText(string newText)
 	{
 		//screenTexture->setActive(true);

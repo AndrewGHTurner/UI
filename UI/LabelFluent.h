@@ -27,6 +27,11 @@ public:
 		this->internal::Label::setHoverColour(c);
 		return static_cast<Derived&>(*this);
 	}
+	Derived& setTextColour(Color c)
+	{
+		this->internal::Label::setTextColour(c);
+		return static_cast<Derived&>(*this);
+	}
 };
 
 #endif

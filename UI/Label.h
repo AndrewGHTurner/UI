@@ -25,6 +25,7 @@ namespace internal {
 		Label& setHoverColour(Color c);
 		Label& setTextJustification(TextJustification justification);
 		Label& setText(string newText);
+		Label& setTextColour(Color c);
 		
 	private:
 		Color colour; // Colour of the label

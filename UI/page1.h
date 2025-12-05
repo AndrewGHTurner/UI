@@ -57,6 +57,9 @@ public:
        //verticalScroll->setHorizontal();
 
 	   LabelPtr label = Label("first label");
+	   label->setColour(Color::Yellow)
+		   .setTextJustification(TextJustification::CENTER)
+		   .setTextColour(Color::Green);
   
 	   verticalScroll->add(move(label));
 
@@ -134,7 +137,8 @@ public:
            .setColour(Color::Yellow)
            .setHoverColour(Color(232, 126, 5))
            .setPressedColour(Color::Green) // Set the pressed colour for the button   
-		   .setTextJustification(TextJustification::CENTER);
+		   .setTextJustification(TextJustification::CENTER)
+		   .setTextColour(Color::Blue);
 	   verticalScroll->add(move(addButtonButton));
 
        TextButtonPtr r = TextButton("ListLayoutDemo");

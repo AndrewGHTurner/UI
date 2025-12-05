@@ -72,6 +72,13 @@ internal::Label& internal::Label::setText(string newText) {
 	return *this;
 }
 
+internal::Label& internal::Label::setTextColour(Color c) {
+	text->setTextColour(c);
+	notifyRedrawNeeded();
+	notifyTextChanged(true);
+	return *this;
+}
+
 Color internal::Label::getColour() {
 	return vertices[0].color;
 }
