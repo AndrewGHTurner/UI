@@ -566,6 +566,19 @@ public:
 		}
 	}
 
+	/**
+	*@brief Safe way of setting the current textbox text because it also sets the currentCharInddex
+	*/
+	void setCurrentTextBoxText(string text)
+	{
+		if (currentTextBox != nullptr)
+		{
+			currentTextBox->setText(text);
+			currentCharIndex = text.length();
+			currentTextBox->notifyRedrawNeeded();
+		}
+	}
+
 	void executeLambdas(const unordered_map<uint32_t, vector<LambdaHolder>>& lambdaMap, int key)
 	{
 		auto it = lambdaMap.find(key);
