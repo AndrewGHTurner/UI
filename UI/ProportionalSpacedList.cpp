@@ -36,7 +36,7 @@ void internal::ProportionalSpacedList::calcPositions()
 		float proportion = static_cast<float>(proportions[0]) / totalProportion;
 		accumulated += proportion * size.y;
 		int nextY = origin.y + static_cast<int>(std::round(accumulated));//doing this distributes the floating point errors
-		int childHeight = nextY - childYCoord - elementMargin;
+		int childHeight = nextY - childYCoord - (2 * elementMargin);
 		children[0]->setOrigin(Vector2f(origin.x + elementMargin, childYCoord + elementMargin));
 		children[0]->setSize(Vector2f(size.x - (2 * elementMargin), static_cast<float>(childHeight)));
 		childYCoord = nextY;
@@ -47,9 +47,9 @@ void internal::ProportionalSpacedList::calcPositions()
 			accumulated += proportion * size.y;
 
 			int nextY = origin.y + static_cast<int>(std::round(accumulated));//doing this distributes the floating point errors
-			int childHeight = nextY - childYCoord - (2 * elementMargin);
+			int childHeight = nextY - childYCoord - elementMargin;
 
-			children[c]->setOrigin(Vector2f(origin.x + elementMargin, childYCoord + elementMargin));
+			children[c]->setOrigin(Vector2f(origin.x + elementMargin, childYCoord));
 			children[c]->setSize(Vector2f(size.x - (2 * elementMargin), static_cast<float>(childHeight)));
 
 			childYCoord = nextY;
@@ -63,7 +63,7 @@ void internal::ProportionalSpacedList::calcPositions()
 		float proportion = static_cast<float>(proportions[0]) / totalProportion;
 		accumulated += proportion * size.x;
 		int nextX = origin.x + static_cast<int>(std::round(accumulated));//doing this distributes the floating point errors
-		int childWidth = nextX - childXCoord - elementMargin;
+		int childWidth = nextX - childXCoord - (2 * elementMargin);
 		children[0]->setOrigin(Vector2f(childXCoord + elementMargin, origin.y + elementMargin));
 		children[0]->setSize(Vector2f(static_cast<float>(childWidth), size.y - (2 * elementMargin)));
 		childXCoord = nextX;
@@ -73,8 +73,8 @@ void internal::ProportionalSpacedList::calcPositions()
 			float proportion = static_cast<float>(proportions[c]) / totalProportion;
 			accumulated += proportion * size.x;
 			int nextX = origin.x + static_cast<int>(std::round(accumulated));//doing this distributes the floating point errors
-			int childWidth = nextX - childXCoord - (2 * elementMargin);
-			children[c]->setOrigin(Vector2f(childXCoord + elementMargin, origin.y + elementMargin));
+			int childWidth = nextX - childXCoord - elementMargin;
+			children[c]->setOrigin(Vector2f(childXCoord, origin.y + elementMargin));
 			children[c]->setSize(Vector2f(static_cast<float>(childWidth), size.y - (2 * elementMargin)));
 			childXCoord = nextX;
 		}

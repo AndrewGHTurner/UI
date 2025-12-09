@@ -10,6 +10,12 @@ private:
 	PageSwitcher& pageSwitcher;
 public:
 	TextJustificationPage(PageSwitcher& switcher) : pageSwitcher(switcher) {}
+	void onShow() override {
+		cout << "Showing Text Justification Page" << endl;
+	}
+	void onHide() override {
+		cout << "Hiding Text Justification Page" << endl;
+	}
 	void createTree() override
 	{
 		ProportionalSpacedListPtr mainContainer = ProportionalSpacedList();

@@ -27,6 +27,7 @@ void PageSwitcher::showPage(int pageID)
 	//move ownership of the previous tree, if it exists, back to its page
 	if (previousTree != nullptr && currentPageID != -1) {
 		pages[idToIndexMap[currentPageID]]->treeRoot = move(previousTree);
+		pages[idToIndexMap[currentPageID]]->onHide();
 	}
 	currentPageID = pageID;
 	//add the next page to the holder branch
@@ -35,6 +36,7 @@ void PageSwitcher::showPage(int pageID)
 	if (page->treeRoot == nullptr) {
 		page->createTree(); //create the ui tree if it has not been created yet
 	}
+	page->onShow();
 	currentTreeRootID = page->treeRoot.get()->id;
 	holder->add(move(page->treeRoot));
 }

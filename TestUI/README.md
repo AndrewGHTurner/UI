@@ -22,6 +22,15 @@ performance penalty will be negligible for most UIs.
 When the user resizes the window the resize event from SFML is only fired when the mouse is released so there is no smooth resize. A possible solution
 would be to poll window.getSize each frame
 
+### Z index
+Adding a Z index to elements would allow for overlapping elements and pop up windows etc. This needs some research to find the best way.
+Ideas inclide a flat draw list sorted by z index or tree traversal with bounding box.
+
+### Class to manage page show/hide automatically
+Currently the developer has to add and remove element lambdas on page show/hide which is efficient but not convenient. A class that allows
+you to declaratively define what lambdas should exist when the page is visible could use the show/hide events to add/remove them automatically.
+This would be slightly slower but possibly worth it for the convenience.
+
 # Design tradeoffs
 
 ## Lambda callback IDs

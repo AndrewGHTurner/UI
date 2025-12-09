@@ -10,6 +10,8 @@ class UI_API Page {
 public:  
 	unique_ptr<Branch> treeRoot; // the ui tree  
 	virtual void createTree() = 0; // method to create the ui tree, must be implemented by derived classes  
+	virtual void onShow() {}; // method called when the page is shown
+	virtual void onHide() {}; // method called when the page is hidden
 	Page() {  
 		treeRoot = nullptr;
 	}  
