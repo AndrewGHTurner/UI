@@ -140,6 +140,9 @@ public:
 					break;
 				case Keyboard::Key::Down:
 					handleArrowEvent(ArrowDirection::DOWN);
+					break;
+				default:
+					handleKeyPress(static_cast<uint32_t>(keyEvent->code));//WILL NOT BE ABLE TO ADD LAMBDAS TO ARROW KEY WITHOUT SMALL REDESIGN
 				}
 			}
 		}
@@ -526,6 +529,7 @@ public:
 	void leftUpAt(Vector2i pos);
 	void mouseWheelScrollAt(Vector2i pos, int delta);//delta is the amount of scroll
 	void mouseMovementAt(Vector2i pos);
+	void handleKeyPress(uint32_t keyCode);
 
 	void getBoxesAt(Vector2i pos, vector<int>& boxIDs, TreeNode* box)//change this to be non recursive to improve performance
 	{
@@ -558,6 +562,18 @@ public:
 				{
 					lambdaHolder.lambda();
 				}
+			}
+		}
+	}
+
+	void executeLambdas(const unordered_map<uint32_t, vector<LambdaHolder>>& lambdaMap, int key)
+	{
+		auto it = lambdaMap.find(key);
+		if (it != lambdaMap.end())//if a vector of handlers exists for this ID
+		{
+			for (const LambdaHolder& lambdaHolder : it->second)
+			{
+				lambdaHolder.lambda();
 			}
 		}
 	}

@@ -44,6 +44,7 @@ protected:
 	unordered_map<uint32_t, vector<MouseMovementLambdaHolder>> hoverEnterLambdas;
 	unordered_map<uint32_t, vector<MouseMovementLambdaHolder>> hoverExitLambdas;
 	unordered_map<uint32_t, vector<LambdaHolder>> hoverLambdas;//holds lambdas for when the mouse moves within an element
+	unordered_map<uint32_t, vector<LambdaHolder>> keyPressLambdas;//holds lambdas for when the mouse moves out of an element
 	//These vectors contain all lambda callbacks that are not localised to particular elements
 	vector<MouseMovementLambdaHolder> mouseMovementLambdas;//This will contain mouse movement lambdas to be called on every mouse movement and not locallised to a particular element
 	vector<LambdaHolder> leftUpLambdasUnlocalized;
@@ -55,6 +56,9 @@ protected:
 	unordered_set<uint32_t> conditionalReleaseLambdaIDs;//it is assumed that there will be fewer conditional than unconditional in complex UIs ... will need a right click equivalent at some point
 
 public:
+	unordered_map<uint32_t, vector<LambdaHolder>>& getLeftDownLambdas() {
+		return leftDownLambdas;
+	}
 	// Delete copy operations because unique_ptrs cannot be copied
 	BehaviorManager(const BehaviorManager&) = delete;
 	BehaviorManager& operator=(const BehaviorManager&) = delete;
@@ -93,6 +97,8 @@ public:
 	uint32_t addHoverEnterLambda(function<void(Vector2i mousePosition)> lambda, int boxID);
 
 	uint32_t addHoverExitLambda(function<void(Vector2i mousePosition)> lambda, int boxID);
+
+	uint32_t addKeyPressLambda(function<void()> lambda, int keyCode);
 
 	void removeHoverExitLambda(uint32_t boxID, uint32_t lambdaID);
 

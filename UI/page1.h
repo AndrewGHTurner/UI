@@ -130,7 +130,11 @@ public:
                lab->label->setText("Not Checked");
            }
            });
+       ui->addKeyPressLambda([k = labelledCheckBox.get()]() {
+           k->checkBox->toggle(false);
+           }, static_cast<uint32_t>(Keyboard::Key::C));
 	   verticalScroll->add(move(labelledCheckBox));
+       
 
 	   TextButtonPtr addButtonButton = TextButton("Add Button");
        addButtonButton->onClickLeftDown(addTreeNode)

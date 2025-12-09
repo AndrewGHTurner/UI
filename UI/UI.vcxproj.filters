@@ -141,6 +141,9 @@
     <ClCompile Include="StaticList.cpp">
       <Filter>Source Files\layouts</Filter>
     </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Source Files\UI\eventHandlers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">

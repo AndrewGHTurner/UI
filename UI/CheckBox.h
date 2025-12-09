@@ -13,7 +13,7 @@ namespace internal {
 		bool checked = false;
 		CheckBox();
 		void setChecked(bool c);
-		void toggle();
+		void toggle(bool withLeftClick = true);
 		void updateVerticesPosition() override;
 		void onToggle(std::function<void()> g);
 	private:

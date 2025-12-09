@@ -30,16 +30,25 @@ void internal::CheckBox::setChecked(bool c)
 	notifyRedrawNeeded();
 }
 
-void internal::CheckBox::toggle()
+void internal::CheckBox::toggle(bool withLeftClick)
 {
-	const int borderThickness = 2;
-	if (checked)
+	if (withLeftClick)
 	{
-		unCheck();
+		const int borderThickness = 2;
+		if (checked)
+		{
+			unCheck();
+		}
+		else
+		{
+			check(Vector2f(origin.x + borderThickness, origin.y + borderThickness), Vector2f(antiOrigin.x - borderThickness, antiOrigin.y - borderThickness));
+		}
 	}
+	//run any toggle lambdas that would be triggered if this was a mouse click
 	else
 	{
-		check(Vector2f(origin.x + borderThickness, origin.y + borderThickness), Vector2f(antiOrigin.x - borderThickness, antiOrigin.y - borderThickness));
+		UI* ui = UI::getInstance();
+		ui->executeLambdas(ui->getLeftDownLambdas(), id);
 	}
 	notifyRedrawNeeded();
 }

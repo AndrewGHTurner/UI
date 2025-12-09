@@ -190,6 +190,7 @@
     <ClCompile Include="EText.cpp" />
     <ClCompile Include="eventDispatchers.cpp" />
     <ClCompile Include="HorizontalExpanderBar.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="ProportionalSpacedList.cpp" />
     <ClInclude Include="InteractiveFluent.h" />
     <ClInclude Include="LabelFluent.h" />

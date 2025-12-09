@@ -148,3 +148,19 @@ void BehaviorManager::removeAllLambdasForElement(int boxID) {
 	hoverEnterLambdas.erase(boxID);
 	hoverExitLambdas.erase(boxID);
 }
+
+uint32_t BehaviorManager::addKeyPressLambda(function<void()> lambda, int keyCode)
+{
+	uint16_t lambdaID = newID();
+	auto it = keyPressLambdas.find(keyCode);
+	if (it != keyPressLambdas.end())//if a vector of lambdas already exists
+	{
+		it->second.push_back(LambdaHolder(lambdaID, lambda));//add the new lambda to the existing vector
+	}
+	else {
+		vector<LambdaHolder> vec;
+		vec.push_back(LambdaHolder(lambdaID, lambda));//pushing a copy ... will not go out of scope
+		keyPressLambdas[keyCode] = move(vec);
+	}
+	return lambdaID;
+}
