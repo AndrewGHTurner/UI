@@ -8,6 +8,8 @@
 void ListLayoutDemoPage::createTree() {
 
 	ProportionalSpacedListPtr mainContainer = ProportionalSpacedList();
+	mainContainer->setMargin(3)
+		.setBackgroundColour(Color(255, 0, 255));
 
 	EvenListPtr topBar = EvenList();
 	topBar->setChildSize(-1);

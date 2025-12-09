@@ -21,11 +21,7 @@ internal::EvenList::EvenList(Vector2f origin, Vector2f siz) :
 	LinearListFluent(origin, siz) {
 }
 
-void internal::EvenList::setMargin(int margin)
-{
-	elementMargin = margin;
-	notifyRecalcNeeded();
-}
+
 
 internal::EvenList& internal::EvenList::setChildSize(int size)
 {

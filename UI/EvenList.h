@@ -24,7 +24,7 @@ namespace internal {
 
     class UI_API EvenList : public LinearListFluent<EvenList> {
     private:
-        int elementMargin = 0;
+        
 		int childSize = 50;
 
 
@@ -32,7 +32,7 @@ namespace internal {
     public:
         EvenList();
         EvenList(Vector2f origin, Vector2f siz);
-        void setMargin(int margin);
+        
         internal::EvenList& setChildSize(int size);
         void calcPositions();
     };
