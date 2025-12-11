@@ -42,6 +42,14 @@ public:
 		ui->addHoverExitLambda(lambda, static_cast<Derived*>(this)->id);
 		return static_cast<Derived&>(*this);
 	}
+
+	Derived& removeClickLeftDown(int lambdaID)
+	{
+		UI* ui = UI::getInstance();
+		ui->removeLeftDown(lambdaID, static_cast<Derived*>(this)->id);
+		return static_cast<Derived&>(*this);
+	}
+
 	~InteractiveFluent()
 	{
 		UI* ui = UI::getInstance();

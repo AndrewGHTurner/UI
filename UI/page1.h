@@ -145,6 +145,27 @@ public:
 		   .setTextColour(Color::Blue);
 	   verticalScroll->add(move(addButtonButton));
 
+	   TextButtonPtr keyPressButton = TextButton("Add enterKey pring");
+
+       keyPressButton->onClickLeftDown([ui, button = keyPressButton.get()]() {
+           function<void()> printEnter = []() { cout << "Enter Key Pressed" << endl; };
+           static uint32_t enterPrintLambdaID = -1;
+           if (enterPrintLambdaID == -1)
+           {
+               enterPrintLambdaID = ui->addKeyPressLambda(printEnter, static_cast<uint32_t>(Keyboard::Key::Enter));
+           }
+           else
+           {
+               ui->removeKeyPressLambda(enterPrintLambdaID, static_cast<uint32_t>(Keyboard::Key::Enter));
+               enterPrintLambdaID = -1;
+           }
+           })
+           .setColour(Color::Yellow)
+           .setHoverColour(Color(232, 126, 5))
+           .setPressedColour(Color::Green); // Set the pressed colour for the button
+       
+       verticalScroll->add(move(keyPressButton));
+
        TextButtonPtr r = TextButton("ListLayoutDemo");
            r->setColour(Color::Blue)
            .setPressedColour(Color::Blue)

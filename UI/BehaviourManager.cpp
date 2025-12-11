@@ -141,6 +141,20 @@ void BehaviorManager::removeLeftUp(uint32_t lambdaID) {
 	}
 }
 
+void BehaviorManager::removeLeftDown(uint32_t lambdaID, uint32_t boxID) {
+	const auto& it = leftDownLambdas.find(boxID);
+	if (it != leftDownLambdas.end()) {
+		vector<LambdaHolder>& elementLambdas = it->second;
+		for (auto it2 = elementLambdas.begin(); it2 != elementLambdas.end(); ++it2)
+		{
+			if (it2->lambdaID == lambdaID) {
+				elementLambdas.erase(it2);
+				break; // Exit after removing the first matching lambda
+			}
+		}
+	}
+}
+
 void BehaviorManager::removeAllLambdasForElement(int boxID) {
 	leftDownLambdas.erase(boxID);
 	leftUpLambdas.erase(boxID);
@@ -163,4 +177,18 @@ uint32_t BehaviorManager::addKeyPressLambda(function<void()> lambda, int keyCode
 		keyPressLambdas[keyCode] = move(vec);
 	}
 	return lambdaID;
+}
+
+void BehaviorManager::removeKeyPressLambda(uint32_t lambdaID, int keyCode) {
+	const auto& it = keyPressLambdas.find(keyCode);
+	if (it != keyPressLambdas.end()) {
+		vector<LambdaHolder>& elementLambdas = it->second;
+		for (auto it2 = elementLambdas.begin(); it2 != elementLambdas.end(); ++it2)
+		{
+			if (it2->lambdaID == lambdaID) {
+				elementLambdas.erase(it2);
+				break; // Exit after removing the first matching lambda
+			}
+		}
+	}
 }

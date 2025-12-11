@@ -100,11 +100,15 @@ public:
 
 	uint32_t addKeyPressLambda(function<void()> lambda, int keyCode);
 
+	void removeKeyPressLambda(uint32_t lambdaID, int keyCode);
+
 	void removeHoverExitLambda(uint32_t boxID, uint32_t lambdaID);
 
 	void removeMouseMovementLambda(uint32_t lambdaID);
 
 	void removeLeftUp(uint32_t lambdaID);
+
+	void removeLeftDown(uint32_t lambdaID, uint32_t boxID);
 
 	void removeAllLambdasForElement(int boxID);
 

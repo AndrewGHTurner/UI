@@ -30,6 +30,8 @@ Ideas inclide a flat draw list sorted by z index or tree traversal with bounding
 Currently the developer has to add and remove element lambdas on page show/hide which is efficient but not convenient. A class that allows
 you to declaratively define what lambdas should exist when the page is visible could use the show/hide events to add/remove them automatically.
 This would be slightly slower but possibly worth it for the convenience.
+ALTERNATIVLY pages could hold their own hash maps of callback lambdas. This is probably the more scalabe idea although would require editing
+the UI class to support it. So the UI would have its own hash map for global callbacks and perhaps a vector of hashmaps for local callbacks for say a page or a composite widget
 
 # Design tradeoffs
 
