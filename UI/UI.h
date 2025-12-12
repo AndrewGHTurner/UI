@@ -44,7 +44,10 @@ private:
 
 	UI(RenderWindow& window) : BehaviorManager(), Branch(Vector2f(0, 0), Vector2f(300, 300)), window(window) {
 		id = newID();//set the id of the ui element (root branch)
-		if (!font.openFromFile("C:/Users/andre/Desktop/Root/utils/fonts/Terminal.ttf")) {
+		//if (!font.openFromFile("C:/Users/andre/Desktop/Root/utils/fonts/Terminal.ttf")) {
+		//	cout << "font could not be loaded" << endl;
+		//}
+		if (!font.openFromFile("C:\\Windows\\Fonts\\arial.ttf")) {
 			cout << "font could not be loaded" << endl;
 		}
 		EText::window = &window;

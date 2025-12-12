@@ -149,6 +149,10 @@ void BehaviorManager::removeLeftDown(uint32_t lambdaID, uint32_t boxID) {
 		{
 			if (it2->lambdaID == lambdaID) {
 				elementLambdas.erase(it2);
+				//remove elementLambdas vector from map if it is empty
+				if (elementLambdas.empty()) {
+					leftDownLambdas.erase(it);
+				}
 				break; // Exit after removing the first matching lambda
 			}
 		}
@@ -187,6 +191,10 @@ void BehaviorManager::removeKeyPressLambda(uint32_t lambdaID, int keyCode) {
 		{
 			if (it2->lambdaID == lambdaID) {
 				elementLambdas.erase(it2);
+				//remove elementLambdas vector from map if it is empty
+				if (elementLambdas.empty()) {
+					keyPressLambdas.erase(it);
+				}
 				break; // Exit after removing the first matching lambda
 			}
 		}
