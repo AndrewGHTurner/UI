@@ -16,7 +16,8 @@ enum TreeNodeFlagBits {
 	REDRAW_TEXT_NEEDED = 1 << 3,
 	PREE_DRAW_NEEDED = 1 << 4,
 	POST_DRAW_NEEDED = 1 << 5,
-	IS_BRANCH = 1 << 6
+	IS_BRANCH = 1 << 6,
+	IS_VISIBLE = 1 << 7
 
 };
 
@@ -158,6 +159,16 @@ public:
 	inline void setPostDrawNeededTrue() { flags |= POST_DRAW_NEEDED; }
 	inline void setPostDrawNeededFalse() { flags &= ~POST_DRAW_NEEDED; }
 
+	//IS_VISIBLE
+	inline void setIsVisibleTrue() {
+		flags |= IS_VISIBLE;
+		notifyRecalcNeeded();
+	}
+	inline void setIsVisibleFalse() {
+		flags &= ~IS_VISIBLE;
+		notifyRecalcNeeded();
+	}
+
 	//helper testers
 
 	inline bool isLeaf() const { return flags & IS_LEAF; }
@@ -167,6 +178,7 @@ public:
 	inline bool isRedrawTextNeeded() const { return flags & REDRAW_TEXT_NEEDED; }
 	inline bool isPreDrawNeeded() const { return flags & PREE_DRAW_NEEDED; }
 	inline bool isPostDrawNeeded() const { return flags & POST_DRAW_NEEDED; }
+	inline bool isVisible() const{ return flags & IS_VISIBLE; }
 
 	virtual ~TreeNode() = default;
 };

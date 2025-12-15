@@ -41,27 +41,40 @@ public:
 			};
 	}
 
-   void createTree() override  
-   {   
-	   UI* ui = UI::getInstance();
-       TextBoxPtr j = TextBox("Hello");
-       void* d = nullptr;
+    void createTree() override
+    {
+        UI* ui = UI::getInstance();
+        TextBoxPtr j = TextBox("Hello");
+        void* d = nullptr;
 
-	   function<void()> print = []() { cout << "clicked" << endl; };
-       ui->addLeftDown(print, j->id);//WOUDL NEED TO MAKE A FOX  
+        function<void()> print = []() { cout << "clicked" << endl; };
+        ui->addLeftDown(print, j->id);//WOUDL NEED TO MAKE A FOX  
 
-       //create the scroll area  
-       EvenListPtr verticalScroll = EvenList();
-	   verticalScroll->setMargin(4); // Set the margin between elements in the scroll area       
-       verticalScroll->setBackgroundColour(Color(63, 3, 153)); // Set the background colour of the scroll area
-       //verticalScroll->setHorizontal();
+        //create the scroll area  
+        EvenListPtr verticalScroll = EvenList();
+        verticalScroll->setMargin(4); // Set the margin between elements in the scroll area       
+        verticalScroll->setBackgroundColour(Color(63, 3, 153)); // Set the background colour of the scroll area
+        //verticalScroll->setHorizontal();
 
-	   LabelPtr label = Label("first label");
-	   label->setColour(Color::Yellow)
-		   .setTextJustification(TextJustification::CENTER)
-		   .setTextColour(Color::Green);
-  
-	   verticalScroll->add(move(label));
+        LabelPtr label = Label("first label");
+        label->setColour(Color::Yellow)
+            .setTextJustification(TextJustification::CENTER)
+            .setTextColour(Color::Green);
+
+        
+
+        TextButtonPtr hideFirstLabelButton = TextButton("Hide First Label");
+        hideFirstLabelButton->onClickLeftDown([labelPtr = label.get()]() {
+            if (labelPtr->isVisible()) {
+                labelPtr->setIsVisibleFalse();
+            }
+            else {
+                labelPtr->setIsVisibleTrue();
+            }
+            });
+		verticalScroll->add(move(hideFirstLabelButton));
+        verticalScroll->add(move(label));
+    
 
        function<void()> addTreeNode = [branch = verticalScroll.get()]() {
            static int t;

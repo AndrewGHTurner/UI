@@ -8,23 +8,27 @@ sf::RenderTexture* TreeNode::screenTexture = nullptr;
 TreeNode::TreeNode()
 {
 	id = UI::getInstance()->newID();
+	setIsVisibleTrue();
 }
 
 TreeNode::TreeNode(TreeNode* parent)
 {
 	parentNode = parent;//this is needed for TextBox so that the text draws on ui start
 	id = UI::getInstance()->newID();
+	setIsVisibleTrue();
 }
 TreeNode::TreeNode(Vector2f origin, Vector2f size)
 {
 	setOrigin(origin);
 	setSize(size);
+	setIsVisibleTrue();
 }
 TreeNode::TreeNode(TreeNode* parent, Vector2f origin, Vector2f siz)
 {
 	id = UI::getInstance()->newID();
 	setOrigin(origin);
 	setSize(siz);
+	setIsVisibleTrue();
 }
 
 void TreeNode::notifyTextChanged(bool added)//bool for if text object was added or not THIS NEEDS TO BE FIXED TO ALLW FOR NOTIFICATIONS WITHOUT CHANGING STUFF

@@ -10,6 +10,10 @@ void internal::StaticList::calcPositions()
 	Vector2f currentOrigin = origin;
 	for (const unique_ptr<TreeNode>& child : children)
 	{
+		if (!child->isVisible())
+		{
+			continue;
+		}
 		child->setOrigin(currentOrigin);
 		if (isVertical())
 		{

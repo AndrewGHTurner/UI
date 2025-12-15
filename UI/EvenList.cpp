@@ -46,6 +46,10 @@ void internal::EvenList::calcPositions()
 
 		for (unique_ptr<TreeNode>& box : children)
 		{
+			if (!box->isVisible())
+			{
+				continue;
+			}
 			Vector2f childOrigin(X, Y);
 
 			box->setOrigin(childOrigin);
@@ -72,6 +76,10 @@ void internal::EvenList::calcPositions()
 		Vector2f childSize(pixelsPerWidget - (elementMargin), (int)this->size.y - (2 * elementMargin));
 		for (unique_ptr<TreeNode>& box : children)
 		{
+			if (!box->isVisible())
+			{
+				continue;
+			}
 			Vector2f childOrigin(X, Y);
 			box->setOrigin(childOrigin);
 			box->setSize(childSize);

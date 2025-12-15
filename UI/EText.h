@@ -53,6 +53,7 @@ public:
 		textSfml.setFillColor(sf::Color::Magenta);
 		textSfml.setPosition(Vector2f(0, 0));
 		textSfml.setCharacterSize(20);
+		textSfml.setStyle(sf::Text::Bold);
 
 	}
 

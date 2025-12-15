@@ -54,6 +54,10 @@ public:
 		}
 		for (const unique_ptr<TreeNode>& child : children)
 		{
+			if (!child->isVisible())
+			{
+				continue;
+			}
 			if (child->isRedrawNeeded())
 			{
 				if (child->isLeaf())
@@ -149,7 +153,10 @@ public:
 		}
 		for (const unique_ptr<TreeNode>& child : children)
 		{
-
+			if (!child->isVisible())
+			{
+				continue;
+			}
 			if (child->isRedrawTextNeeded())
 			{
 				if (child->isLeaf() && child->isRedrawTextNeeded())

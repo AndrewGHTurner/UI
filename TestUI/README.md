@@ -61,6 +61,10 @@ system with an intelligent way of tracking unused IDs would be needed.
 
 # Known issues
 
+## Text antialiasing
+
+Sfml's text objects handle text rendering but they leave artifacts around the edges of the text making small text had to read. 
+
 ## Lambda callback lifetimes
 
 Currently release callbacks are stored in a vector of references to relevant callbacks when the mouse is clicked. This can cause undefined
