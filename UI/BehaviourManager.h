@@ -59,6 +59,14 @@ public:
 	unordered_map<uint32_t, vector<LambdaHolder>>& getLeftDownLambdas() {
 		return leftDownLambdas;
 	}
+	unordered_map<uint32_t, vector<LambdaHolder>>& getHoverLambdas() {
+		return hoverLambdas;
+	}
+	unordered_map<uint32_t, vector<MouseMovementLambdaHolder>>& getHoverEnterLambdas() {
+		return hoverEnterLambdas;
+	}
+
+
 	// Delete copy operations because unique_ptrs cannot be copied
 	BehaviorManager(const BehaviorManager&) = delete;
 	BehaviorManager& operator=(const BehaviorManager&) = delete;
@@ -111,6 +119,8 @@ public:
 	void removeLeftDown(uint32_t lambdaID, uint32_t boxID);
 
 	void removeAllLambdasForElement(int boxID);
+
+	void executeHoverEnterLambdas(int elementID);
 
 	void clearID(int id) {
 		//clickHandelers.erase(id);

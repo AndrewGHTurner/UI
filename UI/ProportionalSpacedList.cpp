@@ -51,7 +51,10 @@ void internal::ProportionalSpacedList::calcPositions()
 
 			children[c]->setOrigin(Vector2f(origin.x + elementMargin, childYCoord));
 			children[c]->setSize(Vector2f(size.x - (2 * elementMargin), static_cast<float>(childHeight)));
-
+			if (children[c]->hasText)
+			{
+				children[c]->notifyTextChanged(true);
+			}
 			childYCoord = nextY;
 		}
 	}
@@ -76,6 +79,10 @@ void internal::ProportionalSpacedList::calcPositions()
 			int childWidth = nextX - childXCoord - elementMargin;
 			children[c]->setOrigin(Vector2f(childXCoord, origin.y + elementMargin));
 			children[c]->setSize(Vector2f(static_cast<float>(childWidth), size.y - (2 * elementMargin)));
+			if (children[c]->hasText)
+			{
+				children[c]->notifyTextChanged(true);
+			}
 			childXCoord = nextX;
 		}
 	}

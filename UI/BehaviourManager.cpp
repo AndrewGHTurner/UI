@@ -167,6 +167,18 @@ void BehaviorManager::removeAllLambdasForElement(int boxID) {
 	hoverExitLambdas.erase(boxID);
 }
 
+void BehaviorManager::executeHoverEnterLambdas(int elementID)
+{
+	auto it = hoverEnterLambdas.find(elementID);
+	if (it != hoverEnterLambdas.end())//if a vector of handlers exists for this ID
+	{
+		for (const MouseMovementLambdaHolder& lambdaHolder : it->second)
+		{
+			lambdaHolder.lambda(Vector2i(0, 0));//mouse position is not known here
+		}
+	}
+}
+
 uint32_t BehaviorManager::addKeyPressLambda(function<void()> lambda, int keyCode)
 {
 	uint16_t lambdaID = newID();
