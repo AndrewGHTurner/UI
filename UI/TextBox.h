@@ -12,11 +12,14 @@ using namespace std;
 
 namespace internal {
 	class UI_API TextBox : public Animation, public ETextContainer {
-
+	private:
+		bool editable = true;
 	public:
 		TextBox(Font& font, Vector2f origin, Vector2f siz, string initialText);
 
 		TextBox(string initialText);
+
+		TextBox(string initialText, bool isEditable);
 
 		void setCurrentCharIndex(int index);
 
@@ -30,6 +33,9 @@ namespace internal {
 		void setText(string newText);
 		string getText();
 		void setColour(Color c);
+		void setEditable(bool isEditable);
+
+		bool isEditable() const { return editable; }
 
 		static void scrollText(tuple<TextBox*, int> param);
 

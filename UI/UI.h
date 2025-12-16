@@ -468,33 +468,34 @@ public:
 
 	void handleTypeEvent(char newChar)
 	{
-		if (currentTextBox != nullptr)
+		if (currentTextBox != nullptr && !currentTextBox->isEditable())
 		{
-			currentTextBox->notifyRedrawNeeded();
-			string currentText = currentTextBox->getText();
-			if (newChar == '\b')//backspace
-			{
-				if (currentCharIndex > 0)
-				{
-					currentText.erase(currentText.begin() + currentCharIndex - 1);
-					currentTextBox->setText(currentText);
-
-					currentCharIndex -= 1;
-				}
-			}
-			else if (newChar == 13) {
-				currentText.insert(currentText.begin() + currentCharIndex, '\n');
-				currentTextBox->setText(currentText);
-				currentCharIndex += 1;
-			}
-			else
-			{
-				currentText.insert(currentText.begin() + currentCharIndex, newChar);
-				currentTextBox->setText(currentText);
-				currentCharIndex += 1;
-			}
-			currentTextBox->setCurrentCharIndex(currentCharIndex);
+			return;
 		}
+		currentTextBox->notifyRedrawNeeded();
+		string currentText = currentTextBox->getText();
+		if (newChar == '\b')//backspace
+		{
+			if (currentCharIndex > 0)
+			{
+				currentText.erase(currentText.begin() + currentCharIndex - 1);
+				currentTextBox->setText(currentText);
+
+				currentCharIndex -= 1;
+			}
+		}
+		else if (newChar == 13) {
+			currentText.insert(currentText.begin() + currentCharIndex, '\n');
+			currentTextBox->setText(currentText);
+			currentCharIndex += 1;
+		}
+		else
+		{
+			currentText.insert(currentText.begin() + currentCharIndex, newChar);
+			currentTextBox->setText(currentText);
+			currentCharIndex += 1;
+		}
+		currentTextBox->setCurrentCharIndex(currentCharIndex);
 	}
 	//returns the ui leaf element clicked on
 	Leaf* getLeafAt(Vector2i pos, TreeNode* box)

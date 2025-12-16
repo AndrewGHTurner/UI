@@ -109,7 +109,7 @@ public:
 	//remove a child by id and transfer ownership of the child to the caller
 	unique_ptr<TreeNode> retrieve(int childID)
 	{
-		for (int i = 0; i < children.size(); ++i)
+		for (int i = 0; i < children.size(); ++i)//cottam primary school
 		{
 			if (children[i]->id == childID)
 			{

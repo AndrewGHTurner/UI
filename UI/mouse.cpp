@@ -14,14 +14,16 @@ void UI::leftDownAt(Vector2i pos)
 	Leaf* leaf = getLeafAt(pos, this);
 	if (leaf != nullptr && leaf->hasText)
 	{
+		if (static_cast<internal::TextBox*>(leaf)->isEditable())
+		{
+			currentTextBox = static_cast<internal::TextBox*>(leaf);
 
-		currentTextBox = static_cast<internal::TextBox*>(leaf);
+			currentCharIndex = currentTextBox->getText().length();
+			currentTextBox->setCurrentCharIndex(currentCharIndex);
+			addAnimation(currentTextBox, leaf);
 
-		currentCharIndex = currentTextBox->getText().length();
-		currentTextBox->setCurrentCharIndex(currentCharIndex);
-		addAnimation(currentTextBox, leaf);
-
-		currentCharIndex = currentTextBox->getText().length();
+			currentCharIndex = currentTextBox->getText().length();
+		}
 	}
 	//store the lambdas for the release event(needed in case the click causes resize of elements)
 

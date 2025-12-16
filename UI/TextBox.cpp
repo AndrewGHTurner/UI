@@ -65,6 +65,12 @@ internal::TextBox::TextBox(string initialText)
 
 }
 
+internal::TextBox::TextBox(string initialText, bool isEditable)
+	: TextBox(initialText)
+{
+	editable = isEditable;
+}
+
 void internal::TextBox::setCurrentCharIndex(int index)
 {
 	text.get()->currentCharIndex = index;
@@ -109,6 +115,10 @@ void internal::TextBox::setColour(Color c)
 	vertices[3].color = c;
 	vertices[4].color = c;
 	vertices[5].color = c;
+}
+void internal::TextBox::setEditable(bool isEditable)
+{
+	editable = isEditable;
 }
 
 TextBoxPtr UI_API TextBox(string initialText)
