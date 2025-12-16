@@ -28,12 +28,21 @@ void internal::ProportionalSpacedList::add(unique_ptr<TreeNode> child, int propo
 */
 void internal::ProportionalSpacedList::calcPositions()
 {
+	//adjust the total proportion if there are non visible child elements
+	int adjustedTotalProportion = totalProportion;
+	for (int c = 0; c < children.size(); ++c)
+	{
+		if (!children[c]->isVisible())
+		{
+			adjustedTotalProportion -= proportions[c];
+		}
+	}
 	if (isVertical())
 	{
 		int childYCoord = origin.y;
 		float accumulated = 0.0f;
 		//don't need margin below the first element
-		float proportion = static_cast<float>(proportions[0]) / totalProportion;
+		float proportion = static_cast<float>(proportions[0]) / adjustedTotalProportion;
 		accumulated += proportion * size.y;
 		int nextY = origin.y + static_cast<int>(std::round(accumulated));//doing this distributes the floating point errors
 		int childHeight = nextY - childYCoord - (2 * elementMargin);
@@ -43,7 +52,11 @@ void internal::ProportionalSpacedList::calcPositions()
 
 		for (int c = 1; c < children.size(); ++c)
 		{
-			float proportion = static_cast<float>(proportions[c]) / totalProportion;
+			if (!children[c]->isVisible())
+			{
+				continue;
+			}
+			float proportion = static_cast<float>(proportions[c]) / adjustedTotalProportion;
 			accumulated += proportion * size.y;
 
 			int nextY = origin.y + static_cast<int>(std::round(accumulated));//doing this distributes the floating point errors
@@ -63,7 +76,7 @@ void internal::ProportionalSpacedList::calcPositions()
 		int childXCoord = origin.x;
 		float accumulated = 0.0f;
 		//don't need margin to the right of first element.
-		float proportion = static_cast<float>(proportions[0]) / totalProportion;
+		float proportion = static_cast<float>(proportions[0]) / adjustedTotalProportion;
 		accumulated += proportion * size.x;
 		int nextX = origin.x + static_cast<int>(std::round(accumulated));//doing this distributes the floating point errors
 		int childWidth = nextX - childXCoord - (2 * elementMargin);
@@ -73,7 +86,11 @@ void internal::ProportionalSpacedList::calcPositions()
 
 		for (int c = 1; c < children.size(); ++c)
 		{
-			float proportion = static_cast<float>(proportions[c]) / totalProportion;
+			if (!children[c]->isVisible())
+			{
+				continue;
+			}
+			float proportion = static_cast<float>(proportions[c]) / adjustedTotalProportion;
 			accumulated += proportion * size.x;
 			int nextX = origin.x + static_cast<int>(std::round(accumulated));//doing this distributes the floating point errors
 			int childWidth = nextX - childXCoord - elementMargin;

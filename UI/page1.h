@@ -11,8 +11,9 @@
 #include <functional>
 #include "CheckBox.h"
 #include "LabelledCheckBox.h"
+#include "ProgressBar.h"
 #include <StaticList.h>
-
+#include "ProportionalSpacedList.h"
 
 class Page1 : public Page {  
 private:
@@ -285,12 +286,35 @@ public:
        vert->add(move(s)); // Add btny to the vertical scroll
 	   vert->add(move(scroll)); // Add the scroll area to the vertical scroll
 	   
-       HorizontalSplitterPtr ggg = HorizontalSplitter(ui->getOrigin(), ui->getSize());
+       ProportionalSpacedListPtr mainLayour = ProportionalSpacedList();
+       //progress bar
+	   ProgressBarPtr progressBar = ProgressBar();
+	   progressBar->setBackgroundColour(Color(0, 0, 100))
+		   .setBarColour(Color::Green)
+		   .setProgress(0.0f);
+	   ProportionalSpacedListPtr progressBarLayout = ProportionalSpacedList();
+	   progressBarLayout->setMargin(2)
+           .setHorizontal()
+           .setBackgroundColour(Color::Cyan);
+	   TextButtonPtr increaseProgressButton = TextButton("Inc Prog");
+       increaseProgressButton->onClickLeftDown([pBar = progressBar.get()]() {
+		   pBar->setProgress(pBar->getProgress() + 0.06f);
+           });
+	   TextButtonPtr decreaseProgressButton = TextButton("Dec Prog");
+	   decreaseProgressButton->onClickLeftDown([pBar = progressBar.get()]() {
+		   pBar->setProgress(pBar->getProgress() - 0.06f);
+		   });
+       progressBarLayout->add(move(progressBar), 80);
+       progressBarLayout->add(move(decreaseProgressButton), 10);
+       progressBarLayout->add(move(increaseProgressButton), 10);
 
-       ggg->add(move(vert), 30);  
-       ggg->add(move(verticalScroll), 50);  
-       ggg->add(btna, 20);  
+	   mainLayour->add(move(progressBarLayout), 7);
+       HorizontalSplitterPtr horizontalSplitter = HorizontalSplitter(ui->getOrigin(), ui->getSize());
+       horizontalSplitter->add(move(vert), 30);  
+       horizontalSplitter->add(move(verticalScroll), 50);  
+       horizontalSplitter->add(btna, 20);  
+	   mainLayour->add(move(horizontalSplitter), 90);
 
-       treeRoot = move(ggg);  
+       treeRoot = move(mainLayour);  
    }  
 };  

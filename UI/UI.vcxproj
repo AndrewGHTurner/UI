@@ -191,6 +191,7 @@
     <ClCompile Include="eventDispatchers.cpp" />
     <ClCompile Include="HorizontalExpanderBar.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="ProportionalSpacedList.cpp" />
     <ClInclude Include="InteractiveFluent.h" />
     <ClInclude Include="LabelFluent.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="PageSwitcher.cpp" />
     <ClInclude Include="LinearListFluent.h" />
+    <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="Proportioned.h" />
     <ClCompile Include="ReservedArea.cpp" />
     <ClCompile Include="Scroll.cpp" />

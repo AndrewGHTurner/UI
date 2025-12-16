@@ -144,6 +144,9 @@
     <ClCompile Include="Keyboard.cpp">
       <Filter>Source Files\UI\eventHandlers</Filter>
     </ClCompile>
+    <ClCompile Include="ProgressBar.cpp">
+      <Filter>Source Files\widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -265,6 +268,9 @@
     </ClInclude>
     <ClInclude Include="LinearListFluent.h">
       <Filter>Header Files\layouts\templates</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgressBar.h">
+      <Filter>Header Files\widgets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

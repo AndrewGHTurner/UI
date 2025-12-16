@@ -84,7 +84,7 @@ void TreeNode::notifyRecalcNeeded()
 {
 	setRecalcNeededTrue();
 	//if vertices recalculation is needed then redrawing is definitely needed so might as well call it here.
-	setRedrawNeededTrue();
+	notifyRedrawNeeded();
 	if (parentNode)
 	{
 		parentNode->notifyRecalcNeeded();
