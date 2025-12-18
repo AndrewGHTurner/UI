@@ -12,6 +12,7 @@ namespace internal {
 		float progress = 0.0f; // Progress value between 0.0 and 1.0
 	public:
 		ProgressBar();
+		virtual void updateVerticesPosition() override;
 		ProgressBar& setBackgroundColour(Color c);
 		ProgressBar& setBarColour(Color c);
 		ProgressBar& setProgress(float progress); // progress should be between 0.0 and 1.0

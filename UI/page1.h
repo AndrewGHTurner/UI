@@ -285,6 +285,7 @@ public:
 
        vert->add(move(s)); // Add btny to the vertical scroll
 	   vert->add(move(scroll)); // Add the scroll area to the vertical scroll
+	   vert->setBackgroundColour(Color(100, 0, 100));
 	   
        ProportionalSpacedListPtr mainLayour = ProportionalSpacedList();
        //progress bar

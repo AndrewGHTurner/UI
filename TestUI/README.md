@@ -32,6 +32,9 @@ you to declaratively define what lambdas should exist when the page is visible c
 This would be slightly slower but possibly worth it for the convenience.
 ALTERNATIVLY pages could hold their own hash maps of callback lambdas. This is probably the more scalabe idea although would require editing
 the UI class to support it. So the UI would have its own hash map for global callbacks and perhaps a vector of hashmaps for local callbacks for say a page or a composite widget
+...CALLBACK REGISTRATION CONTEXT PER PAGE this could be set by the page switcher as a variable in the UI class. The developer would need
+to remember to set the current contect during late callback registration only.... any rememberring is unnecessary if we guarantee
+that there is always only one active page at a time.
 
 # Design tradeoffs
 
