@@ -37,9 +37,9 @@ class UI;
 class UI_API UI : public Branch, public BehaviorManager, public AnnimationManager {
 private:
 	int currentCharIndex = 0;//could make a typeing handeller class?// should probably hold this in the EText class
-
 	
-
+	
+			
 	vector<reference_wrapper<const LambdaHolder>> leftReleaseLambdas;//hold the release lambdas on press do that the correct ones are called on release(even if a button resizes)
 
 
@@ -565,7 +565,7 @@ public:
 			{
 				for (const LambdaHolder& lambdaHolder : it->second)
 				{
-					lambdaHolder.lambda();
+					lambdaHolder.lambda(nullptr);
 				}
 			}
 		}
@@ -591,7 +591,7 @@ public:
 		{
 			for (const LambdaHolder& lambdaHolder : it->second)
 			{
-				lambdaHolder.lambda();
+				lambdaHolder.lambda(nullptr);
 			}
 		}
 	}

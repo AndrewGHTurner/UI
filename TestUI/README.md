@@ -38,6 +38,19 @@ that there is always only one active page at a time.
 
 # Design tradeoffs
 
+## input controller
+input controller holds callbacks and manages when they are called by being given the user input. Event routing is done by the UI class.
+I have chosen composition so the UI class and page classes will hold an inputController instance. At the time of writing inheritance 
+would also work but is less flexible long term.
+
+For global events the element ID is set to zero. This means callbackMap keys only differ by event type so collisions are likely but number of 
+global events will be low so this is acceptable.
+
+## Lambda holders
+There is one type of lambda holder for all lambder arguemnt types. The provided lambda is wrapped in the Lambda holder leading to one
+extra layer of indirection. This indirection only occures on user generated inputs so it is considered worth it to have only one map of 
+lambdas rather than three. This saved 160 bytes in each InputController object... I realise this is a pointless optimisation but who cares.
+
 ## Lambda callback IDs
 
 Two main ways to handle callback IDs:
