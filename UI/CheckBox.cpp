@@ -13,7 +13,7 @@ internal::CheckBox::CheckBox()
 	//register the lambdas for checking and unchecking
 	UI* ui = UI::getInstance();
 
-	ui->addLeftDown([this]() {this->toggle(); }, this->id);
+	ui->addLeftDown([this](EventData d) {this->toggle(); }, this->id);
 }
 
 void internal::CheckBox::setChecked(bool c)
@@ -69,7 +69,7 @@ inline void squareDrawnArea(Vector2f& origin, Vector2f& antiOrigin)
 	}
 }
 
-void internal::CheckBox::onToggle(std::function<void()> g)
+void internal::CheckBox::onToggle(std::function<void(EventData)> g)
 {
 	UI* ui = UI::getInstance();
 	ui->addLeftDown(g, this->id);

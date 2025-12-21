@@ -21,7 +21,7 @@ public:
 	{
 		UI* ui = UI::getInstance();
 		ColouredButton btn1(Color::Red);
-		btn1.onClick([this]() {
+		btn1.onClick([this](EventData d) {
 			this->pageSwitcher.showPage(PageTypes::PAGE_1); // Assuming Page1 has ID 0
 			});
 
@@ -49,12 +49,12 @@ public:
 
 
 		ColouredButton btn3(Color::Magenta);
-		btn3.onClick([this]() {
+		btn3.onClick([this](EventData d) {
 			cout << "you clicked me Too!" << endl;
 			});
 
 		ColouredButton btn4(Color::Blue);
-		btn4.onClick([this]() {
+		btn4.onClick([this](EventData d) {
 			this->pageSwitcher.showPage(PageTypes::PAGE_2); // Assuming Page2 has ID 1
 			});
 
@@ -65,12 +65,12 @@ public:
 		splitter->add(btn4, 30);
 
 		ColouredButton btn5(Color::Blue);
-		btn5.onClick([]() {
+		btn5.onClick([](EventData d) {
 			cout << "you clicked the menu" << endl;
 			}).setSize(Vector2f(50, 50));
 
 		ColouredButton btn6(Color(155, 0, 255));
-		btn6.onClick([]() {
+		btn6.onClick([](EventData d) {
 			cout << "you clicked the menu on this side!!!" << endl;
 			}).setSize(Vector2f(50, 50));
 

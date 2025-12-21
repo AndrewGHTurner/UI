@@ -15,7 +15,7 @@ namespace internal {
 		void setChecked(bool c);
 		void toggle(bool withLeftClick = true);
 		void updateVerticesPosition() override;
-		void onToggle(std::function<void()> g);
+		void onToggle(std::function<void(EventData)> g);
 	private:
 		void unCheck();
 		void check(Vector2f origin, Vector2f antiOrigin);

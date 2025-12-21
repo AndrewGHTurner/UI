@@ -21,14 +21,14 @@ internal::TextBox::TextBox(Font& font, Vector2f origin, Vector2f siz, std::strin
 
 	updateVerticesPosition();
 	//register a lambda to scroll the text
-	function<void(int)> scrollText = [this](int delta) {
+	function<void(EventData d)> scrollText = [this](EventData d) {
 		if (UI::getInstance()->currentTextBox == this)
 		{
-			if (delta > 0)
+			if (d.scrollDelta > 0)
 			{
 				UI::getInstance()->handleArrowEvent(ArrowDirection::UP);
 			}
-			else if (delta < 0)
+			else if (d.scrollDelta < 0)
 			{
 				UI::getInstance()->handleArrowEvent(ArrowDirection::DOWN);
 			}
@@ -48,14 +48,14 @@ internal::TextBox::TextBox(string initialText)
 
 	updateVerticesPosition();
 	//register a lambda to scroll the text
-	function<void(int)> scrollText = [this](int delta) {
+	function<void(EventData d)> scrollText = [this](EventData d) {
 		if (UI::getInstance()->currentTextBox == this)
 		{
-			if (delta > 0)
+			if (d.scrollDelta > 0)
 			{
 				UI::getInstance()->handleArrowEvent(ArrowDirection::UP);
 			}
-			else if (delta < 0)
+			else if (d.scrollDelta < 0)
 			{
 				UI::getInstance()->handleArrowEvent(ArrowDirection::DOWN);
 			}

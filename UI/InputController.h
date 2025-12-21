@@ -9,8 +9,9 @@
 #include <SFML/System/Vector2.hpp>
 
 enum class EventType : uint8_t;
-class LambdaHolder;
+class EventCallback;
 class Page;
+struct EventData;
 
 
 /**
@@ -18,9 +19,7 @@ class Page;
 */
 class UI_API InputController {
 private:
-	uint32_t insertCallback(EventType type, const function<void()>& lambda, int boxID);
-	uint32_t insertCallback(EventType type, const function<void(int)>& lambda, int boxID);
-	uint32_t insertCallback(EventType type, const function<void(Vector2i)>& lambda, int boxID);
+	uint32_t insertCallback(EventType type, const function<void(EventData)>& lambda, int boxID);
 protected:
 	static uint32_t nextID;
 
@@ -53,22 +52,22 @@ public:
 *
 */
 
-	uint32_t addLeftDown(std::function<void()> lambda, int boxID);
+	uint32_t addLeftDown(std::function<void(EventData)> lambda, int boxID);
 	/**
 	* @return The ID assigned to the lambda
 	* @param conditional If true then the mouse must be within the box for the lambda to be executed on mouse release. Conditional for user actions such as changing page. conditional = false for graphical callbacks like changing button colour on release
 	*/
-	uint32_t addLeftUp(std::function<void()> lambda, int boxID, bool allowSlideOff = false);
-	uint32_t addLeftUp(std::function<void()> lambda);
+	uint32_t addLeftUp(std::function<void(EventData)> lambda, int boxID, bool allowSlideOff = false);
+	uint32_t addLeftUp(std::function<void(EventData)> lambda);
 	/**
 	* @return The ID assigned to the lambda
 	*/
 	//add lambdas
-	uint32_t addMouseWheelLambda(std::function<void(int)> lambda, int boxID);
-	uint32_t addMouseMovementLambda(std::function<void(sf::Vector2i mousePosition)> lambda);
-	uint32_t addHoverEnterLambda(std::function<void(sf::Vector2i mousePosition)> lambda, int boxID);
-	uint32_t addHoverExitLambda(std::function<void(sf::Vector2i mousePosition)> lambda, int boxID);
-	uint32_t addKeyPressLambda(std::function<void()> lambda, int keyCode);
+	uint32_t addMouseWheelLambda(std::function<void(EventData)> lambda, int boxID);
+	uint32_t addMouseMovementLambda(std::function<void(EventData)> lambda);
+	uint32_t addHoverEnterLambda(std::function<void(EventData)> lambda, int boxID);
+	uint32_t addHoverExitLambda(std::function<void(EventData)> lambda, int boxID);
+	uint32_t addKeyPressLambda(std::function<void(EventData)> lambda, int keyCode);
 	//remove lambdas
 	void removeKeyPressLambda(uint32_t lambdaID, int keyCode);
 	void removeHoverExitLambda(uint32_t boxID, uint32_t lambdaID);

@@ -27,7 +27,7 @@ public:
 		ColouredButton btn1(Color::Red);
 		void* u = 0;
 
-		function<void()> switchToPage1 = [this]() {
+		function<void(EventData d)> switchToPage1 = [this](EventData d) {
 			this->pageSwitcher.showPage(PageTypes::PAGE_1);
 			};
 

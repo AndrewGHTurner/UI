@@ -40,7 +40,7 @@ private:
 	
 	
 			
-	vector<reference_wrapper<const LambdaHolder>> leftReleaseLambdas;//hold the release lambdas on press do that the correct ones are called on release(even if a button resizes)
+	vector<reference_wrapper<const EventCallback>> leftReleaseLambdas;//hold the release lambdas on press do that the correct ones are called on release(even if a button resizes)
 
 
 	UI(RenderWindow& window) : InputController(), Branch(Vector2f(0, 0), Vector2f(300, 300)), window(window) {
@@ -565,9 +565,9 @@ public:
 		}
 	}
 
-	vector<reference_wrapper<const LambdaHolder>> retrieveRelevantLambdas(EventType type, Vector2i pos)
+	vector<reference_wrapper<const EventCallback>> retrieveRelevantLambdas(EventType type, Vector2i pos)
 	{
-		vector<reference_wrapper<const LambdaHolder>> relevantLambdas;
+		vector<reference_wrapper<const EventCallback>> relevantLambdas;
 		//get a list of the boxIDs that are at position
 		vector<int> boxIDs;
 		getBoxesAt(pos, boxIDs, this);
@@ -578,7 +578,7 @@ public:
 			auto it = currentPage->registry.callbackMap.find(key);
 			if (it != currentPage->registry.callbackMap.end())//if a vector of handlers exists for this ID
 			{
-				for (const LambdaHolder& lambdaHolder : it->second)
+				for (const EventCallback& lambdaHolder : it->second)
 				{
 					relevantLambdas.push_back(std::cref(lambdaHolder));//add the lambda to the vector
 				}

@@ -5,11 +5,12 @@ void UI::handleKeyPress(uint32_t keyCode)
 {
 	EventKey key(EventType::KEY_PRESS, keyCode);
 	const auto it = currentPage->registry.callbackMap.find(key);
+	EventData data;
 	if (it != currentPage->registry.callbackMap.end())
 	{
-		for (const LambdaHolder& lambdaHolder : it->second)
+		for (const EventCallback& lambdaHolder : it->second)
 		{
-			lambdaHolder.lambda(nullptr);
+			lambdaHolder.lambda(data);
 		}
 	}
 }

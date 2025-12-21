@@ -24,7 +24,7 @@ public:
 		topBar->setChildSize(-1);
 
 		TextButtonPtr homeButton = TextButton("Home");
-		homeButton->onClickLeftDown([this]() {
+		homeButton->onClickLeftDown([this](EventData d) {
 			this->pageSwitcher.showPage(PageTypes::PAGE_1);
 			});
 		topBar->add(move(homeButton));
@@ -39,7 +39,7 @@ public:
 		TextButtonPtr topButton = TextButton("Change Justification");
 		topButton->setColour(Color::Red)
 			.setPressedColour(Color::Green)
-			.onClickLeftDown([topLabel = topLabel.get()]() {
+			.onClickLeftDown([topLabel = topLabel.get()](EventData d) {
 			//cycle through justifications
 			if (topLabel->getTextJustification() == TextJustification::LEFT) {
 				topLabel->setText("CENTER");
@@ -66,7 +66,7 @@ public:
 		TextButtonPtr middleButton = TextButton("Change Justification");
 		middleButton->setColour(Color::Red)
 			.setPressedColour(Color::Green)
-			.onClickLeftDown([middleLabel = middleLabel.get()]() {
+			.onClickLeftDown([middleLabel = middleLabel.get()](EventData d) {
 			//cycle through justifications
 			if (middleLabel->getTextJustification() == TextJustification::LEFT) {
 				middleLabel->setText("CENTER");
@@ -93,7 +93,7 @@ public:
 		TextButtonPtr bottomButton = TextButton("Change Justification");
 		bottomButton->setColour(Color::Red)
 			.setPressedColour(Color::Green)
-			.onClickLeftDown([bottomLabel = bottomLabel.get()]() {
+			.onClickLeftDown([bottomLabel = bottomLabel.get()](EventData d) {
 			//cycle through justifications
 			if (bottomLabel->getTextJustification() == TextJustification::LEFT) {
 				bottomLabel->setText("CENTER");

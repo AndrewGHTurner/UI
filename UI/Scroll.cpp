@@ -8,8 +8,8 @@ internal::Scroll::Scroll() : Branch() {
 
 	UI* ui = UI::getInstance();
 	//add mouseWheel lambda to scroll area
-	function<void(int)> scroller = [scrollPtr = this](int delta) {
-		scrollPtr->incrementOffset(delta);
+	function<void(EventData d)> scroller = [scrollPtr = this](EventData d) {
+		scrollPtr->incrementOffset(d.scrollDelta);
 		};
 	ui->addMouseWheelLambda(scroller, this->id);
 }

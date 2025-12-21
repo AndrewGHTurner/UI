@@ -15,14 +15,14 @@ void ListLayoutDemoPage::createTree() {
 	topBar->setChildSize(-1);
 
 	TextButtonPtr homeButton = TextButton("Home");
-	homeButton->onClickLeftDown([this]() {
+	homeButton->onClickLeftDown([this](EventData d) {
 		this->pageSwitcher.showPage(PageTypes::PAGE_1);
 		});
 	topBar->add(move(homeButton));
 
 	EvenListPtr showList = EvenList();
 	TextButtonPtr changeButton = TextButton("Vertical");
-	changeButton->onClickLeftDown([showListPtr = showList.get(), changeButtonPtr = changeButton.get()]() {
+	changeButton->onClickLeftDown([showListPtr = showList.get(), changeButtonPtr = changeButton.get()](EventData d) {
 		if (showListPtr->isVertical()) {
 			showListPtr->setHorizontal();
 			changeButtonPtr->setText("Horizontal");

@@ -41,16 +41,18 @@ void UI::leftDownAt(Vector2i pos)
 */
 void UI::leftUpAt(Vector2i pos)
 {
+	EventData data;
+	data.mousePosition = pos;
 	//retrieve relevant lambdas for the position ... do not run all of these
-	vector<reference_wrapper<const LambdaHolder>> relevantLambdas = retrieveRelevantLambdas(EventType::LEFT_CLICK_UP, pos);
+	vector<reference_wrapper<const EventCallback>> relevantLambdas = retrieveRelevantLambdas(EventType::LEFT_CLICK_UP, pos);
 	//for each one if it is in the leftReleaseLambdas vector then run it
-	for (const reference_wrapper<const LambdaHolder> lambdaHolder : relevantLambdas)//this runs all relevant lambdas
+	for (const reference_wrapper<const EventCallback> lambdaHolder : relevantLambdas)//this runs all relevant lambdas
 	{
 		for (auto it = leftReleaseLambdas.begin(); it != leftReleaseLambdas.end(); it++)
 		{
 			if (lambdaHolder.get().lambdaID == it->get().lambdaID)
 			{
-				it->get().lambda(nullptr);
+				it->get().lambda(data);
 				std::swap(*it, leftReleaseLambdas.back());//place the to be removed element at the back of the vector
 				leftReleaseLambdas.pop_back();//remove the back of the vector ... this is faster than erase which has O(n) complexity
 				break;
@@ -66,7 +68,7 @@ void UI::leftUpAt(Vector2i pos)
 		}
 		else
 		{
-			LambdaHolder.get().lambda(nullptr);
+			LambdaHolder.get().lambda(data);
 		}
 	}
 	leftReleaseLambdas.clear();
@@ -91,11 +93,13 @@ void UI::mouseMovementAt(Vector2i pos)
 {
 	EventKey key(EventType::HOVER_MOVE, globalEventBoxID);
 	const auto it = currentPage->registry.callbackMap.find(key);
+	EventData data;
+	data.mousePosition = pos;
 	if (it != currentPage->registry.callbackMap.end())//if a vector of handlers exists for this ID
 	{
-		for (const LambdaHolder& lambdaHolder : it->second)
+		for (const EventCallback& lambdaHolder : it->second)
 		{
-			lambdaHolder.lambda(&pos);
+			lambdaHolder.lambda(data);
 		}
 	}
 
@@ -124,7 +128,7 @@ void UI::mouseMovementAt(Vector2i pos)
 			{
 				for (auto& lambdaHolder : it->second)
 				{
-					lambdaHolder.lambda(&pos);
+					lambdaHolder.lambda(data);
 				}
 			}
 		}
@@ -142,7 +146,7 @@ void UI::mouseMovementAt(Vector2i pos)
 			if (it != currentPage->registry.callbackMap.end()) {
 				for (auto& lambdaHolder : it->second)
 				{
-					lambdaHolder.lambda(&pos);
+					lambdaHolder.lambda(data);
 				}
 			}
 		}

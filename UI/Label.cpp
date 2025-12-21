@@ -36,10 +36,10 @@ internal::Label& internal::Label::setColour(Color c) {
 
 internal::Label& internal::Label::setHoverColour(Color c) {
 	Color originalColour = this->getColour();
-	this->onHoverEnter([this, c](Vector2i pos) {
+	this->onHoverEnter([this, c](EventData d) {
 		this->setColour(c);
 		});
-	this->onHoverExit([this, originalColour](Vector2i pos) {
+	this->onHoverExit([this, originalColour](EventData d) {
 		this->setColour(originalColour);
 	});
 	return *this;

@@ -15,7 +15,7 @@ const int globalEventBoxID = -1;//used to indicate that an event is not localise
 */
 class UI_API CallbackRegistry {
 public:
-	std::unordered_map<EventKey, std::vector<LambdaHolder>, EventKeyHash> callbackMap;
+	std::unordered_map<EventKey, std::vector<EventCallback>, EventKeyHash> callbackMap;
 	//These std::vectors contain all lambda callbacks that are not localised to particular elements
 	std::unordered_set<uint32_t> hoveredElementIDs;//holds each frames hoveded elements
 	std::unordered_set<uint32_t> conditionalReleaseLambdaIDs;//it is assumed that there will be fewer conditional than unconditional in complex UIs ... will need a right click equivalent at some point

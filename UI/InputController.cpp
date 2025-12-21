@@ -11,39 +11,21 @@ uint32_t InputController::newID() {
 	return nextID += 1;
 }
 
-uint32_t InputController::insertCallback(EventType type, const function<void()>& lambda, int boxID)
+uint32_t InputController::insertCallback(EventType type, const function<void(EventData)>& lambda, int boxID)
 {
 	EventKey key(type, boxID);
 	uint32_t lambdaID = UI::getInstance()->newID();
 	auto& callbackVector = this->currentPage->registry.callbackMap[key]; // creates empty vector if needed
-	callbackVector.emplace_back(LambdaHolder(lambdaID, lambda));
+	callbackVector.emplace_back(EventCallback(lambdaID, lambda));
 	return lambdaID;
 }
 
-uint32_t InputController::insertCallback(EventType type, const function<void(int)>& lambda, int boxID)
-{
-	EventKey key(type, boxID);
-	uint32_t lambdaID = UI::getInstance()->newID();
-	auto& callbackVector = this->currentPage->registry.callbackMap[key]; // creates empty vector if needed
-	callbackVector.emplace_back(LambdaHolder(lambdaID, lambda));
-	return lambdaID;
-}
-
-uint32_t InputController::insertCallback(EventType type, const function<void(Vector2i)>& lambda, int boxID)
-{
-	EventKey key(type, boxID);
-	uint32_t lambdaID = UI::getInstance()->newID();
-	auto& callbackVector = this->currentPage->registry.callbackMap[key]; // creates empty vector if needed
-	callbackVector.emplace_back(LambdaHolder(lambdaID, lambda));
-	return lambdaID;
-}
-
-uint32_t InputController::addLeftDown(function<void()> lambda, int boxID)
+uint32_t InputController::addLeftDown(function<void(EventData)> lambda, int boxID)
 {
 	return insertCallback(EventType::LEFT_CLICK_DOWN, lambda, boxID);
 }
 
-uint32_t InputController::addLeftUp(function<void()> lambda, int boxID, bool allowSlideOff)
+uint32_t InputController::addLeftUp(function<void(EventData)> lambda, int boxID, bool allowSlideOff)
 {
 	uint32_t lambdaID = insertCallback(EventType::LEFT_CLICK_UP, lambda, boxID);
 	//record if this lambda is conditional
@@ -54,32 +36,32 @@ uint32_t InputController::addLeftUp(function<void()> lambda, int boxID, bool all
 	return lambdaID;
 }
 
-uint32_t InputController::addLeftUp(function<void()> lambda)
+uint32_t InputController::addLeftUp(function<void(EventData)> lambda)
 {
 	return insertCallback(EventType::LEFT_CLICK_UP, lambda, globalEventBoxID);
 }
 
-uint32_t InputController::addMouseWheelLambda(function<void(int)> lambda, int boxID)
+uint32_t InputController::addMouseWheelLambda(function<void(EventData)> lambda, int boxID)
 {
 	return insertCallback(EventType::MOUSE_WHEEL, lambda, boxID);
 }
 
-uint32_t InputController::addMouseMovementLambda(function<void(Vector2i)> lambda)
+uint32_t InputController::addMouseMovementLambda(function<void(EventData)> lambda)
 {
 	return insertCallback(EventType::HOVER_MOVE, lambda, globalEventBoxID);
 }
 
-uint32_t InputController::addHoverEnterLambda(function<void(Vector2i mousePosition)> lambda, int boxID)
+uint32_t InputController::addHoverEnterLambda(function<void(EventData)> lambda, int boxID)
 {
 	return insertCallback(EventType::HOVER_ENTER, lambda, boxID);
 }
 
-uint32_t InputController::addHoverExitLambda(function<void(Vector2i mousePosition)> lambda, int boxID)
+uint32_t InputController::addHoverExitLambda(function<void(EventData)> lambda, int boxID)
 {
 	return insertCallback(EventType::HOVER_EXIT, lambda, boxID);
 }
 
-uint32_t InputController::addKeyPressLambda(function<void()> lambda, int keyCode)
+uint32_t InputController::addKeyPressLambda(function<void(EventData)> lambda, int keyCode)
 {
 	return insertCallback(EventType::KEY_PRESS, lambda, keyCode);
 }
@@ -90,7 +72,7 @@ void InputController::removeHoverExitLambda(uint32_t boxID, uint32_t lambdaID) {
 	EventKey key(EventType::HOVER_EXIT, boxID);
 	const auto& it = this->currentPage->registry.callbackMap.find(key);
 	if (it != this->currentPage->registry.callbackMap.end()) {
-		vector<LambdaHolder>& elementLambdas = it->second;
+		vector<EventCallback>& elementLambdas = it->second;
 		for (auto it2 = elementLambdas.begin(); it2 != elementLambdas.end(); ++it2)
 		{
 			if (it2->lambdaID == lambdaID) {
@@ -105,7 +87,7 @@ void InputController::removeMouseMovementLambda(uint32_t lambdaID) {
 	EventKey key(EventType::HOVER_MOVE, globalEventBoxID);
 	const auto& it = this->currentPage->registry.callbackMap.find(key);
 	if (it != this->currentPage->registry.callbackMap.end()) {
-		vector<LambdaHolder>& elementLambdas = it->second;
+		vector<EventCallback>& elementLambdas = it->second;
 		for (auto it2 = elementLambdas.begin(); it2 != elementLambdas.end(); ++it2)
 		{
 			if (it2->lambdaID == lambdaID) {
@@ -120,7 +102,7 @@ void InputController::removeLeftUp(uint32_t lambdaID) {
 	EventKey key(EventType::LEFT_CLICK_UP, globalEventBoxID);
 	const auto& it = this->currentPage->registry.callbackMap.find(key);
 	if (it != this->currentPage->registry.callbackMap.end()) {
-		vector<LambdaHolder>& elementLambdas = it->second;
+		vector<EventCallback>& elementLambdas = it->second;
 		for (auto it2 = elementLambdas.begin(); it2 != elementLambdas.end(); ++it2)
 		{
 			if (it2->lambdaID == lambdaID) {
@@ -135,7 +117,7 @@ void InputController::removeLeftDown(uint32_t lambdaID, uint32_t boxID) {
 	EventKey key(EventType::LEFT_CLICK_DOWN, boxID);
 	const auto& it = this->currentPage->registry.callbackMap.find(key);
 	if (it != this->currentPage->registry.callbackMap.end()) {
-		vector<LambdaHolder>& elementLambdas = it->second;
+		vector<EventCallback>& elementLambdas = it->second;
 		for (auto it2 = elementLambdas.begin(); it2 != elementLambdas.end(); ++it2)
 		{
 			if (it2->lambdaID == lambdaID) {
@@ -166,9 +148,10 @@ void InputController::executeHoverEnterLambdas(int elementID)
 	auto it = this->currentPage->registry.callbackMap.find(key);
 	if (it != this->currentPage->registry.callbackMap.end())//if a vector of handlers exists for this ID
 	{
-		for (const LambdaHolder& lambdaHolder : it->second)
+		for (const EventCallback& lambdaHolder : it->second)
 		{
-			lambdaHolder.lambda(nullptr);//mouse position is not known here
+			EventData data;
+			lambdaHolder.lambda(data);//mouse position is not known here
 		}
 	}
 }
@@ -179,7 +162,7 @@ void InputController::removeKeyPressLambda(uint32_t lambdaID, int keyCode) {
 	EventKey key(EventType::KEY_PRESS, keyCode);
 	const auto& it = this->currentPage->registry.callbackMap.find(key);
 	if (it != this->currentPage->registry.callbackMap.end()) {
-		vector<LambdaHolder>& elementLambdas = it->second;
+		vector<EventCallback>& elementLambdas = it->second;
 		for (auto it2 = elementLambdas.begin(); it2 != elementLambdas.end(); ++it2)
 		{
 			if (it2->lambdaID == lambdaID) {
@@ -201,34 +184,12 @@ void InputController::raiseEvent(EventType type, int boxID, Vector2i pos, int de
 	const auto it = this->currentPage->registry.callbackMap.find(key);
 	if (it != this->currentPage->registry.callbackMap.end())//if a vector of handlers exists for this ID
 	{
-		for (const LambdaHolder& lambdaHolder : it->second)
+		EventData eventData;
+		eventData.mousePosition = pos;
+		eventData.scrollDelta = delta;
+		for (const EventCallback& lambdaHolder : it->second)
 		{
-			switch (type)		
-			{
-			case EventType::LEFT_CLICK_DOWN:
-				lambdaHolder.lambda(&pos);
-				break;
-			case EventType::LEFT_CLICK_UP:
-				lambdaHolder.lambda(&pos);
-				break;
-			case EventType::HOVER_ENTER:
-				lambdaHolder.lambda(nullptr);
-				break;
-			case EventType::HOVER_EXIT:
-				lambdaHolder.lambda(nullptr);
-				break;
-			case EventType::HOVER_MOVE:
-				lambdaHolder.lambda(nullptr);
-				break;
-			case EventType::KEY_PRESS:
-				lambdaHolder.lambda(nullptr);
-				break;
-			case EventType::MOUSE_WHEEL:
-				lambdaHolder.lambda(&delta);
-				break;
-			default:
-				break;
-			}
+			lambdaHolder.lambda(eventData);
 		}
 	}
 }

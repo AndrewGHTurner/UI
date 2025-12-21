@@ -25,7 +25,7 @@ public:
 
 	ColouredBox* getRootNodePointer() override;
 
-	ColouredButton& onClick(function<void()> lambda);
+	ColouredButton& onClick(function<void(EventData d)> lambda);
 
 	ColouredButton& setColor(Color c);
 

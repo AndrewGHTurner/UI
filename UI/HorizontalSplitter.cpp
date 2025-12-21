@@ -83,14 +83,14 @@ void internal::HorizontalSplitter::addHandle()
 	unique_ptr<TreeNode> handle = handleBuilder();
 	UI* ui = UI::getInstance();
 	//register hover enter lambda to change the mouse cursor
-	ui->addHoverEnterLambda([](Vector2i mousePos) {
+	ui->addHoverEnterLambda([](EventData d) {
 		const auto cursor = sf::Cursor::createFromSystem(sf::Cursor::Type::SizeHorizontal).value();
 		UI::getInstance()->window.setMouseCursor(cursor);
 		}, handle->id);
 
 	//register hover leave lambda to change the mouse cursor back to default
 	
-	int hoverExitLambdaID = ui->addHoverExitLambda([](Vector2i mousePos) {
+	int hoverExitLambdaID = ui->addHoverExitLambda([](EventData d) {
 		const auto cursor = sf::Cursor::createFromSystem(sf::Cursor::Type::Arrow).value();
 		UI::getInstance()->window.setMouseCursor(cursor);
 		}, handle->id);
@@ -98,15 +98,15 @@ void internal::HorizontalSplitter::addHandle()
 	//register lambdas to make it draggable
 	
 	int handleIndex = children.size();//the handle hasn't yet been added to children so no need to subtract 1
-	ui->addLeftDown([handlePtr = handle.get(), hoverExitLambdaID, this, handleIndex](void) mutable//mutable allows you to change the copy of hoverExitLambdaID integer
+	ui->addLeftDown([handlePtr = handle.get(), hoverExitLambdaID, this, handleIndex](EventData d) mutable//mutable allows you to change the copy of hoverExitLambdaID integer
 	{
 		UI* ui = UI::getInstance();
 		//remove the old drag exit lambda so it doesn't change the mouse cursor back to a pointer while dragging
 		ui->removeHoverExitLambda(handlePtr->id ,hoverExitLambdaID);
 		
 		//add the drag lambda ... this is the lambda that will move the splitter handles
-		dragLambdaID = ui->addMouseMovementLambda([handleIndex, this](Vector2i mousePos) {
-			int mouseX = mousePos.x + ( handleWidth / 2);
+		dragLambdaID = ui->addMouseMovementLambda([handleIndex, this](EventData d) {
+			int mouseX = d.mousePosition.x + ( handleWidth / 2);
 			int leftMostX = children[handleIndex - 1].get()->getOrigin().x;
 			int rightMostX = children[handleIndex + 1].get()->getAntiOrigin().x;
 			int totalXRange = rightMostX - leftMostX;
@@ -134,7 +134,7 @@ void internal::HorizontalSplitter::addHandle()
 			});
 
 		//add the release lambda ... this lambda will remove the drag lambda and itself	and reinstate the hover exit lambda
-		releaseLambdaID = ui->addLeftUp([this, handlePtr, &hoverExitLambdaID](void)
+		releaseLambdaID = ui->addLeftUp([this, handlePtr, &hoverExitLambdaID](EventData d)
 			{
 				UI* ui = UI::getInstance();
 				//remove the drag lambda
@@ -144,7 +144,7 @@ void internal::HorizontalSplitter::addHandle()
 				const auto cursor = sf::Cursor::createFromSystem(sf::Cursor::Type::Arrow).value();
 				UI::getInstance()->window.setMouseCursor(cursor);
 				//reinstate the hover exit lambda
-				hoverExitLambdaID = ui->addHoverExitLambda([](Vector2i mousePos) {
+				hoverExitLambdaID = ui->addHoverExitLambda([](EventData d) {
 					const auto cursor = sf::Cursor::createFromSystem(sf::Cursor::Type::Arrow).value();
 					UI::getInstance()->window.setMouseCursor(cursor);
 					}, handlePtr->id);

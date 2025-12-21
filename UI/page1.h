@@ -24,14 +24,14 @@ public:
     Page1(PageSwitcher& pageSwitcher) : pageSwitcher(pageSwitcher){
     }
 
-	function<void()> makeSwitchPageLambda(int pageID) {
-		return [this, pageID]() {
+	function<void(EventData d)> makeSwitchPageLambda(int pageID) {
+		return [this, pageID](EventData d) {
 			this->pageSwitcher.showPage(pageID);
 			};
 	}
 
-	function<void()> makeChangeColourLambda(ColouredBox* button) {
-		return [button]() {
+	function<void(EventData d)> makeChangeColourLambda(ColouredBox* button) {
+		return [button](EventData d) {
 			if (button->colour == Color::Cyan)
 			{
 				button->setColour(Color::Magenta);
@@ -48,7 +48,7 @@ public:
         TextBoxPtr j = TextBox("Hello");
         void* d = nullptr;
 
-        function<void()> print = []() { cout << "clicked" << endl; };
+        function<void(EventData d)> print = [](EventData d) { cout << "clicked" << endl; };
         ui->addLeftDown(print, j->id);//WOUDL NEED TO MAKE A FOX  
 
         //create the scroll area  
@@ -65,7 +65,7 @@ public:
         
 
         TextButtonPtr hideFirstLabelButton = TextButton("Hide First Label");
-        hideFirstLabelButton->onClickLeftDown([labelPtr = label.get()]() {
+        hideFirstLabelButton->onClickLeftDown([labelPtr = label.get()](EventData d) {
             if (labelPtr->isVisible()) {
                 labelPtr->setIsVisibleFalse();
             }
@@ -77,7 +77,7 @@ public:
         verticalScroll->add(move(label));
     
 
-       function<void()> addTreeNode = [branch = verticalScroll.get()]() {
+       function<void(EventData d)> addTreeNode = [branch = verticalScroll.get()](EventData d) {
            static int t;
            Color f;
            if (t == 0)
@@ -101,7 +101,7 @@ public:
 
            ColouredButton btn(f);
 
-           function<void()> removeTreeNode = [branch, btnID = btn.getID()]() {           
+           function<void(EventData d)> removeTreeNode = [branch, btnID = btn.getID()](EventData d) {
                branch->remove(btnID);
                };
 
@@ -113,14 +113,14 @@ public:
 	   //make check box
 	   CheckBoxPtr checkBox = CheckBox();
 
-       function<void()> printToggle = []() {
+       function<void(EventData d)> printToggle = [](EventData d) {
            cout << "toggled" << endl;
            };
        checkBox->onToggle(printToggle);
 
 	   TextButtonPtr isCheckedButton = TextButton("Is Checked?");
 
-       isCheckedButton->onClickLeftDown([checkBoxPtr = checkBox.get()]() {
+       isCheckedButton->onClickLeftDown([checkBoxPtr = checkBox.get()](EventData d) {
            if (checkBoxPtr->checked) {
                cout << "Checked!" << endl;
            }
@@ -136,7 +136,7 @@ public:
 	   verticalScroll->add(move(isCheckedButton));
 
 	   LabelledCheckBoxPtr labelledCheckBox = LabelledCheckBox("Labelled CheckBox");
-       labelledCheckBox->checkBox->onToggle([lab = labelledCheckBox.get()]() {
+       labelledCheckBox->checkBox->onToggle([lab = labelledCheckBox.get()](EventData d) {
            if (lab->checkBox->checked) {
                lab->label->setText("Checked");
            }
@@ -144,7 +144,7 @@ public:
                lab->label->setText("Not Checked");
            }
            });
-       ui->addKeyPressLambda([k = labelledCheckBox.get()]() {
+       ui->addKeyPressLambda([k = labelledCheckBox.get()](EventData d) {
            k->checkBox->toggle(false);
            }, static_cast<uint32_t>(Keyboard::Key::C));
 	   verticalScroll->add(move(labelledCheckBox));
@@ -161,8 +161,8 @@ public:
 
 	   TextButtonPtr keyPressButton = TextButton("Add enterKey pring");
 
-       keyPressButton->onClickLeftDown([ui, button = keyPressButton.get()]() {
-           function<void()> printEnter = []() { cout << "Enter Key Pressed" << endl; };
+       keyPressButton->onClickLeftDown([ui, button = keyPressButton.get()](EventData d) {
+           function<void(EventData)> printEnter = [](EventData f) { cout << "Enter Key Pressed" << endl; };
            static uint32_t enterPrintLambdaID = -1;
            if (enterPrintLambdaID == -1)
            {
@@ -194,7 +194,7 @@ public:
 
 
        ColouredButton btn2 = ColouredButton(Color::Black);
-	   function<void()> removeTreeNode = [verticalScrollPtr = verticalScroll.get(), btnID = btn2.getID()]() {
+	   function<void(EventData d)> removeTreeNode = [verticalScrollPtr = verticalScroll.get(), btnID = btn2.getID()](EventData d) {
 		   verticalScrollPtr->remove(btnID);
 		   };
 	   btn2.onClick(removeTreeNode);
@@ -298,11 +298,11 @@ public:
            .setHorizontal()
            .setBackgroundColour(Color::Cyan);
 	   TextButtonPtr increaseProgressButton = TextButton("Inc Prog");
-       increaseProgressButton->onClickLeftDown([pBar = progressBar.get()]() {
+       increaseProgressButton->onClickLeftDown([pBar = progressBar.get()](EventData d) {
 		   pBar->setProgress(pBar->getProgress() + 0.06f);
            });
 	   TextButtonPtr decreaseProgressButton = TextButton("Dec Prog");
-	   decreaseProgressButton->onClickLeftDown([pBar = progressBar.get()]() {
+	   decreaseProgressButton->onClickLeftDown([pBar = progressBar.get()](EventData d) {
 		   pBar->setProgress(pBar->getProgress() - 0.06f);
 		   });
        progressBarLayout->add(move(progressBar), 80);

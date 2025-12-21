@@ -26,11 +26,11 @@ internal::TextButton& internal::TextButton::setPressedColour(Color c)
 
 	if (pressedColour != Color::Transparent)
 	{
-		function<void()> changeColourRelease = [this]() {
+		function<void(EventData d)> changeColourRelease = [this](EventData d) {
 			this->Label::setColour(this->releasedColour);
 			};
 
-		function<void()> changeColourPress = [this]() {
+		function<void(EventData d)> changeColourPress = [this](EventData d) {
 			this->Label::setColour(this->pressedColour);
 			};
 

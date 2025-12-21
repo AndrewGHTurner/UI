@@ -4,26 +4,15 @@
 #include <functional>
 #include <SFML/System/Vector2.hpp>
 
-struct LambdaHolder {
+struct EventData {
+	int scrollDelta;
+	sf::Vector2i mousePosition;
+};
+
+struct EventCallback {
 	uint32_t lambdaID;
-	std::function<void(void*)> lambda;
-	LambdaHolder(uint32_t id, std::function<void()> func) : lambdaID(id) {
-		lambda = [func](void* arg) {
-			func();
-		};
-	}
-	LambdaHolder(uint32_t id, std::function<void(int)> func) : lambdaID(id){
-		lambda = [func](void* arg) {
-			int intArg = *static_cast<int*>(arg);
-			func(intArg);
-			};
-	}
-	LambdaHolder(uint32_t id, std::function<void(sf::Vector2i)> func) : lambdaID(id) {
-		lambda = [func](void* arg) {
-			sf::Vector2i vecArg = *static_cast<sf::Vector2i*>(arg);
-			func(vecArg);
-			};
-	}
+	std::function<void(const EventData& data)> lambda;
+	EventCallback(uint32_t id, std::function<void(const EventData& data)> func) : lambdaID(id), lambda(func) {}
 };
 
 

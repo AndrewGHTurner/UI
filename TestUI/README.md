@@ -48,9 +48,8 @@ For global events the element ID is set to zero. This means callbackMap keys onl
 global events will be low so this is acceptable.
 
 ## Lambda holders
-The callback registry as a map for each type of lambda holder. An alternative design is a lambdaHolder where the lambda takes a void*
-as a param and wraps the other lambda types. This would allow for a single map of callback holders per element per event type woth the 
-extra cost of an extra lambda(72 bytes) per callback.
+CallbackLambdas take an EventData param. This allows for simple storage of lambdas but the API is slightly more annoying as all lambdas
+need to take this param even if they do not use it. An alternative would be to have different lambda types for different events
 
 ## Lambda callback IDs
 
