@@ -26,10 +26,13 @@ void UI::leftDownAt(Vector2i pos)
 		}
 	}
 	//store the lambdas for the release event(needed in case the click causes resize of elements)
-
-	leftReleaseLambdas = retrieveRelevantLambdas(leftUpLambdas, pos);
+	leftReleaseLambdas = retrieveRelevantLambdas(EventType::LEFT_CLICK_UP, pos);
 	//run any left press lambdas associated with the position
-	executeRelevantLambdas(leftDownLambdas, pos);
+	if (leaf != nullptr)
+	{
+		raiseEvent(EventType::LEFT_CLICK_DOWN, leaf->id, pos);
+	}
+	raiseEvent(EventType::LEFT_CLICK_DOWN, globalEventBoxID, pos);//raise global left down event
 }
 
 
@@ -39,7 +42,7 @@ void UI::leftDownAt(Vector2i pos)
 void UI::leftUpAt(Vector2i pos)
 {
 	//retrieve relevant lambdas for the position ... do not run all of these
-	vector<reference_wrapper<const LambdaHolder>> relevantLambdas = retrieveRelevantLambdas(leftUpLambdas, pos);
+	vector<reference_wrapper<const LambdaHolder>> relevantLambdas = retrieveRelevantLambdas(EventType::LEFT_CLICK_UP, pos);
 	//for each one if it is in the leftReleaseLambdas vector then run it
 	for (const reference_wrapper<const LambdaHolder> lambdaHolder : relevantLambdas)//this runs all relevant lambdas
 	{
@@ -47,7 +50,7 @@ void UI::leftUpAt(Vector2i pos)
 		{
 			if (lambdaHolder.get().lambdaID == it->get().lambdaID)
 			{
-				it->get().lambda();
+				it->get().lambda(nullptr);
 				std::swap(*it, leftReleaseLambdas.back());//place the to be removed element at the back of the vector
 				leftReleaseLambdas.pop_back();//remove the back of the vector ... this is faster than erase which has O(n) complexity
 				break;
@@ -57,46 +60,43 @@ void UI::leftUpAt(Vector2i pos)
 	//if not then only run it if it's id is not in the conditionalReleaseIDs set
 	for (auto LambdaHolder : leftReleaseLambdas)
 	{
-		if (conditionalReleaseLambdaIDs.find(LambdaHolder.get().lambdaID) != conditionalReleaseLambdaIDs.end())//if the lambda is conditional
+		if (currentPage->registry.conditionalReleaseLambdaIDs.find(LambdaHolder.get().lambdaID) != currentPage->registry.conditionalReleaseLambdaIDs.end())//if the lambda is conditional
 		{
 			continue;//do not run it ... if it was relevant then it would have been run in the previous loop
 		}
 		else
 		{
-			LambdaHolder.get().lambda();
+			LambdaHolder.get().lambda(nullptr);
 		}
 	}
 	leftReleaseLambdas.clear();
 	//run all unlocalized left up lambdas
-	for (const LambdaHolder& lambdaHolder : leftUpLambdasUnlocalized)
-	{
-		lambdaHolder.lambda();
-	}
+	raiseEvent(EventType::LEFT_CLICK_UP, globalEventBoxID);
 }
 
-void UI::mouseWheelScrollAt(Vector2i pos, int delta)
+void UI::mouseWheelScrollAt(Vector2i pos, int deltag)
 {
+
 	vector<int> boxIDs;
 	getBoxesAt(pos, boxIDs, this);
 	//handle the scroll event
 	for (int boxID : boxIDs)
 	{
-		auto it = mouseWheelLambdas.find(boxID);
-		if (it != mouseWheelLambdas.end())//if a vector of handlers exists for this ID
-		{
-			for (const MouseWheelLambdaHolder& lambdaHolder : it->second)
-			{
-				lambdaHolder.lambda(delta);
-			}
-		}
+		raiseEvent(EventType::MOUSE_WHEEL, boxID, pos, deltag);
 	}
+	raiseEvent(EventType::MOUSE_WHEEL, globalEventBoxID, pos, deltag);//raise global mouse wheel event
 }
 
 void UI::mouseMovementAt(Vector2i pos)
 {
-	for (const MouseMovementLambdaHolder& lambdaHolder : mouseMovementLambdas)
+	EventKey key(EventType::HOVER_MOVE, globalEventBoxID);
+	const auto it = currentPage->registry.callbackMap.find(key);
+	if (it != currentPage->registry.callbackMap.end())//if a vector of handlers exists for this ID
 	{
-		lambdaHolder.lambda(pos);
+		for (const LambdaHolder& lambdaHolder : it->second)
+		{
+			lambdaHolder.lambda(&pos);
+		}
 	}
 
 	//record the currently hovered elements
@@ -115,31 +115,38 @@ void UI::mouseMovementAt(Vector2i pos)
 
 	for (int boxID : boxIDs)
 	{
-		if (hoveredElementIDs.find(boxID) == hoveredElementIDs.end())//if this element was not previously hovered
+		if (currentPage->registry.hoveredElementIDs.find(boxID) == currentPage->registry.hoveredElementIDs.end())//if this element was not previously hovered
 		{
 			//run hover enter callback for this element
-			vector<MouseMovementLambdaHolder>& elementHoverEnters = hoverEnterLambdas[boxID];
-			for (auto& lambdaHolder : elementHoverEnters)
+			EventKey key(EventType::HOVER_ENTER, boxID);
+			const auto it = currentPage->registry.callbackMap.find(key);
+			if (it != currentPage->registry.callbackMap.end())
 			{
-				lambdaHolder.lambda(pos);
+				for (auto& lambdaHolder : it->second)
+				{
+					lambdaHolder.lambda(&pos);
+				}
 			}
 		}
 	}
 
 	//run hover exit callbacks for elements no longer hovered
 
-	for (uint32_t hoveredElementID : hoveredElementIDs)
+	for (uint32_t hoveredElementID : currentPage->registry.hoveredElementIDs)
 	{
 		if (newlyHoveredElementIDs.find(hoveredElementID) == newlyHoveredElementIDs.end())//if this element is no longer hovered
 		{
 			//run hover exit callback for this element
-			vector<MouseMovementLambdaHolder>& elementHoverExits = hoverExitLambdas[hoveredElementID];
-			for (auto& lambdaHolder : elementHoverExits)
-			{
-				lambdaHolder.lambda(pos);
+			EventKey key(EventType::HOVER_EXIT, hoveredElementID);
+			const auto it = currentPage->registry.callbackMap.find(key);
+			if (it != currentPage->registry.callbackMap.end()) {
+				for (auto& lambdaHolder : it->second)
+				{
+					lambdaHolder.lambda(&pos);
+				}
 			}
 		}
 	}
 	
-	hoveredElementIDs = move(newlyHoveredElementIDs);
+	currentPage->registry.hoveredElementIDs = move(newlyHoveredElementIDs);
 }

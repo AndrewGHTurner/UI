@@ -30,12 +30,16 @@ void PageSwitcher::showPage(int pageID)
 		pages[idToIndexMap[currentPageID]]->onHide();
 	}
 	currentPageID = pageID;
+
 	//add the next page to the holder branch
 	unique_ptr<Page>& page = pages[idToIndexMap[pageID]];
+	//set the current active page in the UI to the new page so callbacks are registered with the correct page callback registry
+	UI::getInstance()->currentPage = pages[idToIndexMap[pageID]].get();
 	//check that the page has built its ui tree
 	if (page->treeRoot == nullptr) {
 		page->createTree(); //create the ui tree if it has not been created yet
 	}
+
 	page->onShow();
 	currentTreeRootID = page->treeRoot.get()->id;
 	holder->add(move(page->treeRoot));

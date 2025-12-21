@@ -1,12 +1,21 @@
 #include "pch.h"
 #include "InputController.h"
+#include <SFML/System/Vector2.hpp>
+#include "CallbackLambdaHolders.h"
 #include "EventType.h"
+using namespace sf;
+
+uint32_t InputController::nextID = 0;
+
+uint32_t InputController::newID() {
+	return nextID += 1;
+}
 
 uint32_t InputController::insertCallback(EventType type, const function<void()>& lambda, int boxID)
 {
 	EventKey key(type, boxID);
 	uint32_t lambdaID = UI::getInstance()->newID();
-	auto& callbackVector = callbackMap[key]; // creates empty vector if needed
+	auto& callbackVector = this->currentPage->registry.callbackMap[key]; // creates empty vector if needed
 	callbackVector.emplace_back(LambdaHolder(lambdaID, lambda));
 	return lambdaID;
 }
@@ -15,7 +24,7 @@ uint32_t InputController::insertCallback(EventType type, const function<void(int
 {
 	EventKey key(type, boxID);
 	uint32_t lambdaID = UI::getInstance()->newID();
-	auto& callbackVector = callbackMap[key]; // creates empty vector if needed
+	auto& callbackVector = this->currentPage->registry.callbackMap[key]; // creates empty vector if needed
 	callbackVector.emplace_back(LambdaHolder(lambdaID, lambda));
 	return lambdaID;
 }
@@ -24,7 +33,7 @@ uint32_t InputController::insertCallback(EventType type, const function<void(Vec
 {
 	EventKey key(type, boxID);
 	uint32_t lambdaID = UI::getInstance()->newID();
-	auto& callbackVector = callbackMap[key]; // creates empty vector if needed
+	auto& callbackVector = this->currentPage->registry.callbackMap[key]; // creates empty vector if needed
 	callbackVector.emplace_back(LambdaHolder(lambdaID, lambda));
 	return lambdaID;
 }
@@ -40,7 +49,7 @@ uint32_t InputController::addLeftUp(function<void()> lambda, int boxID, bool all
 	//record if this lambda is conditional
 	if (allowSlideOff)
 	{
-		conditionalReleaseLambdaIDs.insert(lambdaID);
+		this->currentPage->registry.conditionalReleaseLambdaIDs.insert(lambdaID);
 	}
 	return lambdaID;
 }
@@ -79,8 +88,8 @@ uint32_t InputController::addKeyPressLambda(function<void()> lambda, int keyCode
 
 void InputController::removeHoverExitLambda(uint32_t boxID, uint32_t lambdaID) {
 	EventKey key(EventType::HOVER_EXIT, boxID);
-	const auto& it = callbackMap.find(key);
-	if (it != callbackMap.end()) {
+	const auto& it = this->currentPage->registry.callbackMap.find(key);
+	if (it != this->currentPage->registry.callbackMap.end()) {
 		vector<LambdaHolder>& elementLambdas = it->second;
 		for (auto it2 = elementLambdas.begin(); it2 != elementLambdas.end(); ++it2)
 		{
@@ -94,8 +103,8 @@ void InputController::removeHoverExitLambda(uint32_t boxID, uint32_t lambdaID) {
 
 void InputController::removeMouseMovementLambda(uint32_t lambdaID) {
 	EventKey key(EventType::HOVER_MOVE, globalEventBoxID);
-	const auto& it = callbackMap.find(key);
-	if (it != callbackMap.end()) {
+	const auto& it = this->currentPage->registry.callbackMap.find(key);
+	if (it != this->currentPage->registry.callbackMap.end()) {
 		vector<LambdaHolder>& elementLambdas = it->second;
 		for (auto it2 = elementLambdas.begin(); it2 != elementLambdas.end(); ++it2)
 		{
@@ -109,8 +118,8 @@ void InputController::removeMouseMovementLambda(uint32_t lambdaID) {
 
 void InputController::removeLeftUp(uint32_t lambdaID) {
 	EventKey key(EventType::LEFT_CLICK_UP, globalEventBoxID);
-	const auto& it = callbackMap.find(key);
-	if (it != callbackMap.end()) {
+	const auto& it = this->currentPage->registry.callbackMap.find(key);
+	if (it != this->currentPage->registry.callbackMap.end()) {
 		vector<LambdaHolder>& elementLambdas = it->second;
 		for (auto it2 = elementLambdas.begin(); it2 != elementLambdas.end(); ++it2)
 		{
@@ -124,8 +133,8 @@ void InputController::removeLeftUp(uint32_t lambdaID) {
 
 void InputController::removeLeftDown(uint32_t lambdaID, uint32_t boxID) {
 	EventKey key(EventType::LEFT_CLICK_DOWN, boxID);
-	const auto& it = callbackMap.find(key);
-	if (it != callbackMap.end()) {
+	const auto& it = this->currentPage->registry.callbackMap.find(key);
+	if (it != this->currentPage->registry.callbackMap.end()) {
 		vector<LambdaHolder>& elementLambdas = it->second;
 		for (auto it2 = elementLambdas.begin(); it2 != elementLambdas.end(); ++it2)
 		{
@@ -147,15 +156,15 @@ void InputController::removeAllLambdasForElement(int boxID) {
 		EventKey(EventType::HOVER_EXIT, boxID)
 	};
 	for (const EventKey& key : keysToRemove) {
-		callbackMap.erase(key);
+		this->currentPage->registry.callbackMap.erase(key);
 	}
 }
 
 void InputController::executeHoverEnterLambdas(int elementID)
 {
 	EventKey key(EventType::HOVER_ENTER, elementID);
-	auto it = callbackMap.find(key);
-	if (it != callbackMap.end())//if a vector of handlers exists for this ID
+	auto it = this->currentPage->registry.callbackMap.find(key);
+	if (it != this->currentPage->registry.callbackMap.end())//if a vector of handlers exists for this ID
 	{
 		for (const LambdaHolder& lambdaHolder : it->second)
 		{
@@ -168,8 +177,8 @@ void InputController::executeHoverEnterLambdas(int elementID)
 
 void InputController::removeKeyPressLambda(uint32_t lambdaID, int keyCode) {
 	EventKey key(EventType::KEY_PRESS, keyCode);
-	const auto& it = callbackMap.find(key);
-	if (it != callbackMap.end()) {
+	const auto& it = this->currentPage->registry.callbackMap.find(key);
+	if (it != this->currentPage->registry.callbackMap.end()) {
 		vector<LambdaHolder>& elementLambdas = it->second;
 		for (auto it2 = elementLambdas.begin(); it2 != elementLambdas.end(); ++it2)
 		{
@@ -177,9 +186,48 @@ void InputController::removeKeyPressLambda(uint32_t lambdaID, int keyCode) {
 				elementLambdas.erase(it2);
 				//remove elementLambdas vector from map if it is empty
 				if (elementLambdas.empty()) {
-					callbackMap.erase(it);
+					this->currentPage->registry.callbackMap.erase(it);
 				}
 				break; // Exit after removing the first matching lambda
+			}
+		}
+	}
+}
+
+
+void InputController::raiseEvent(EventType type, int boxID, Vector2i pos, int delta)
+{
+	EventKey key(type, boxID);
+	const auto it = this->currentPage->registry.callbackMap.find(key);
+	if (it != this->currentPage->registry.callbackMap.end())//if a vector of handlers exists for this ID
+	{
+		for (const LambdaHolder& lambdaHolder : it->second)
+		{
+			switch (type)		
+			{
+			case EventType::LEFT_CLICK_DOWN:
+				lambdaHolder.lambda(&pos);
+				break;
+			case EventType::LEFT_CLICK_UP:
+				lambdaHolder.lambda(&pos);
+				break;
+			case EventType::HOVER_ENTER:
+				lambdaHolder.lambda(nullptr);
+				break;
+			case EventType::HOVER_EXIT:
+				lambdaHolder.lambda(nullptr);
+				break;
+			case EventType::HOVER_MOVE:
+				lambdaHolder.lambda(nullptr);
+				break;
+			case EventType::KEY_PRESS:
+				lambdaHolder.lambda(nullptr);
+				break;
+			case EventType::MOUSE_WHEEL:
+				lambdaHolder.lambda(&delta);
+				break;
+			default:
+				break;
 			}
 		}
 	}

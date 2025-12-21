@@ -48,7 +48,7 @@ void internal::CheckBox::toggle(bool withLeftClick)
 	else
 	{
 		UI* ui = UI::getInstance();
-		ui->executeLambdas(ui->getLeftDownLambdas(), id);
+		ui->raiseEvent(EventType::LEFT_CLICK_DOWN, id);
 	}
 	notifyRedrawNeeded();
 }

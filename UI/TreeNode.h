@@ -132,7 +132,7 @@ public:
 	/**
 	*@brief Sets the flag to show that redraw of this treeNode is needed
 	*/
-	inline void setRedrawNeededTrue() { flags |= REDRAW_NEEDED; }
+ 	inline void setRedrawNeededTrue() { flags |= REDRAW_NEEDED; }
 
 	/**
 	*@brief Sets the flag to show that redraw of this treeNode is not needed

@@ -1,31 +1,53 @@
-
 #ifndef INPUT_CONTROLLER_H
 #define INPUT_CONTROLLER_H
+
+#include "UI_DLL_Interface.h"
 #include <unordered_map>
+#include <cstdint>
+#include <functional>
 #include <unordered_set>
-#include <vector>
-#include "CallbackLambdaHolders.h"
-#include <memory>
+#include <SFML/System/Vector2.hpp>
 
-enum class EventTypes;
-struct EventKey;
-struct EventKeyHash;
+enum class EventType : uint8_t;
+class LambdaHolder;
+class Page;
 
-const int globalEventBoxID = -1;//used to indicate that an event is not localised to a particular element
+
 /**
-* @brief Input controller acts as a registry for callbacks of elements.
+* @note the unordered maps may need to be replaced with a vector of vectors + a vector of free indexes ... this may be more scalable than an unordered map
 */
-class InputController {
+class UI_API InputController {
 private:
-	std::unordered_map<EventKey, std::vector<LambdaHolder>, EventKeyHash> callbackMap;
-	//These std::vectors contain all lambda callbacks that are not localised to particular elements
-	std::unordered_set<uint32_t> hoveredElementIDs;//holds each frames hoveded elements
-	std::unordered_set<uint32_t> conditionalReleaseLambdaIDs;//it is assumed that there will be fewer conditional than unconditional in complex UIs ... will need a right click equivalent at some point
-	
 	uint32_t insertCallback(EventType type, const function<void()>& lambda, int boxID);
 	uint32_t insertCallback(EventType type, const function<void(int)>& lambda, int boxID);
 	uint32_t insertCallback(EventType type, const function<void(Vector2i)>& lambda, int boxID);
+protected:
+	static uint32_t nextID;
+
+
+
 public:
+	Page* currentPage = nullptr;
+
+
+	// Delete copy operations because unique_ptrs cannot be copied
+	InputController(const InputController&) = delete;
+	InputController& operator=(const InputController&) = delete;
+
+	// Allow move operations
+	InputController(InputController&&) noexcept = default;
+	InputController& operator=(InputController&&) noexcept = default;
+
+	InputController() = default;
+
+
+
+	/**
+	* @note If ID wrapping (after ~4 billion IDs ... never going to happen) becomes a problem, one solution is to  have multiple ID counters. eg one for element IDs and one for callback IDs
+	*/
+	static uint32_t newID();
+
+
 	/**
 * @return The ID assigned to the lambda
 *
@@ -56,8 +78,13 @@ public:
 	void removeAllLambdasForElement(int boxID);
 	//execute lambdas
 	void executeHoverEnterLambdas(int elementID);
+	void raiseEvent(EventType type, int boxID, Vector2i pos = Vector2i(0, 0), int delta = 0);
+
+	
+
+	void clearID(int id) {
+		//clickHandelers.erase(id);
+	}
 };
-
-
 
 #endif

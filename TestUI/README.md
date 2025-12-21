@@ -27,14 +27,15 @@ Adding a Z index to elements would allow for overlapping elements and pop up win
 Ideas inclide a flat draw list sorted by z index or tree traversal with bounding box.
 
 ### Class to manage page show/hide automatically
-Currently the developer has to add and remove element lambdas on page show/hide which is efficient but not convenient. A class that allows
-you to declaratively define what lambdas should exist when the page is visible could use the show/hide events to add/remove them automatically.
-This would be slightly slower but possibly worth it for the convenience.
 ALTERNATIVLY pages could hold their own hash maps of callback lambdas. This is probably the more scalabe idea although would require editing
 the UI class to support it. So the UI would have its own hash map for global callbacks and perhaps a vector of hashmaps for local callbacks for say a page or a composite widget
 ...CALLBACK REGISTRATION CONTEXT PER PAGE this could be set by the page switcher as a variable in the UI class. The developer would need
 to remember to set the current contect during late callback registration only.... any rememberring is unnecessary if we guarantee
 that there is always only one active page at a time.
+
+Pages hold callback registries and the UI may have one for global callbacks. Input events are processed through the UI which is incharge of routing
+events to the correct callback registry. The UI manages adding and removing callbacks via the inputController. This is based on the "active page" that
+is set by classes such as pageSwitcher as then the developer of UIs does not need to specify the specific page for each callback.
 
 # Design tradeoffs
 
@@ -47,9 +48,9 @@ For global events the element ID is set to zero. This means callbackMap keys onl
 global events will be low so this is acceptable.
 
 ## Lambda holders
-There is one type of lambda holder for all lambder arguemnt types. The provided lambda is wrapped in the Lambda holder leading to one
-extra layer of indirection. This indirection only occures on user generated inputs so it is considered worth it to have only one map of 
-lambdas rather than three. This saved 160 bytes in each InputController object... I realise this is a pointless optimisation but who cares.
+The callback registry as a map for each type of lambda holder. An alternative design is a lambdaHolder where the lambda takes a void*
+as a param and wraps the other lambda types. This would allow for a single map of callback holders per element per event type woth the 
+extra cost of an extra lambda(72 bytes) per callback.
 
 ## Lambda callback IDs
 

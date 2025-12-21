@@ -147,9 +147,6 @@
     <ClCompile Include="InputController.cpp">
       <Filter>Source Files\UI</Filter>
     </ClCompile>
-    <ClCompile Include="BehaviourManager.cpp">
-      <Filter>Source Files\UI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -215,7 +212,7 @@
     <ClInclude Include="Branch.h">
       <Filter>Header Files\treeClasses</Filter>
     </ClInclude>
-    <ClInclude Include="BehaviourManager.h">
+    <ClInclude Include="InputController.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
@@ -275,7 +272,7 @@
     <ClInclude Include="ProgressBar.h">
       <Filter>Header Files\widgets</Filter>
     </ClInclude>
-    <ClInclude Include="InputController.h">
+    <ClInclude Include="CallbackRegistry.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
     <ClInclude Include="CallbackLambdaHolders.h">

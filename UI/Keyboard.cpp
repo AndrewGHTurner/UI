@@ -1,10 +1,15 @@
 #include "pch.h"
+#include "EventType.h"
 
 void UI::handleKeyPress(uint32_t keyCode)
 {
-	vector<LambdaHolder>& relevantLambdas = keyPressLambdas[keyCode];
-	for (const LambdaHolder& lambdaHolder : relevantLambdas)
+	EventKey key(EventType::KEY_PRESS, keyCode);
+	const auto it = currentPage->registry.callbackMap.find(key);
+	if (it != currentPage->registry.callbackMap.end())
 	{
-		lambdaHolder.lambda();
+		for (const LambdaHolder& lambdaHolder : it->second)
+		{
+			lambdaHolder.lambda(nullptr);
+		}
 	}
 }

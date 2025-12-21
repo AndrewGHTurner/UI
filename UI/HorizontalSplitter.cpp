@@ -139,8 +139,7 @@ void internal::HorizontalSplitter::addHandle()
 				UI* ui = UI::getInstance();
 				//remove the drag lambda
 				ui->removeMouseMovementLambda(dragLambdaID);
-				//remove this release lambda ... itself
-				ui->removeLeftUp(releaseLambdaID);
+
 				//change the cursor back to an arrow
 				const auto cursor = sf::Cursor::createFromSystem(sf::Cursor::Type::Arrow).value();
 				UI::getInstance()->window.setMouseCursor(cursor);
@@ -149,6 +148,8 @@ void internal::HorizontalSplitter::addHandle()
 					const auto cursor = sf::Cursor::createFromSystem(sf::Cursor::Type::Arrow).value();
 					UI::getInstance()->window.setMouseCursor(cursor);
 					}, handlePtr->id);
+				//remove this release lambda ... itself
+				ui->removeLeftUp(releaseLambdaID);
 
 			});
 	}, handle->id);

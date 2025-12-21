@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <functional>
 #include <SFML/System/Vector2.hpp>
+
 struct LambdaHolder {
 	uint32_t lambdaID;
 	std::function<void(void*)> lambda;

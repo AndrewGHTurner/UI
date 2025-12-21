@@ -183,20 +183,19 @@
   <ItemGroup>
     <ClCompile Include="AnimationManager.cpp" />
     <ClInclude Include="AnimationManager.h" />
-    <ClCompile Include="BehaviourManager.cpp" />
+    <ClCompile Include="InputController.cpp" />
     <ClCompile Include="CenterAligner.cpp" />
     <ClCompile Include="CheckBox.cpp" />
     <ClCompile Include="ColouredButton.cpp" />
     <ClCompile Include="EText.cpp" />
     <ClCompile Include="eventDispatchers.cpp" />
     <ClCompile Include="HorizontalExpanderBar.cpp" />
-    <ClCompile Include="InputController.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="ProportionalSpacedList.cpp" />
     <ClInclude Include="CallbackLambdaHolders.h" />
     <ClInclude Include="EventType.h" />
-    <ClInclude Include="InputController.h" />
+    <ClInclude Include="CallbackRegistry.h" />
     <ClInclude Include="InteractiveFluent.h" />
     <ClInclude Include="LabelFluent.h" />
     <ClInclude Include="HorizontalExpanderBar.h" />
@@ -223,7 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
-    <ClInclude Include="BehaviourManager.h" />
+    <ClInclude Include="InputController.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Branch.h" />
     <ClInclude Include="CheckBox.h" />

@@ -4,7 +4,7 @@
 #include "Branch.h"
 #include "Leaf.h"
 #include "AnimationManager.h"
-#include "BehaviourManager.h"
+#include "InputController.h"
 #include <iostream>
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Sprite.hpp>
@@ -34,7 +34,7 @@ class UI;
 //SHOULD PROBABLE MAKE A CONFIGURABLE UI CLASS WHICH WILL BE BUILT IN A BUILDER PATTERN AND ALLOW FOR 
 //ONLY NEEDED FUNCTIONALITY TO BE CREATED VIA COMPOSITION
 
-class UI_API UI : public Branch, public BehaviorManager, public AnnimationManager {
+class UI_API UI : public Branch, public InputController, public AnnimationManager {
 private:
 	int currentCharIndex = 0;//could make a typeing handeller class?// should probably hold this in the EText class
 	
@@ -43,7 +43,7 @@ private:
 	vector<reference_wrapper<const LambdaHolder>> leftReleaseLambdas;//hold the release lambdas on press do that the correct ones are called on release(even if a button resizes)
 
 
-	UI(RenderWindow& window) : BehaviorManager(), Branch(Vector2f(0, 0), Vector2f(300, 300)), window(window) {
+	UI(RenderWindow& window) : InputController(), Branch(Vector2f(0, 0), Vector2f(300, 300)), window(window) {
 		id = newID();//set the id of the ui element (root branch)
 		//if (!font.openFromFile("C:/Users/andre/Desktop/Root/utils/fonts/Terminal.ttf")) {
 		//	cout << "font could not be loaded" << endl;
@@ -469,7 +469,7 @@ public:
 
 	void handleTypeEvent(char newChar)
 	{
-		if (currentTextBox != nullptr && !currentTextBox->isEditable())
+		if (currentTextBox == nullptr || !currentTextBox->isEditable())
 		{
 			return;
 		}
@@ -552,25 +552,6 @@ public:
 		}
 	}
 
-	void executeRelevantLambdas(const unordered_map<uint32_t, vector<LambdaHolder>>& handlers, Vector2i pos)
-	{
-		//get a list of the boxIDs that are at position
-		vector<int> boxIDs;
-		getBoxesAt(pos, boxIDs, this);
-		//run the lambdas from the handlers map
-		for (int boxID : boxIDs)
-		{
-			auto it = handlers.find(boxID);
-			if (it != handlers.end())//if a vector of handlers exists for this ID
-			{
-				for (const LambdaHolder& lambdaHolder : it->second)
-				{
-					lambdaHolder.lambda(nullptr);
-				}
-			}
-		}
-	}
-
 	/**
 	*@brief Safe way of setting the current textbox text because it also sets the currentCharInddex
 	*/
@@ -584,19 +565,7 @@ public:
 		}
 	}
 
-	void executeLambdas(const unordered_map<uint32_t, vector<LambdaHolder>>& lambdaMap, int key)
-	{
-		auto it = lambdaMap.find(key);
-		if (it != lambdaMap.end())//if a vector of handlers exists for this ID
-		{
-			for (const LambdaHolder& lambdaHolder : it->second)
-			{
-				lambdaHolder.lambda(nullptr);
-			}
-		}
-	}
-
-	vector<reference_wrapper<const LambdaHolder>> retrieveRelevantLambdas(const unordered_map<uint32_t, vector<LambdaHolder>>& handlers, Vector2i pos)
+	vector<reference_wrapper<const LambdaHolder>> retrieveRelevantLambdas(EventType type, Vector2i pos)
 	{
 		vector<reference_wrapper<const LambdaHolder>> relevantLambdas;
 		//get a list of the boxIDs that are at position
@@ -605,8 +574,9 @@ public:
 		//get the lambdas from the handlers map
 		for (int boxID : boxIDs)
 		{
-			auto it = handlers.find(boxID);
-			if (it != handlers.end())//if a vector of handlers exists for this ID
+			EventKey key(type, boxID);
+			auto it = currentPage->registry.callbackMap.find(key);
+			if (it != currentPage->registry.callbackMap.end())//if a vector of handlers exists for this ID
 			{
 				for (const LambdaHolder& lambdaHolder : it->second)
 				{
