@@ -35,11 +35,20 @@ void internal::EvenList::calcPositions()
 	float Y = this->origin.y + elementMargin;
 	float X = this->origin.x + elementMargin;
 	float pixelsPerWidget = this->childSize;
+	//count visible children
+	int visibleChildren = 0;
+	for (const unique_ptr<TreeNode>& box : children)
+	{
+		if (box->isVisible())
+		{
+			visibleChildren++;
+		}
+	}
 	if (isVertical())
 	{
 		if (pixelsPerWidget == -1)//calculate pixels per widget based on layout size
 		{
-			pixelsPerWidget = static_cast<float>(this->size.y) / children.size();
+			pixelsPerWidget = static_cast<float>(this->size.y) / visibleChildren;
 		}
 
 		Vector2f childSize((int)this->size.x - (2 * elementMargin), pixelsPerWidget - (elementMargin));
@@ -63,7 +72,7 @@ void internal::EvenList::calcPositions()
 		}
 		if (pixelsPerWidget != -1)//set the size of the layout
 		{
-			this->size.y = (pixelsPerWidget * children.size());
+			this->size.y = (pixelsPerWidget * visibleChildren);
 		}
 
 	}
@@ -71,7 +80,7 @@ void internal::EvenList::calcPositions()
 	{
 		if (pixelsPerWidget == -1)//calculate pixels per widget based on layout size
 		{
-			pixelsPerWidget = static_cast<float>(this->size.x) / children.size();
+			pixelsPerWidget = static_cast<float>(this->size.x) / visibleChildren;
 		}
 		Vector2f childSize(pixelsPerWidget - (elementMargin), (int)this->size.y - (2 * elementMargin));
 		for (unique_ptr<TreeNode>& box : children)
