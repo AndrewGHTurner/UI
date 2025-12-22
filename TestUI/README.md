@@ -77,6 +77,10 @@ system with an intelligent way of tracking unused IDs would be needed.
 
 # Known issues
 
+## Crashing when the window closes
+
+When you close the SFML window a memory access violation occurs. This is likely due to captured objects in lambdas being deleted before the lambda destructor is called.
+
 ## Text antialiasing
 
 Sfml's text objects handle text rendering but they leave artifacts around the edges of the text making small text had to read. 
