@@ -31,9 +31,12 @@ public:
 		//	});
 
 		unique_ptr<ReservedArea> btn2 = make_unique<ReservedArea>();
+		btn2->onClickLeftDown([this](EventData d) {
+			cout << "you clicked the reserved area!" << endl;
+			});
 
 		//run fractal viewer on setSize
-
+		
 
 		Vector2f o = btn2->getOrigin();
 
@@ -49,8 +52,10 @@ public:
 
 
 		ColouredButton btn3(Color::Magenta);
-		btn3.onClick([this](EventData d) {
+		btn3.onClick([this, b = btn2.get()](EventData d) {
 			cout << "you clicked me Too!" << endl;
+			cout << "the reserved area is at origin: " << b->getOrigin().x << ", " << b->getOrigin().y << endl;
+			cout << "the reserved area has size: " << b->getSize().x << ", " << b->getSize().y << endl;
 			});
 
 		ColouredButton btn4(Color::Blue);

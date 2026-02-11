@@ -28,9 +28,11 @@ void UI::leftDownAt(Vector2i pos)
 	//store the lambdas for the release event(needed in case the click causes resize of elements)
 	leftReleaseLambdas = retrieveRelevantLambdas(EventType::LEFT_CLICK_UP, pos);
 	//run any left press lambdas associated with the position
-	if (leaf != nullptr)
+	vector<int> boxIDs = vector<int>();
+	getBoxesAt(pos, boxIDs, this);
+	for (const int& boxId : boxIDs)
 	{
-		raiseEvent(EventType::LEFT_CLICK_DOWN, leaf->id, pos);
+		raiseEvent(EventType::LEFT_CLICK_DOWN, boxId, pos);
 	}
 	raiseEvent(EventType::LEFT_CLICK_DOWN, globalEventBoxID, pos);//raise global left down event
 }
