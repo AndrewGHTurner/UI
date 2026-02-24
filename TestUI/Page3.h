@@ -30,7 +30,7 @@ public:
 		//	cout << "you clicked me!" << endl;
 		//	});
 
-		unique_ptr<ReservedArea> btn2 = make_unique<ReservedArea>();
+		ReservedAreaPtr btn2 = ReservedArea();
 		btn2->onClickLeftDown([this](EventData d) {
 			cout << "you clicked the reserved area!" << endl;
 			});

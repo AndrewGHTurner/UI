@@ -267,6 +267,7 @@
   <ItemGroup>
     <None Include="..\TestUI\README.md" />
     <None Include=".gitignore" />
+    <None Include="minimalApplicationSetup.md" />
     <None Include="waysToUse.md" />
   </ItemGroup>
   <ItemGroup>

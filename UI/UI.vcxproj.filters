@@ -230,9 +230,6 @@
     <ClInclude Include="SizePolicy.h">
       <Filter>Header Files\layouts</Filter>
     </ClInclude>
-    <ClInclude Include="ReservedArea.h">
-      <Filter>Header Files\layouts</Filter>
-    </ClInclude>
     <ClInclude Include="CheckBox.h">
       <Filter>Header Files\widgets</Filter>
     </ClInclude>
@@ -284,6 +281,9 @@
     <ClInclude Include="EventType.h">
       <Filter>Header Files\UI</Filter>
     </ClInclude>
+    <ClInclude Include="ReservedArea.h">
+      <Filter>Header Files\widgets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="designChoices.txt" />
@@ -295,6 +295,9 @@
     <None Include=".gitignore" />
     <None Include="..\TestUI\README.md" />
     <None Include="waysToUse.md">
+      <Filter>Documentation</Filter>
+    </None>
+    <None Include="minimalApplicationSetup.md">
       <Filter>Documentation</Filter>
     </None>
   </ItemGroup>
