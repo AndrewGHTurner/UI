@@ -1,5 +1,7 @@
 # UI Library
 
+## For detailed information on how to use this library please see the [Documentation](/waysToUse.md)
+
 ## This library is a work in progress!!! 
 
 This is a UI library written on top of the SFML 2D graphics library.

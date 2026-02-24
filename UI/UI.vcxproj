@@ -267,6 +267,7 @@
   <ItemGroup>
     <None Include="..\TestUI\README.md" />
     <None Include=".gitignore" />
+    <None Include="waysToUse.md" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="UI.rc" />

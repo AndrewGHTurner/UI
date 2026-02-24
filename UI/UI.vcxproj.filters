@@ -64,6 +64,9 @@
     <Filter Include="Header Files\layouts\templates">
       <UniqueIdentifier>{06672706-3644-491e-8b84-a9cbb3bf32b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Documentation">
+      <UniqueIdentifier>{0b8514fb-80fd-4556-847f-8be674c41fd0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UI.cpp">
@@ -291,6 +294,9 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="..\TestUI\README.md" />
+    <None Include="waysToUse.md">
+      <Filter>Documentation</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="UI.rc">
