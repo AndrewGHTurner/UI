@@ -9,17 +9,25 @@
 /**
 * @brief A horizontal layout that holds a size policy for each of its children
 */
-class UI_API HorizontalExpanderBar : public Branch {
-private:
-	vector<uint8_t> sizePolicies;
-public:
-	HorizontalExpanderBar(Vector2f origin, Vector2f siz) : Branch(origin, siz) {}
+namespace internal {
+	class UI_API HorizontalExpanderBar : public Branch {
+	private:
+		vector<uint8_t> sizePolicies;
+	public:
+		HorizontalExpanderBar(Vector2f origin, Vector2f siz) : Branch(origin, siz) {}
 
-	void add(Facade& facade, SizePolicy sizePolicy);
+		HorizontalExpanderBar() : Branch() {}
 
-	void add(unique_ptr<TreeNode> child, SizePolicy sizePolicy);
+		void add(Facade& facade, SizePolicy sizePolicy);
 
-	void calcPositions() override;
-};
+		void add(unique_ptr<TreeNode> child, SizePolicy sizePolicy);
+
+		void calcPositions() override;
+	};
+}
+
+using HorizontalExpanderBarPtr = unique_ptr<internal::HorizontalExpanderBar>;
+
+UI_API HorizontalExpanderBarPtr HorizontalExpanderBar();
 
 #endif

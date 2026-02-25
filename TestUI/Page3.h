@@ -79,7 +79,7 @@ public:
 			cout << "you clicked the menu on this side!!!" << endl;
 			}).setSize(Vector2f(50, 50));
 
-		unique_ptr<HorizontalExpanderBar> expanderBar = make_unique<HorizontalExpanderBar>(ui->getOrigin(), ui->getSize());
+		HorizontalExpanderBarPtr expanderBar = HorizontalExpanderBar();
 
 		expanderBar->add(btn5, SizePolicy::FIXED_SIZE);
 		expanderBar->add(move(splitter), SizePolicy::EXPANDER);

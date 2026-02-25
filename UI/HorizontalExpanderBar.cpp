@@ -3,21 +3,21 @@
 
 
 
-void HorizontalExpanderBar::add(Facade& facade, SizePolicy sizePolicy)
+void internal::HorizontalExpanderBar::add(Facade& facade, SizePolicy sizePolicy)
 {
 	Branch::add(facade);
 	sizePolicies.resize(children.size(), sizePolicy);
 	sizePolicies.back() = sizePolicy;
 }
 
-void HorizontalExpanderBar::add(unique_ptr<TreeNode> child, SizePolicy sizePolicy)
+void internal::HorizontalExpanderBar::add(unique_ptr<TreeNode> child, SizePolicy sizePolicy)
 {
 	Branch::add(move(child));
 	sizePolicies.resize(children.size(), sizePolicy);
 	sizePolicies.back() = sizePolicy;
 }
 
-void HorizontalExpanderBar::calcPositions()
+void internal::HorizontalExpanderBar::calcPositions()
 {
 	float totalFixedSize = 0;
 	float numberOfExpandableChildren = 0;
@@ -56,4 +56,9 @@ void HorizontalExpanderBar::calcPositions()
 		child->setSize(buttonSize);
 	}
 
+}
+
+UI_API HorizontalExpanderBarPtr HorizontalExpanderBar()
+{
+	return make_unique<internal::HorizontalExpanderBar>();
 }
