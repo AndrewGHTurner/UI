@@ -74,6 +74,10 @@ void internal::HorizontalSplitter::calcPositions()
 			childXCoord += childSize.x;
 		}
 	}
+	//run on drag lambdas
+	for (function<void()>& lambda : onDragLambdas) {
+		lambda();
+	}
 }
 
 
@@ -160,6 +164,11 @@ void internal::HorizontalSplitter::addHandle()
 
 	//add the handle to the end of the children vector
 	children.push_back(move(handle));
+}
+
+void internal::HorizontalSplitter::onDrag(function<void()> lambda)
+{
+	onDragLambdas.push_back(lambda);
 }
 
 UI_API HorizontalSplitterPtr HorizontalSplitter() {

@@ -20,7 +20,9 @@ namespace internal {
 		void add(unique_ptr<TreeNode> child, int proportion);
 		void add(Facade& child, int proportion);
 		void calcPositions() override;
+		void onDrag(function<void()> lambda);
 	private:
+		vector<function<void()>> onDragLambdas;
 		int handleWidth = 6;
 		uint32_t dragLambdaID = 0;//id of the drag lambda of the active handle(currently being dragged) Only one handle can be dragged at a time so this works
 		uint32_t releaseLambdaID = 0;//id of the release lambda of the active handle

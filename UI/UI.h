@@ -153,13 +153,23 @@ public:
 		drawUI(window, displayNeeded);
 	}
 
+	void drawToScreen(VertexArray& vertices)
+	{
+		screenTexture->draw(vertices);
+		screenTexture->display();
+		sf::Sprite sprite(screenTexture->getTexture());
+		window.draw(sprite);
+		window.display();
+	}
+
 	void drawUI(RenderWindow& const window, bool displayNeeded = false)
 	{
 		if (isRecalcNeeded())
 		{
 			//reCalc the vertices
-			updateChildren();
 			setRecalcNeededFalse();
+			updateChildren();
+			
 		}
 
 		//redraw the vertices 
