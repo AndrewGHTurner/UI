@@ -205,7 +205,11 @@ public:
 		clearVertices[3].color = backgroundColour;
 		clearVertices[4].color = backgroundColour;
 		clearVertices[5].color = backgroundColour;
-		texture->draw(clearVertices);
+
+		RenderStates states;
+		states.blendMode = sf::BlendNone;
+
+		texture->draw(clearVertices, states);
 	}
 
 	void updateChildren()

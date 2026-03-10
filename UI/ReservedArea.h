@@ -1,10 +1,10 @@
 #ifndef RESERVED_AREA_H
 #define RESERVED_AREA_H
 #include "UI_DLL_Interface.h"
-#include "TreeNode.h"
+#include "Branch.h"
 #include "InteractiveFluent.h"
 namespace internal {
-	class UI_API ReservedArea : public InteractiveFluent<ReservedArea, TreeNode> {
+	class UI_API ReservedArea : public InteractiveFluent<ReservedArea, Branch> {
 	public:
 		ReservedArea();
 

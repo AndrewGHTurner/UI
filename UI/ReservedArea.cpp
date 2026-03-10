@@ -6,7 +6,7 @@
 
 internal::ReservedArea::ReservedArea() 
 {
-
+	setBackgroundColour(Color(255,255, 255, 0));
 };
 
 
