@@ -43,6 +43,13 @@ public:
 		return static_cast<Derived&>(*this);
 	}
 
+	Derived& onDragMove(function<void(EventData d)> lambda)
+	{
+		UI* ui = UI::getInstance();
+		ui->addDragMoveLambda(lambda, static_cast<Derived*>(this)->id);
+		return static_cast<Derived&>(*this);
+	}
+
 	Derived& removeClickLeftDown(int lambdaID)
 	{
 		UI* ui = UI::getInstance();

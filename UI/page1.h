@@ -62,7 +62,7 @@ public:
             .setTextJustification(TextJustification::CENTER)
             .setTextColour(Color::Green);
 
-        
+
 
         TextButtonPtr hideFirstLabelButton = TextButton("Hide First Label");
         hideFirstLabelButton->onClickLeftDown([labelPtr = label.get()](EventData d) {
@@ -73,177 +73,180 @@ public:
                 labelPtr->setIsVisibleTrue();
             }
             });
-		verticalScroll->add(move(hideFirstLabelButton));
+        verticalScroll->add(move(hideFirstLabelButton));
         verticalScroll->add(move(label));
-    
-
-       function<void(EventData d)> addTreeNode = [branch = verticalScroll.get()](EventData d) {
-           static int t;
-           Color f;
-           if (t == 0)
-           {
-               f = Color::Red;
-           }
-           else if (t == 1)
-           {
-               f = Color::Green;
-           }
-           else if (t == 2)
-           {
-               f = Color::Blue;
-           }
-           else
-           {
-               f = Color::Magenta;
-               t = -1;
-           }
-           t += 1;
-
-           ColouredButton btn(f);
-
-           function<void(EventData d)> removeTreeNode = [branch, btnID = btn.getID()](EventData d) {
-               branch->remove(btnID);
-               };
-
-           btn.onClick(removeTreeNode);
-           branch->add(btn);
-
-           };
-
-	   //make check box
-	   CheckBoxPtr checkBox = CheckBox();
-
-       function<void(EventData d)> printToggle = [](EventData d) {
-           cout << "toggled" << endl;
-           };
-       checkBox->onToggle(printToggle);
-
-	   TextButtonPtr isCheckedButton = TextButton("Is Checked?");
-
-       isCheckedButton->onClickLeftDown([checkBoxPtr = checkBox.get()](EventData d) {
-           if (checkBoxPtr->checked) {
-               cout << "Checked!" << endl;
-           }
-           else {
-               cout << "Not checked!" << endl;
-           }
-               })
-           .setColour(Color::Cyan)
-           .setPressedColour(Color::Blue)
-           ;
-
-       verticalScroll->add(move(checkBox));
-	   verticalScroll->add(move(isCheckedButton));
-
-	   LabelledCheckBoxPtr labelledCheckBox = LabelledCheckBox("Labelled CheckBox");
-       labelledCheckBox->checkBox->onToggle([lab = labelledCheckBox.get()](EventData d) {
-           if (lab->checkBox->checked) {
-               lab->label->setText("Checked");
-           }
-           else {
-               lab->label->setText("Not Checked");
-           }
-           });
-       ui->addKeyPressLambda([k = labelledCheckBox.get()](EventData d) {
-           k->checkBox->toggle(false);
-           }, static_cast<uint32_t>(Keyboard::Key::C));
-	   verticalScroll->add(move(labelledCheckBox));
-       
-
-	   TextButtonPtr addButtonButton = TextButton("Add Button");
-       addButtonButton->onClickLeftDown(addTreeNode)
-           .setColour(Color::Yellow)
-           .setHoverColour(Color(232, 126, 5))
-           .setPressedColour(Color::Green) // Set the pressed colour for the button   
-		   .setTextJustification(TextJustification::CENTER)
-		   .setTextColour(Color::Blue);
-	   verticalScroll->add(move(addButtonButton));
-
-	   TextButtonPtr keyPressButton = TextButton("Add enterKey pring");
-
-       keyPressButton->onClickLeftDown([ui, button = keyPressButton.get()](EventData d) {
-           function<void(EventData)> printEnter = [](EventData f) { cout << "Enter Key Pressed" << endl; };
-           static uint32_t enterPrintLambdaID = -1;
-           if (enterPrintLambdaID == -1)
-           {
-               enterPrintLambdaID = ui->addKeyPressLambda(printEnter, static_cast<uint32_t>(Keyboard::Key::Enter));
-           }
-           else
-           {
-               ui->removeKeyPressLambda(enterPrintLambdaID, static_cast<uint32_t>(Keyboard::Key::Enter));
-               enterPrintLambdaID = -1;
-           }
-           })
-           .setColour(Color::Yellow)
-           .setHoverColour(Color(232, 126, 5))
-           .setPressedColour(Color::Green); // Set the pressed colour for the button
-       
-       verticalScroll->add(move(keyPressButton));
-
-       TextButtonPtr r = TextButton("ListLayoutDemo");
-           r->setColour(Color::Blue)
-           .setPressedColour(Color::Blue)
-		   .onClickLeftDown(makeSwitchPageLambda(PageTypes::LIST_LAYOUT_DEMO));
-        
-	   verticalScroll->add(move(r));
-
-	   TextButtonPtr f = TextButton("Text Justification Demo");
-       f->setColour(Color(33, 33, 33))
-		   .onClickLeftDown(makeSwitchPageLambda(PageTypes::TEXT_JUSTIFICATION_PAGE));
-	   verticalScroll->add(move(f));
 
 
-       ColouredButton btn2 = ColouredButton(Color::Black);
-	   function<void(EventData d)> removeTreeNode = [verticalScrollPtr = verticalScroll.get(), btnID = btn2.getID()](EventData d) {
-		   verticalScrollPtr->remove(btnID);
-		   };
-	   btn2.onClick(removeTreeNode);
+        function<void(EventData d)> addTreeNode = [branch = verticalScroll.get()](EventData d) {
+            static int t;
+            Color f;
+            if (t == 0)
+            {
+                f = Color::Red;
+            }
+            else if (t == 1)
+            {
+                f = Color::Green;
+            }
+            else if (t == 2)
+            {
+                f = Color::Blue;
+            }
+            else
+            {
+                f = Color::Magenta;
+                t = -1;
+            }
+            t += 1;
 
-       verticalScroll->add(btn2);  
+            ColouredButton btn(f);
 
-       TextButtonPtr page2Button = TextButton("Page 2");
-       page2Button->setColour(Color::Cyan)
-		   .setPressedColour(Color::Magenta)
-		   .onClickLeftDown(makeSwitchPageLambda(PageTypes::PAGE_2));
-       verticalScroll->add(move(page2Button));
+            function<void(EventData d)> removeTreeNode = [branch, btnID = btn.getID()](EventData d) {
+                branch->remove(btnID);
+                };
 
-       TextButtonPtr page3Button = TextButton("Page 3");
-       page3Button->setColour(Color::Cyan)
-		   .setPressedColour(Color::Magenta)
-		   .onClickLeftUp(makeSwitchPageLambda(PageTypes::PAGE_3), true);
-	   verticalScroll->add(move(page3Button));  
+            btn.onClick(removeTreeNode);
+            branch->add(btn);
 
-       ColouredButton btn4 = ColouredButton(Color::Magenta);
+            };
 
-	   
-	   btn4.onClick(makeChangeColourLambda(btn4.getRootNodePointer()));
+        //make check box
+        CheckBoxPtr checkBox = CheckBox();
 
-       verticalScroll->add(btn4);  
+        function<void(EventData d)> printToggle = [](EventData d) {
+            cout << "toggled" << endl;
+            };
+        checkBox->onToggle(printToggle);
 
-       verticalScroll->add(move(j));  
+        TextButtonPtr isCheckedButton = TextButton("Is Checked?");
 
-       ColouredButton btn5 = ColouredButton(Color::Cyan);
-       btn5.onClick(makeChangeColourLambda(btn5.getRootNodePointer()));  
+        isCheckedButton->onClickLeftDown([checkBoxPtr = checkBox.get()](EventData d) {
+            if (checkBoxPtr->checked) {
+                cout << "Checked!" << endl;
+            }
+            else {
+                cout << "Not checked!" << endl;
+            }
+            })
+            .setColour(Color::Cyan)
+            .setPressedColour(Color::Blue)
+            ;
+
+        verticalScroll->add(move(checkBox));
+        verticalScroll->add(move(isCheckedButton));
+
+        LabelledCheckBoxPtr labelledCheckBox = LabelledCheckBox("Labelled CheckBox");
+        labelledCheckBox->checkBox->onToggle([lab = labelledCheckBox.get()](EventData d) {
+            if (lab->checkBox->checked) {
+                lab->label->setText("Checked");
+            }
+            else {
+                lab->label->setText("Not Checked");
+            }
+            });
+        ui->addKeyPressLambda([k = labelledCheckBox.get()](EventData d) {
+            k->checkBox->toggle(false);
+            }, static_cast<uint32_t>(Keyboard::Key::C));
+        verticalScroll->add(move(labelledCheckBox));
+
+
+        TextButtonPtr addButtonButton = TextButton("Add Button");
+        addButtonButton->onClickLeftDown(addTreeNode)
+            .setColour(Color::Yellow)
+            .setHoverColour(Color(232, 126, 5))
+            .setPressedColour(Color::Green) // Set the pressed colour for the button   
+            .setTextJustification(TextJustification::CENTER)
+            .setTextColour(Color::Blue);
+        verticalScroll->add(move(addButtonButton));
+
+        TextButtonPtr keyPressButton = TextButton("Add enterKey pring");
+
+        keyPressButton->onClickLeftDown([ui, button = keyPressButton.get()](EventData d) {
+            function<void(EventData)> printEnter = [](EventData f) { cout << "Enter Key Pressed" << endl; };
+            static uint32_t enterPrintLambdaID = -1;
+            if (enterPrintLambdaID == -1)
+            {
+                enterPrintLambdaID = ui->addKeyPressLambda(printEnter, static_cast<uint32_t>(Keyboard::Key::Enter));
+            }
+            else
+            {
+                ui->removeKeyPressLambda(enterPrintLambdaID, static_cast<uint32_t>(Keyboard::Key::Enter));
+                enterPrintLambdaID = -1;
+            }
+            })
+            .setColour(Color::Yellow)
+            .setHoverColour(Color(232, 126, 5))
+            .setPressedColour(Color::Green); // Set the pressed colour for the button
+
+        verticalScroll->add(move(keyPressButton));
+
+        TextButtonPtr r = TextButton("ListLayoutDemo");
+        r->setColour(Color::Blue)
+            .setPressedColour(Color::Blue)
+            .onClickLeftDown(makeSwitchPageLambda(PageTypes::LIST_LAYOUT_DEMO));
+
+        verticalScroll->add(move(r));
+
+        TextButtonPtr f = TextButton("Text Justification Demo");
+        f->setColour(Color(33, 33, 33))
+            .onClickLeftDown(makeSwitchPageLambda(PageTypes::TEXT_JUSTIFICATION_PAGE));
+        verticalScroll->add(move(f));
+
+
+        ColouredButton btn2 = ColouredButton(Color::Black);
+        function<void(EventData d)> removeTreeNode = [verticalScrollPtr = verticalScroll.get(), btnID = btn2.getID()](EventData d) {
+            verticalScrollPtr->remove(btnID);
+            };
+        btn2.onClick(removeTreeNode);
+
+        verticalScroll->add(btn2);
+
+        TextButtonPtr page2Button = TextButton("Page 2");
+        page2Button->setColour(Color::Cyan)
+            .setPressedColour(Color::Magenta)
+            .onClickLeftDown(makeSwitchPageLambda(PageTypes::PAGE_2));
+        verticalScroll->add(move(page2Button));
+
+        TextButtonPtr page3Button = TextButton("Page 3");
+        page3Button->setColour(Color::Cyan)
+            .setPressedColour(Color::Magenta)
+            .onClickLeftUp(makeSwitchPageLambda(PageTypes::PAGE_3), true);
+        verticalScroll->add(move(page3Button));
+
+        ColouredButton btn4 = ColouredButton(Color::Magenta);
+
+
+        btn4.onClick(makeChangeColourLambda(btn4.getRootNodePointer()));
+
+        verticalScroll->add(btn4);
+
+        verticalScroll->add(move(j));
+
+        ColouredButton btn5 = ColouredButton(Color::Cyan);
+        btn5.onClick(makeChangeColourLambda(btn5.getRootNodePointer()));
 
 
 
-       verticalScroll->add(btn5);  
+        verticalScroll->add(btn5);
 
-         
 
-       ColouredButton btna(Color::Blue);  
-       btna.onClick(makeChangeColourLambda(btna.getRootNodePointer()));
 
-       EvenListPtr vert = EvenList();//make_unique<Vertical>(Vector2f(0, 0), Vector2f(200, 200));
-	   vert->setChildSize(-1); // Let the EvenList calculate child size based on its own size
+        ColouredButton btna(Color::Blue);
+        btna.onClick(makeChangeColourLambda(btna.getRootNodePointer()));
 
-	   ScrollPtr scroll = Scroll();
-       scroll->setBackgroundColour(Color::Green);
+        EvenListPtr vert = EvenList();//make_unique<Vertical>(Vector2f(0, 0), Vector2f(200, 200));
+        vert->setChildSize(-1); // Let the EvenList calculate child size based on its own size
 
-       EvenListPtr vert2 = EvenList();
-	   vert2->setMargin(4); // Set the margin between elements in the vertical scroll area
+        ScrollPtr scroll = Scroll();
+        scroll->setBackgroundColour(Color::Green);
 
-	   LabelPtr label2 = Label("label in scroll area");
+        EvenListPtr vert2 = EvenList();
+        vert2->setMargin(4); // Set the margin between elements in the vertical scroll area
+
+        LabelPtr label2 = Label("label in scroll area");
+        label2->onDragMove([](EventData event){
+            cout << "dragging label" << endl;
+            });
 	   vert2->add(move(label2));
 
 	   TextBoxPtr textBoxInScroll = TextBox("TextBox in Scroll Area");

@@ -67,6 +67,7 @@ public:
 	uint32_t addMouseMovementLambda(std::function<void(EventData)> lambda);
 	uint32_t addHoverEnterLambda(std::function<void(EventData)> lambda, int boxID);
 	uint32_t addHoverExitLambda(std::function<void(EventData)> lambda, int boxID);
+	uint32_t addDragMoveLambda(std::function<void(EventData)> lambda, int boxID);
 	uint32_t addKeyPressLambda(std::function<void(EventData)> lambda, int keyCode);
 	//remove lambdas
 	void removeKeyPressLambda(uint32_t lambdaID, int keyCode);

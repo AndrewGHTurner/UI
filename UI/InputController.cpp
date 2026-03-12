@@ -61,6 +61,11 @@ uint32_t InputController::addHoverExitLambda(function<void(EventData)> lambda, i
 	return insertCallback(EventType::HOVER_EXIT, lambda, boxID);
 }
 
+uint32_t InputController::addDragMoveLambda(std::function<void(EventData)> lambda, int boxID)
+{
+	return insertCallback(EventType::DRAG_MOVE, lambda, boxID);
+}
+
 uint32_t InputController::addKeyPressLambda(function<void(EventData)> lambda, int keyCode)
 {
 	return insertCallback(EventType::KEY_PRESS, lambda, keyCode);

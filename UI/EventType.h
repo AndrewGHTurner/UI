@@ -18,7 +18,8 @@ enum class EventType : uint8_t {
 	HOVER_ENTER,
 	HOVER_EXIT,
 	HOVER_MOVE,
-	KEY_PRESS
+	KEY_PRESS,
+	DRAG_MOVE,
 };
 
 struct EventKey {

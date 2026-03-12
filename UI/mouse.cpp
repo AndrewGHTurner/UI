@@ -104,7 +104,6 @@ void UI::mouseMovementAt(Vector2i pos)
 			lambdaHolder.lambda(data);
 		}
 	}
-
 	//record the currently hovered elements
 	vector<int> boxIDs;
 	unordered_set<uint32_t> newlyHoveredElementIDs;
@@ -116,6 +115,24 @@ void UI::mouseMovementAt(Vector2i pos)
 	//run hover handlers for currently hovered elements
 
 	//TODO
+
+
+	//run drag move handlers for currently hovered elements if mouse button is down
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+	{
+		for (int boxID : boxIDs)
+		{
+			EventKey key(EventType::DRAG_MOVE, boxID);
+			const auto it = currentPage->registry.callbackMap.find(key);
+			if (it != currentPage->registry.callbackMap.end())//if a vector of handlers exists for this ID
+			{
+				for (const EventCallback& lambdaHolder : it->second)
+				{
+					lambdaHolder.lambda(data);
+				}
+			}
+		}
+	}
 
 	//run hover enter calbacks for newly hovered elements
 
