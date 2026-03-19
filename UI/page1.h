@@ -1,5 +1,6 @@
 #include "Page.h"  
-#include "ColouredButton.h"  
+#include "ColouredButton.h"
+#include "ImageButton.h"
 #include "TextButton.h"
 #include "HorizontalSplitter.h"
 #include <memory>  
@@ -12,8 +13,9 @@
 #include "CheckBox.h"
 #include "LabelledCheckBox.h"
 #include "ProgressBar.h"
-#include <StaticList.h>
+#include "StaticList.h"
 #include "ProportionalSpacedList.h"
+
 
 class Page1 : public Page {  
 private:
@@ -51,12 +53,20 @@ public:
         function<void(EventData d)> print = [](EventData d) { cout << "clicked" << endl; };
         ui->addLeftDown(print, j->id);//WOUDL NEED TO MAKE A FOX  
 
+
         //create the scroll area  
         EvenListPtr verticalScroll = EvenList();
         verticalScroll->setMargin(4); // Set the margin between elements in the scroll area       
         verticalScroll->setBackgroundColour(Color(63, 3, 153)); // Set the background colour of the scroll area
         //verticalScroll->setHorizontal();
 
+        std::cout << std::filesystem::current_path() << std::endl;
+
+
+		ImageButtonPtr imageButton = ImageButton("images/grass.png");
+		imageButton->onClickLeftDown([](EventData d) { cout << "Image Button Clicked!" << endl; });
+		verticalScroll->add(move(imageButton));
+        
         LabelPtr label = Label("first label");
         label->setColour(Color::Yellow)
             .setTextJustification(TextJustification::CENTER)

@@ -183,6 +183,8 @@
   <ItemGroup>
     <ClCompile Include="AnimationManager.cpp" />
     <ClInclude Include="AnimationManager.h" />
+    <ClCompile Include="ImageButton.cpp" />
+    <ClInclude Include="ImageButton.h" />
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="CenterAligner.cpp" />
     <ClCompile Include="CheckBox.cpp" />
