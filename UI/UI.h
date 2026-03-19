@@ -145,9 +145,8 @@ public:
 				case Keyboard::Key::Down:
 					handleArrowEvent(ArrowDirection::DOWN);
 					break;
-				default:
-					handleKeyPress(static_cast<uint32_t>(keyEvent->code));//WILL NOT BE ABLE TO ADD LAMBDAS TO ARROW KEY WITHOUT SMALL REDESIGN
 				}
+				handleKeyPress(static_cast<uint32_t>(keyEvent->code));//WILL NOT BE ABLE TO ADD LAMBDAS TO ARROW KEY WITHOUT SMALL REDESIGN
 			}
 		}
 		drawUI(window, displayNeeded);
