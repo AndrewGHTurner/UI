@@ -52,14 +52,14 @@ public:
 
         function<void(EventData d)> print = [](EventData d) { cout << "clicked" << endl; };
         ui->addLeftDown(print, j->id);//WOUDL NEED TO MAKE A FOX  
-
+        
 
         //create the scroll area  
         EvenListPtr verticalScroll = EvenList();
         verticalScroll->setMargin(4); // Set the margin between elements in the scroll area       
         verticalScroll->setBackgroundColour(Color(63, 3, 153)); // Set the background colour of the scroll area
         //verticalScroll->setHorizontal();
-
+        verticalScroll->add(move(j));
         std::cout << std::filesystem::current_path() << std::endl;
 
 
@@ -230,7 +230,7 @@ public:
 
         verticalScroll->add(btn4);
 
-        verticalScroll->add(move(j));
+        //verticalScroll->add(move(j));
 
         ColouredButton btn5 = ColouredButton(Color::Cyan);
         btn5.onClick(makeChangeColourLambda(btn5.getRootNodePointer()));

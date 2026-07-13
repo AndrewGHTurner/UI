@@ -8,78 +8,32 @@ RenderWindow* EText::window = nullptr;
 bool EText::draw()
 	{
 		screenTexture->setActive(true);
+		bool cursorVisible = false;
 		//store the gl scissor states so they can be reset if draws to other targets occure
 		GLboolean scissorEnabled;
 		GLint scissorBox[4];
 		glGetBooleanv(GL_SCISSOR_TEST, &scissorEnabled);
 		glGetIntegerv(GL_SCISSOR_BOX, scissorBox);
 
-		if (currentCharIndex != oldCharIndex && currentCharIndex != -1)//if the user has used the arrow keys to move in the string
-		{
-			elapsedTime = 0;//make sure that the cursor is drawn
-			oldCharIndex = currentCharIndex;
-			cachedTexture.clear(Color::Transparent);
-			cachedTexture.draw(textSfml);
-			cachedTexture.display();
-		}
+		//if (currentCharIndex != oldCharIndex && currentCharIndex != -1)//if the user has used the arrow keys to move in the string
+		//{
+		//	elapsedTime = 0;//make sure that the cursor is drawn
+		//	oldCharIndex = currentCharIndex;
+		//	cachedTexture.clear(Color::Transparent);
+		//	cachedTexture.draw(textSfml);
+		//	cachedTexture.display();
+		//}
 
 
 		if (currentCharIndex != -1)
 		{
 			elapsedTime += clock.restart().asSeconds();
 			if (elapsedTime < 0.25) {
-				Vector2f cursorPosition = textSfml.findCharacterPos(currentCharIndex);
-				RectangleShape cursor;//rect is the cursor
-				//redraw text so that the old curser line is removed
-				cachedTexture.clear(Color::Transparent);
-				cachedTexture.draw(textSfml);
-
-				cursorPosition.y += 1;//get it pixel perfect
-
-				cursor.setPosition(cursorPosition);
-
-				//handle moving the SFML Text object position to keep the cursor within the bounds of the cached texture
-				Vector2f textPosition = textSfml.getPosition();
-				int cursorHeight = textSfml.getFont().getLineSpacing(textSfml.getCharacterSize());
-				if (cursorPosition.x < 0)//if the cursor is to the left of the cachedTexture
-				{
-					
-					textPosition.x -= (cursorPosition.x - 10);
-					cursorPosition.x = 10;
-				}
-				else if (cursorPosition.x > cachedTexture.getSize().x)//if the cursor is to the right of the cachedTexture
-				{
-					textPosition.x -= (cursorPosition.x - cachedTexture.getSize().x) + cursorWidth;
-					cursorPosition.x = cachedTexture.getSize().x - cursorWidth;
-				}
-				if (cursorPosition.y < 0)//if the cursor is above the cachedTexture
-				{
-					textPosition.y -= cursorPosition.y;
-					cursorPosition.y = 0;
-				}
-				else if (cursorPosition.y + cursorHeight > cachedTexture.getSize().y)//if the cursor is below the cachedTexture
-				{
-					textPosition.y -= (cursorPosition.y - cachedTexture.getSize().y) + cursorHeight + 10;
-					cursorPosition.y = cachedTexture.getSize().y + cursorHeight + 10;
-				}
-				if (textPosition != textSfml.getPosition())//if the text position has changed, redraw the text
-				{
-					textSfml.setPosition(textPosition);
-				}
-
-				unsigned int k = textSfml.getCharacterSize();
-				cursor.setSize(Vector2f(cursorWidth, textSfml.getFont().getLineSpacing(k)));
-				cursor.setFillColor(Color::Magenta);
-				cachedTexture.draw(cursor);
-
-
-				cachedTexture.display();
+				cursorVisible = true;
 			}
 			else if (elapsedTime < 0.5)
 			{
-				cachedTexture.clear(Color::Transparent);
-				cachedTexture.draw(textSfml);
-				cachedTexture.display();
+				cursorVisible = false;
 
 			}
 			else {
@@ -90,11 +44,9 @@ bool EText::draw()
 
 		if (currentCharIndex == -2)//magic number to indicate that the text needs to be redrawn without cursor
 		{
-			elapsedTime = 0;
+			
 			currentCharIndex = -1;
-			cachedTexture.clear(Color::Transparent);
-			cachedTexture.draw(textSfml);
-			cachedTexture.display();
+			cursorVisible = false;
 		}
 
 		Vector2u textureSize = cachedTexture.getSize();
@@ -102,8 +54,6 @@ bool EText::draw()
 		{
 			return false;
 		}
-
-		Texture textTexture = cachedTexture.getTexture();
 
 		VertexArray quad(sf::PrimitiveType::Triangles, 6);
 		quad[0].position = Vector2f(windowPosition.x, windowPosition.y);
@@ -133,7 +83,18 @@ bool EText::draw()
 			glDisable(GL_SCISSOR_TEST);
 		}
 		//must draw a vertex arrary rather than a sprite to preserve the scissor states
-		screenTexture->draw(quad, &cachedTexture.getTexture());
+		screenTexture->draw(quad, &cachedTexture);
+		//draw the cursor over the text if it is visible
+		if (cursorVisible)
+		{
+			CaretPosition cursorPosition = labelGenerator.charPosition(currentCharIndex);
+			VertexArray cursor(sf::PrimitiveType::Lines, 2);
+			cursor[0].position = Vector2f(windowPosition.x + cursorPosition.x, windowPosition.y + cursorPosition.y);
+			cursor[1].position = Vector2f(windowPosition.x + cursorPosition.x, windowPosition.y + cursorPosition.y + cursorPosition.height);
+			cursor[0].color = Color::Black;
+			cursor[1].color = Color::Black;
+			screenTexture->draw(cursor);
+		}
 
 		return false;
 	}

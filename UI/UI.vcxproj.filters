@@ -153,6 +153,9 @@
     <ClCompile Include="ImageButton.cpp">
       <Filter>Source Files\widgets</Filter>
     </ClCompile>
+    <ClCompile Include="LabelGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -289,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="ImageButton.h">
       <Filter>Header Files\widgets</Filter>
+    </ClInclude>
+    <ClInclude Include="LabelGenerator.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,7 @@
 #include <SFML/Graphics/RenderTexture.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include "LabelGenerator.h"
 
 
 using namespace sf;
@@ -26,7 +27,8 @@ enum class TextJustification {
 class UI_API EText {
 private:
 	/** SFML Text object that handles the rendering of the text */
-	Text textSfml;
+
+	LabelGenerator labelGenerator = LabelGenerator();
 	/** The text content */
 	string text;
 	TextJustification justification = TextJustification::LEFT;
@@ -35,7 +37,7 @@ public:
 	static RenderWindow* window;
 	/** For drawing the text and the cursor to. This texture is then rendered to the screen texture */
 	//the cached texture is as big as its container sets it to. text justification is done via moving the text object inside the cached texture
-	RenderTexture cachedTexture;
+	Texture cachedTexture;
 	Vector2f windowPosition;//position of the text box in the window
 	Vector2f windowSize;//size of the text box in the window
 	sf::Clock clock;
@@ -48,13 +50,9 @@ public:
 	}
 	
 
-	EText(Font& font, string initialText) : textSfml(font, initialText) {
+	EText(Font& font, string initialText) {
 		text = initialText;
-		textSfml.setFillColor(sf::Color::Magenta);
-		textSfml.setPosition(Vector2f(0, 0));
-		textSfml.setCharacterSize(20);
-		textSfml.setStyle(sf::Text::Bold);
-
+		labelGenerator.renderText(wstring(initialText.begin(), initialText.end()));
 	}
 
 	bool draw();
@@ -67,21 +65,22 @@ public:
 		switch (justification)
 		{
 		case TextJustification::LEFT:
-			textSfml.setOrigin(Vector2f(0, 0));
+		//	textSfml.setOrigin(Vector2f(0, 0));
 			break;
 		case TextJustification::CENTER:
 		{
-			sf::FloatRect bounds = textSfml.getLocalBounds();
-			float widthEeitherSideOfText = (windowSize.x - bounds.size.x) / 2;
+			labelGenerator.justifyTextCenter();
+	//		sf::FloatRect bounds = textSfml.getLocalBounds();
+		//	float widthEeitherSideOfText = (windowSize.x - bounds.size.x) / 2;
 
-			textSfml.setOrigin(Vector2f(-widthEeitherSideOfText, 0));//I HAVE NO IDEA WHY MAKING IT NEGATIVE WORKS BUT IT DOES
+		//	textSfml.setOrigin(Vector2f(-widthEeitherSideOfText, 0));//I HAVE NO IDEA WHY MAKING IT NEGATIVE WORKS BUT IT DOES
 			break;
 		}
 		case TextJustification::RIGHT:
 		{
-			FloatRect bounds = textSfml.getLocalBounds();
-			float widthLeftOfText = windowSize.x - bounds.size.x;
-			textSfml.setOrigin(Vector2f(-widthLeftOfText, 0));//I HAVE NO IDEA WHY MAKING IT NEGATIVE WORKS BUT IT DOES
+	//		FloatRect bounds = textSfml.getLocalBounds();
+		//	float widthLeftOfText = windowSize.x - bounds.size.x;
+		//	textSfml.setOrigin(Vector2f(-widthLeftOfText, 0));//I HAVE NO IDEA WHY MAKING IT NEGATIVE WORKS BUT IT DOES
 			break;
 		}
 		default:
@@ -94,18 +93,29 @@ public:
 		position.x += 10;
 		windowPosition = position;
 		Justify();
-		cachedTexture.clear(sf::Color::Transparent);
-		cachedTexture.draw(textSfml);
-		cachedTexture.display();
+		//cachedTexture.clear(sf::Color::Transparent);
+
+
+
+		//cachedTexture.draw(textSfml);
+		//cachedTexture.display();
+
+		const unsigned char* pixels = labelGenerator.getPixels(cachedTexture.getSize().x, cachedTexture.getSize().y);
+
+		cachedTexture.update(pixels);
 	}
 
 	void setTextJustification(TextJustification justification)
 	{
 		this->justification = justification;
 		Justify();
-		cachedTexture.clear(sf::Color::Transparent);
-		cachedTexture.draw(textSfml);
-		cachedTexture.display();
+		//cachedTexture.clear(sf::Color::Transparent);
+		//cachedTexture.draw(textSfml);
+		//cachedTexture.display();
+
+		const unsigned char* pixels = labelGenerator.getPixels(cachedTexture.getSize().x, cachedTexture.getSize().y);
+
+		cachedTexture.update(pixels);
 	}
 
 	void setSize(Vector2f size)
@@ -114,17 +124,17 @@ public:
 		cachedTexture.resize({ static_cast<unsigned int>(size.x), static_cast<unsigned int>(size.y) });
 		windowSize = size;
 		Justify();
-		cachedTexture.clear(sf::Color::Transparent);
-		cachedTexture.draw(textSfml);
-		cachedTexture.display();
+
+		const unsigned char* pixels = labelGenerator.getPixels(cachedTexture.getSize().x, cachedTexture.getSize().y);
+
+		cachedTexture.update(pixels);
 	}
 
 	void setTextColour(Color c)
 	{
-		textSfml.setFillColor(c);
-		cachedTexture.clear(sf::Color::Transparent);
-		cachedTexture.draw(textSfml);
-		cachedTexture.display();
+		const unsigned char* pixels = labelGenerator.getPixels(cachedTexture.getSize().x, cachedTexture.getSize().y);
+
+		cachedTexture.update(pixels);
 	}
 
 	void setText(string newText)
@@ -135,11 +145,18 @@ public:
 
 
 		elapsedTime = 0;
-		textSfml.setString(newText);
+
+		labelGenerator.renderText(wstring(newText.begin(), newText.end()));
+
 		Justify();
-		cachedTexture.clear(Color::Transparent);
-		cachedTexture.draw(textSfml);
-		cachedTexture.display();
+	//	cachedTexture.clear(Color::Transparent);
+	//	cachedTexture.draw(textSfml);
+
+		const unsigned char* pixels = labelGenerator.getPixels(cachedTexture.getSize().x, cachedTexture.getSize().y);
+
+		cachedTexture.update(pixels);
+
+	//	cachedTexture.display();
 
 
 
@@ -170,12 +187,12 @@ public:
 
 	Vector2f getMinTextSize()
 	{
-		sf::FloatRect bounds = textSfml.getLocalBounds();
-		bounds.size.x += 20;
-		bounds.size.y += 10;
-		return bounds.size;
+	//	sf::FloatRect bounds = textSfml.getLocalBounds();
+	//	bounds.size.x += 20;
+	//	bounds.size.y += 10;
+	//	return bounds.size;
+		return Vector2f(0, 0);
 	}
 };
-
 
 #endif

@@ -193,6 +193,7 @@
     <ClCompile Include="eventDispatchers.cpp" />
     <ClCompile Include="HorizontalExpanderBar.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="LabelGenerator.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="ProportionalSpacedList.cpp" />
     <ClInclude Include="CallbackLambdaHolders.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="Page.cpp" />
     <ClCompile Include="PageSwitcher.cpp" />
+    <ClInclude Include="LabelGenerator.h" />
     <ClInclude Include="LinearListFluent.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="Proportioned.h" />
