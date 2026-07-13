@@ -52,7 +52,7 @@ public:
 
 	EText(Font& font, string initialText) {
 		text = initialText;
-		labelGenerator.renderText(wstring(initialText.begin(), initialText.end()));
+		
 	}
 
 	bool draw();
@@ -65,7 +65,7 @@ public:
 		switch (justification)
 		{
 		case TextJustification::LEFT:
-		//	textSfml.setOrigin(Vector2f(0, 0));
+			labelGenerator.justifyTextLeft();
 			break;
 		case TextJustification::CENTER:
 		{
@@ -78,6 +78,7 @@ public:
 		}
 		case TextJustification::RIGHT:
 		{
+			labelGenerator.justifyTextRight();
 	//		FloatRect bounds = textSfml.getLocalBounds();
 		//	float widthLeftOfText = windowSize.x - bounds.size.x;
 		//	textSfml.setOrigin(Vector2f(-widthLeftOfText, 0));//I HAVE NO IDEA WHY MAKING IT NEGATIVE WORKS BUT IT DOES
@@ -112,7 +113,8 @@ public:
 		//cachedTexture.clear(sf::Color::Transparent);
 		//cachedTexture.draw(textSfml);
 		//cachedTexture.display();
-
+		labelGenerator.renderText(wstring(text.begin(), text.end()), windowSize.x);
+		
 		const unsigned char* pixels = labelGenerator.getPixels(cachedTexture.getSize().x, cachedTexture.getSize().y);
 
 		cachedTexture.update(pixels);
@@ -124,6 +126,8 @@ public:
 		cachedTexture.resize({ static_cast<unsigned int>(size.x), static_cast<unsigned int>(size.y) });
 		windowSize = size;
 		Justify();
+
+		labelGenerator.renderText(wstring(text.begin(), text.end()), windowSize.x);
 
 		const unsigned char* pixels = labelGenerator.getPixels(cachedTexture.getSize().x, cachedTexture.getSize().y);
 
@@ -146,7 +150,7 @@ public:
 
 		elapsedTime = 0;
 
-		labelGenerator.renderText(wstring(newText.begin(), newText.end()));
+		labelGenerator.renderText(wstring(newText.begin(), newText.end()), windowSize.x);
 
 		Justify();
 	//	cachedTexture.clear(Color::Transparent);

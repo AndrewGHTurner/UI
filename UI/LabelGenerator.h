@@ -114,7 +114,7 @@ public:
     }
 
     // Render centered text over the whole bitmap
-    void renderText(const std::wstring& text)
+    void renderText(const std::wstring& text, float textBoxWidth)
     {
         renderTarget->BeginDraw();
 
@@ -133,7 +133,7 @@ public:
             text.c_str(),
             static_cast<UINT32>(text.length()),
             m_textFormat.Get(),
-			rect.right - rect.left,
+			textBoxWidth,
 			rect.bottom - rect.top,
             &layout
         );
@@ -212,6 +212,23 @@ public:
     void justifyTextCenter()
     {
         m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+    }
+
+	void justifyTextLeft()
+	{
+		m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+	}
+
+	void justifyTextRight()
+	{
+		m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
+	}
+
+    int getTextWidth()
+    {
+        DWRITE_TEXT_METRICS metrics;
+		layout->GetMetrics(&metrics);
+		return static_cast<int>(metrics.width);
     }
 
     UINT getWidth() const { return m_width; }
