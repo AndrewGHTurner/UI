@@ -154,6 +154,7 @@
     <ClCompile Include="..\UI\page2.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="chartPage.h" />
     <ClInclude Include="ListLayoutDemoPage.h" />
     <ClInclude Include="Page3.h" />
     <ClInclude Include="TextJustificationPage.h" />

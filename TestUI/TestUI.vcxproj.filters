@@ -44,5 +44,8 @@
     <ClInclude Include="TextJustificationPage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="chartPage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

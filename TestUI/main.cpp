@@ -27,6 +27,7 @@ DESIGN CHOICES
 #include "PageTypes.h"
 #include "ListLayoutDemoPage.h"
 #include "TextJustificationPage.h"
+#include "chartPage.h"
 
 
 //#include "testPage.h"
@@ -75,12 +76,14 @@ MAIN()
 
 	PagePtr listLayoutDemoPage = make_unique<ListLayoutDemoPage>(pageSwitcher);
 	PagePtr textJustificationPage = make_unique<TextJustificationPage>(pageSwitcher);
+	PagePtr chartPage = make_unique<ChartPage>(pageSwitcher);
 
 	pageSwitcher.addPage(move(page1), PageTypes::PAGE_1);
 	pageSwitcher.addPage(move(page2), PageTypes::PAGE_2);
 	pageSwitcher.addPage(move(page3), PageTypes::PAGE_3);
 	pageSwitcher.addPage(move(listLayoutDemoPage), PageTypes::LIST_LAYOUT_DEMO);
 	pageSwitcher.addPage(move(textJustificationPage), PageTypes::TEXT_JUSTIFICATION_PAGE);
+	pageSwitcher.addPage(move(chartPage), PageTypes::CHART_EXAMPLE);
 
 
 	//using CreatePageFunc = Page * (*)(PageSwitcher*, int);

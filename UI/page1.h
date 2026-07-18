@@ -55,6 +55,7 @@ public:
         
 
         //create the scroll area  
+		ScrollPtr centerScroll = Scroll();
         EvenListPtr verticalScroll = EvenList();
         verticalScroll->setMargin(4); // Set the margin between elements in the scroll area       
         verticalScroll->setBackgroundColour(Color(63, 3, 153)); // Set the background colour of the scroll area
@@ -217,6 +218,12 @@ public:
             .onClickLeftDown(makeSwitchPageLambda(PageTypes::PAGE_2));
         verticalScroll->add(move(page2Button));
 
+		TextButtonPtr chartButton = TextButton("Chart Example");
+		chartButton->setColour(Color::Cyan)
+			.setPressedColour(Color::Magenta)
+			.onClickLeftDown(makeSwitchPageLambda(PageTypes::CHART_EXAMPLE));
+		verticalScroll->add(move(chartButton));
+
         TextButtonPtr page3Button = TextButton("Page 3");
         page3Button->setColour(Color::Cyan)
             .setPressedColour(Color::Magenta)
@@ -325,7 +332,10 @@ public:
 	   mainLayour->add(move(progressBarLayout), 7);
        HorizontalSplitterPtr horizontalSplitter = HorizontalSplitter(ui->getOrigin(), ui->getSize());
        horizontalSplitter->add(move(vert), 30);  
-       horizontalSplitter->add(move(verticalScroll), 50);  
+
+	   centerScroll->setLayout(move(verticalScroll));
+
+       horizontalSplitter->add(move(centerScroll), 50);
        horizontalSplitter->add(btna, 20);  
 	   mainLayour->add(move(horizontalSplitter), 90);
 
