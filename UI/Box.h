@@ -11,8 +11,8 @@ using namespace sf;
 */
 class UI_API Box {
 protected:
-	Vector2f origin;//top right
-	Vector2f antiOrigin;//bottom left
+	Vector2f origin;//top left
+	Vector2f antiOrigin;//bottom right
 	Vector2f size;
 public:
 	Vector2f getOrigin() {

@@ -195,6 +195,7 @@
     <ClCompile Include="HorizontalExpanderBar.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="LabelGenerator.cpp" />
+    <ClCompile Include="LineChart.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
     <ClCompile Include="ProportionalSpacedList.cpp" />
     <ClInclude Include="CallbackLambdaHolders.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="PageSwitcher.cpp" />
     <ClInclude Include="LabelGenerator.h" />
     <ClInclude Include="LinearListFluent.h" />
+    <ClInclude Include="LineChart.h" />
     <ClInclude Include="ProgressBar.h" />
     <ClInclude Include="Proportioned.h" />
     <ClCompile Include="ReservedArea.cpp" />

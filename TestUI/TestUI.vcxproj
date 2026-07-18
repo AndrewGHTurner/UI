@@ -159,6 +159,11 @@
     <ClInclude Include="Page3.h" />
     <ClInclude Include="TextJustificationPage.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UI\UI.vcxproj">
+      <Project>{9621f003-97ba-46bc-82ab-4b04756aba3b}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
