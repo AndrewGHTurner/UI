@@ -83,13 +83,13 @@ MAIN()
 	pageSwitcher.addPage(move(textJustificationPage), PageTypes::TEXT_JUSTIFICATION_PAGE);
 
 
-	using CreatePageFunc = Page * (*)(PageSwitcher*, int);
+	//using CreatePageFunc = Page * (*)(PageSwitcher*, int);
 
-	HMODULE h = LoadLibraryA("C:\\Users\\andre\\Desktop\\Root\\DLLs\\PrivateHub.dll");
-	auto createPage3 = (CreatePageFunc)GetProcAddress(h, "createPage");
+	//HMODULE h = LoadLibraryA("C:\\Users\\andre\\Desktop\\Root\\DLLs\\PrivateHub.dll");
+	//auto createPage3 = (CreatePageFunc)GetProcAddress(h, "createPage");
 
-	PagePtr page(createPage3(&pageSwitcher, 0));
-	pageSwitcher.addPage(move(page), PageTypes::EXTERNAL_DLL_PAGE);
+	//PagePtr page(createPage3(&pageSwitcher, 0));
+	//pageSwitcher.addPage(move(page), PageTypes::EXTERNAL_DLL_PAGE); DLL PAGE WORKS BUT DELETION CAUSES CRASH... EXE calls destructor in DLL and boom!
 
 
 

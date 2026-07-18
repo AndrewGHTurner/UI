@@ -102,6 +102,7 @@ public:
 			if (event->is<Event::Closed>())//can definitly fiddle with the ordering and else if these if statements to get better performamce(minute though)
 			{
 				window.close();
+				return;
 			}
 			if (event->is<Event::Resized>())
 			{
