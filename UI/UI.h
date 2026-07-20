@@ -55,6 +55,7 @@ private:
 		screenTexture = make_unique<RenderTexture>(window.getSize());
 		Leaf::setTexture(screenTexture.get());
 		EText::screenTexture = screenTexture.get();
+		LabelGenerator::init();
 	}
 
 	static UI* instance;

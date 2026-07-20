@@ -40,56 +40,69 @@ public:
             throw std::runtime_error("CoInitializeEx failed");
 
         // Direct2D factory
-        hr = D2D1CreateFactory(
-            D2D1_FACTORY_TYPE_SINGLE_THREADED,
-            direct2DFactory.GetAddressOf());
-        if (FAILED(hr))
-            throw std::runtime_error("D2D1CreateFactory failed");
+        if (!direct2DFactory)
+        {
+            hr = D2D1CreateFactory(
+                D2D1_FACTORY_TYPE_SINGLE_THREADED,
+                direct2DFactory.GetAddressOf());
+            if (FAILED(hr))
+                throw std::runtime_error("D2D1CreateFactory failed");
+        }
 
-        // DirectWrite factory
-        hr = DWriteCreateFactory(
-            DWRITE_FACTORY_TYPE_SHARED,
-            __uuidof(IDWriteFactory),
-            reinterpret_cast<IUnknown**>(
-                directWriteFactory.GetAddressOf()));
-        if (FAILED(hr))
-            throw std::runtime_error("DWriteCreateFactory failed");
+        if (!directWriteFactory)
+        {
+            // DirectWrite factory
+            hr = DWriteCreateFactory(
+                DWRITE_FACTORY_TYPE_SHARED,
+                __uuidof(IDWriteFactory),
+                reinterpret_cast<IUnknown**>(
+                    directWriteFactory.GetAddressOf()));
+            if (FAILED(hr))
+                throw std::runtime_error("DWriteCreateFactory failed");
+        }
 
         makeTextFormat();
 
-        // WIC factory
-        hr = CoCreateInstance(
-            CLSID_WICImagingFactory,
-            nullptr,
-            CLSCTX_INPROC_SERVER,
-            IID_PPV_ARGS(wicFactory.GetAddressOf()));
-        if (FAILED(hr))
-            throw std::runtime_error("CoCreateInstance(WIC) failed");
+        //// WIC factory
+        //if (!wicFactory)
+        //{
+        //    hr = CoCreateInstance(
+        //        CLSID_WICImagingFactory,
+        //        nullptr,
+        //        CLSCTX_INPROC_SERVER,
+        //        IID_PPV_ARGS(wicFactory.GetAddressOf()));
+        //    if (FAILED(hr))
+        //        throw std::runtime_error("CoCreateInstance(WIC) failed");
+        //}
 
         // Off-screen bitmap (32-bit premultiplied BGRA)
-        hr = wicFactory->CreateBitmap(
-            m_width,
-            m_height,
-            GUID_WICPixelFormat32bppPBGRA,
-            WICBitmapCacheOnLoad,
-            wicBitmap.GetAddressOf());
-        if (FAILED(hr))
-            throw std::runtime_error("CreateBitmap failed");
+        //if (!wicBitmap) {
+        //    hr = wicFactory->CreateBitmap(
+        //        m_width,
+        //        m_height,
+        //        GUID_WICPixelFormat32bppPBGRA,
+        //        WICBitmapCacheOnLoad,
+        //        wicBitmap.GetAddressOf());
+        //    if (FAILED(hr))
+        //        throw std::runtime_error("CreateBitmap failed");
+        //}
+        if (!renderTarget)
+        {
+            // Off-screen render target
+            hr = direct2DFactory->CreateWicBitmapRenderTarget(
+                wicBitmap.Get(),
+                D2D1::RenderTargetProperties(
+                    D2D1_RENDER_TARGET_TYPE_DEFAULT, // use GPU when available
+                    D2D1::PixelFormat(
+                        DXGI_FORMAT_UNKNOWN,
+                        D2D1_ALPHA_MODE_PREMULTIPLIED)),
+                renderTarget.GetAddressOf());
+            if (FAILED(hr))
+                throw std::runtime_error("CreateWicBitmapRenderTarget failed");
+        }
 
-        // Off-screen render target
-        hr = direct2DFactory->CreateWicBitmapRenderTarget(
-            wicBitmap.Get(),
-            D2D1::RenderTargetProperties(
-                D2D1_RENDER_TARGET_TYPE_DEFAULT, // use GPU when available
-                D2D1::PixelFormat(
-                    DXGI_FORMAT_UNKNOWN,
-                    D2D1_ALPHA_MODE_PREMULTIPLIED)),
-            renderTarget.GetAddressOf());
-        if (FAILED(hr))
-            throw std::runtime_error("CreateWicBitmapRenderTarget failed");
-
-        m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
-        m_textFormat->SetParagraphAlignment(
+        textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+        textFormat->SetParagraphAlignment(
             DWRITE_PARAGRAPH_ALIGNMENT_NEAR);
 
         // Brush
@@ -102,6 +115,27 @@ public:
         // Better text quality
         renderTarget->SetTextAntialiasMode(
             D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
+    }
+
+    static void init()
+    {
+        //wic factory
+        HRESULT hr = CoCreateInstance(
+            CLSID_WICImagingFactory,
+            nullptr,
+            CLSCTX_INPROC_SERVER,
+            IID_PPV_ARGS(wicFactory.GetAddressOf()));
+        if (FAILED(hr))
+            throw std::runtime_error("CoCreateInstance(WIC) failed");
+		//wic bitmap
+        hr = wicFactory->CreateBitmap(
+            m_width,
+            m_height,
+            GUID_WICPixelFormat32bppPBGRA,
+            WICBitmapCacheOnLoad,
+            wicBitmap.GetAddressOf());
+        if (FAILED(hr))
+            throw std::runtime_error("CreateBitmap failed");
     }
 
     // Clear to transparent
@@ -132,7 +166,7 @@ public:
         directWriteFactory->CreateTextLayout(
             text.c_str(),
             static_cast<UINT32>(text.length()),
-            m_textFormat.Get(),
+            textFormat.Get(),
 			textBoxWidth,
 			rect.bottom - rect.top,
             &layout
@@ -211,17 +245,17 @@ public:
 
     void justifyTextCenter()
     {
-        m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
+        textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER);
     }
 
 	void justifyTextLeft()
 	{
-		m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
+		textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_LEADING);
 	}
 
 	void justifyTextRight()
 	{
-		m_textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
+		textFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_TRAILING);
 	}
 
     int getTextWidth()
@@ -240,28 +274,32 @@ private:
     float fontSize = 15;
     std::wstring fontName = L"Arial";
     static std::vector<unsigned char> m_pixels;
-    Microsoft::WRL::ComPtr<ID2D1Factory>            direct2DFactory;
-    Microsoft::WRL::ComPtr<IDWriteFactory>          directWriteFactory;
-    Microsoft::WRL::ComPtr<IWICImagingFactory>      wicFactory;
-    Microsoft::WRL::ComPtr<IWICBitmap>              wicBitmap;
-    Microsoft::WRL::ComPtr<ID2D1RenderTarget>       renderTarget;
-    Microsoft::WRL::ComPtr<IDWriteTextFormat>       m_textFormat;
-    Microsoft::WRL::ComPtr<ID2D1SolidColorBrush>    brush;
+    inline static Microsoft::WRL::ComPtr<ID2D1Factory> direct2DFactory;
+    inline static Microsoft::WRL::ComPtr<IDWriteFactory> directWriteFactory;
+    inline static Microsoft::WRL::ComPtr<IWICImagingFactory> wicFactory;
+
+    inline static Microsoft::WRL::ComPtr<IWICBitmap> wicBitmap;
+    inline static Microsoft::WRL::ComPtr<ID2D1RenderTarget> renderTarget;
+    inline static Microsoft::WRL::ComPtr<ID2D1SolidColorBrush> brush;
+    inline static Microsoft::WRL::ComPtr<IDWriteTextFormat> textFormat;
     Microsoft::WRL::ComPtr<IDWriteTextLayout> layout;
 
 	void makeTextFormat()
 	{
-		HRESULT hr = directWriteFactory->CreateTextFormat(
-			fontName.c_str(),
-			nullptr,
-            DWRITE_FONT_WEIGHT_NORMAL,
-			DWRITE_FONT_STYLE_NORMAL,
-			DWRITE_FONT_STRETCH_NORMAL,
-			fontSize,
-			L"", // locale
-			m_textFormat.GetAddressOf());
-		if (FAILED(hr))
-			throw std::runtime_error("CreateTextFormat failed");
+        if (!textFormat)
+        {
+            HRESULT hr = directWriteFactory->CreateTextFormat(
+                fontName.c_str(),
+                nullptr,
+                DWRITE_FONT_WEIGHT_NORMAL,
+                DWRITE_FONT_STYLE_NORMAL,
+                DWRITE_FONT_STRETCH_NORMAL,
+                fontSize,
+                L"", // locale
+                textFormat.GetAddressOf());
+            if (FAILED(hr))
+                throw std::runtime_error("CreateTextFormat failed");
+        }
 	}
 };
 
